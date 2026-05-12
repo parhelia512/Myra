@@ -11,10 +11,19 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI.ColorPicker
 {
+	/// <summary>
+	/// A dialog window for selecting colors using a color picker panel.
+	/// </summary>
 	public class ColorPickerDialog : Dialog
 	{
+		/// <summary>
+		/// Gets the color picker panel used for color selection.
+		/// </summary>
 		public ColorPickerPanel ColorPickerPanel { get; }
 
+		/// <summary>
+		/// Gets or sets the currently selected color.
+		/// </summary>
 		public Color Color
 		{
 			get
@@ -28,6 +37,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the ColorPickerDialog class.
+		/// </summary>
 		public ColorPickerDialog(): base(null)
 		{
 			ColorPickerPanel = new ColorPickerPanel();
@@ -38,6 +50,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			SetStyle(Stylesheet.DefaultStyleName);
 		}
 
+		/// <summary>
+		/// Closes the dialog and saves user color selections.
+		/// </summary>
 		public override void Close()
 		{
 			base.Close();
@@ -51,6 +66,10 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			}
 		}
 
+		/// <summary>
+		/// Applies a color picker dialog style to this dialog.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyColorPickerDialogStyle(ColorPickerDialogStyle style)
 		{
 			ApplyWindowStyle(style);
@@ -58,6 +77,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			ColorPickerPanel.ApplyColorPickerDialogStyle(style);
 		}
 
+		/// <summary>
+		/// Sets the dialog's style using a stylesheet.
+		/// </summary>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyColorPickerDialogStyle(stylesheet.ColorPickerDialogStyles.SafelyGetStyle(name));

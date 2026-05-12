@@ -23,6 +23,9 @@ using Matrix = System.Numerics.Matrix3x2;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// The root UI container that manages all widgets, input events, rendering, and layout for a UI hierarchy.
+	/// </summary>
 	public partial class Desktop : ITransformable, IDisposable
 	{
 		private Rectangle _lastBounds;
@@ -47,10 +50,13 @@ namespace Myra.Graphics2D.UI
 
 		private bool _isDisposed = false;
 
+		/// <summary>
+		/// Gets or sets the function that returns the bounds for the desktop.
+		/// </summary>
 		public Func<Rectangle> BoundsFetcher { get; set; } = DefaultBoundsFetcher;
 
 		/// <summary>
-		/// Root Widget
+		/// Gets or sets the root widget displayed on the desktop.
 		/// </summary>
 		public Widget Root
 		{
@@ -82,8 +88,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the menu bar widget at the top of the desktop.
+		/// </summary>
 		public HorizontalMenu MenuBar { get; private set; }
 
+		/// <summary>
+		/// Gets a copy of the child widgets collection for internal use.
+		/// </summary>
 		internal List<Widget> ChildrenCopy
 		{
 			get
@@ -93,8 +105,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the collection of top-level widgets displayed on the desktop.
+		/// </summary>
 		public ObservableCollection<Widget> Widgets { get; } = new ObservableCollection<Widget>();
 
+		/// <summary>
+		/// Gets the internal bounds of the desktop.
+		/// </summary>
 		internal Rectangle InternalBounds
 		{
 			get => _lastBounds;

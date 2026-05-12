@@ -21,15 +21,24 @@ using SolidBrush = Myra.Graphics2D.Brushes.SolidBrush;
 
 namespace Myra.Graphics2D.UI.Styles
 {
+	/// <summary>
+	/// Manages a collection of styles for UI widgets and provides a centralized stylesheet system.
+	/// </summary>
 	public class Stylesheet
 	{
 		private static readonly Dictionary<string, string> LegacyClassNames = new Dictionary<string, string>();
 		private static readonly Dictionary<string, string> LegacyPropertyNames = new Dictionary<string, string>();
 
+		/// <summary>
+		/// The identifier used for the default style.
+		/// </summary>
 		public const string DefaultStyleName = "";
 
 		private static Stylesheet _current;
 
+		/// <summary>
+		/// Gets or sets the currently active stylesheet.
+		/// </summary>
 		public static Stylesheet Current
 		{
 			get
@@ -82,8 +91,14 @@ namespace Myra.Graphics2D.UI.Styles
 
 		private TextureRegion _whiteRegion;
 
+		/// <summary>
+		/// Gets the texture region atlas containing all style images.
+		/// </summary>
 		public TextureRegionAtlas Atlas { get; private set; }
 
+		/// <summary>
+		/// Gets the white texture region used for rendering solid colors.
+		/// </summary>
 		public TextureRegion WhiteRegion
 		{
 			get
@@ -97,10 +112,19 @@ namespace Myra.Graphics2D.UI.Styles
 			}
 		}
 
+		/// <summary>
+		/// Gets the collection of sprite fonts available in this stylesheet.
+		/// </summary>
 		public Dictionary<string, SpriteFontBase> Fonts { get; private set; }
 
+		/// <summary>
+		/// Gets or sets the default desktop style.
+		/// </summary>
 		public DesktopStyle DesktopStyle { get; set; }
 
+		/// <summary>
+		/// Gets or sets the default label style.
+		/// </summary>
 		[XmlIgnore]
 		public LabelStyle LabelStyle
 		{
@@ -108,6 +132,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_labelStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default tooltip style.
+		/// </summary>
 		[XmlIgnore]
 		public LabelStyle TooltipStyle
 		{
@@ -115,6 +142,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_tooltipStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default text box style.
+		/// </summary>
 		[XmlIgnore]
 		public TextBoxStyle TextBoxStyle
 		{
@@ -122,6 +152,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_textBoxStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default button style.
+		/// </summary>
 		[XmlIgnore]
 		public ButtonStyle ButtonStyle
 		{
@@ -129,6 +162,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_buttonStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default check box style.
+		/// </summary>
 		[XmlIgnore]
 		public ImageTextButtonStyle CheckBoxStyle
 		{
@@ -136,6 +172,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_checkBoxStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default radio button style.
+		/// </summary>
 		[XmlIgnore]
 		public ImageTextButtonStyle RadioButtonStyle
 		{
@@ -143,6 +182,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_radioButtonStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default spin button style.
+		/// </summary>
 		[XmlIgnore]
 		public SpinButtonStyle SpinButtonStyle
 		{
@@ -150,6 +192,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_spinButtonStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default horizontal slider style.
+		/// </summary>
 		[XmlIgnore]
 		public SliderStyle HorizontalSliderStyle
 		{
@@ -157,6 +202,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_horizontalSliderStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default vertical slider style.
+		/// </summary>
 		[XmlIgnore]
 		public SliderStyle VerticalSliderStyle
 		{
@@ -164,6 +212,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_verticalSliderStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default horizontal progress bar style.
+		/// </summary>
 		[XmlIgnore]
 		public ProgressBarStyle HorizontalProgressBarStyle
 		{
@@ -171,6 +222,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_horizontalProgressBarStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default vertical progress bar style.
+		/// </summary>
 		[XmlIgnore]
 		public ProgressBarStyle VerticalProgressBarStyle
 		{
@@ -178,6 +232,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_verticalProgressBarStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default horizontal separator style.
+		/// </summary>
 		[XmlIgnore]
 		public SeparatorStyle HorizontalSeparatorStyle
 		{
@@ -185,6 +242,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_horizontalSeparatorStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default vertical separator style.
+		/// </summary>
 		[XmlIgnore]
 		public SeparatorStyle VerticalSeparatorStyle
 		{
@@ -192,6 +252,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_verticalSeparatorStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default combo box style.
+		/// </summary>
 		[XmlIgnore]
 		public ComboBoxStyle ComboBoxStyle
 		{
@@ -199,6 +262,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_comboBoxStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default list box style.
+		/// </summary>
 		[XmlIgnore]
 		public ListBoxStyle ListBoxStyle
 		{
@@ -206,6 +272,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_listBoxStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default tab control style.
+		/// </summary>
 		[XmlIgnore]
 		public TabControlStyle TabControlStyle
 		{
@@ -213,6 +282,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_tabControlStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default tree view style.
+		/// </summary>
 		[XmlIgnore]
 		public TreeStyle TreeStyle
 		{
@@ -220,6 +292,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_treeStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default horizontal split pane style.
+		/// </summary>
 		[XmlIgnore]
 		public SplitPaneStyle HorizontalSplitPaneStyle
 		{
@@ -227,6 +302,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_horizontalSplitPaneStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default vertical split pane style.
+		/// </summary>
 		[XmlIgnore]
 		public SplitPaneStyle VerticalSplitPaneStyle
 		{
@@ -234,6 +312,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_verticalSplitPaneStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default scroll viewer style.
+		/// </summary>
 		[XmlIgnore]
 		public ScrollViewerStyle ScrollViewerStyle
 		{
@@ -241,6 +322,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_scrollViewerStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default horizontal menu style.
+		/// </summary>
 		[XmlIgnore]
 		public MenuStyle HorizontalMenuStyle
 		{
@@ -248,6 +332,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_horizontalMenuStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default vertical menu style.
+		/// </summary>
 		[XmlIgnore]
 		public MenuStyle VerticalMenuStyle
 		{
@@ -255,6 +342,9 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_verticalMenuStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default window style.
+		/// </summary>
 		[XmlIgnore]
 		public WindowStyle WindowStyle
 		{
@@ -262,66 +352,147 @@ namespace Myra.Graphics2D.UI.Styles
 			set => SetDefaultStyle(_windowStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default file dialog style.
+		/// </summary>
 		public FileDialogStyle FileDialogStyle
 		{
 			get => GetDefaultStyle(_fileDialogStyles);
 			set => SetDefaultStyle(_fileDialogStyles, value);
 		}
 
+		/// <summary>
+		/// Gets or sets the default color picker dialog style.
+		/// </summary>
 		public ColorPickerDialogStyle ColorPickerDialogStyle
 		{
 			get => GetDefaultStyle(_colorPickerDialogStyles);
 			set => SetDefaultStyle(_colorPickerDialogStyles, value);
 		}
 
+		/// <summary>
+		/// Gets the collection of label styles.
+		/// </summary>
 		public Dictionary<string, LabelStyle> LabelStyles => _labelStyles;
 
+		/// <summary>
+		/// Gets the collection of tooltip styles.
+		/// </summary>
 		public Dictionary<string, LabelStyle> TooltipStyles => _tooltipStyles;
 
+		/// <summary>
+		/// Gets the collection of text box styles.
+		/// </summary>
 		public Dictionary<string, TextBoxStyle> TextBoxStyles => _textBoxStyles;
 
+		/// <summary>
+		/// Gets the collection of button styles.
+		/// </summary>
 		public Dictionary<string, ButtonStyle> ButtonStyles => _buttonStyles;
 
+		/// <summary>
+		/// Gets the collection of check box styles.
+		/// </summary>
 		public Dictionary<string, ImageTextButtonStyle> CheckBoxStyles => _checkBoxStyles;
 
+		/// <summary>
+		/// Gets the collection of radio button styles.
+		/// </summary>
 		public Dictionary<string, ImageTextButtonStyle> RadioButtonStyles => _radioButtonStyles;
 
+		/// <summary>
+		/// Gets the collection of spin button styles.
+		/// </summary>
 		public Dictionary<string, SpinButtonStyle> SpinButtonStyles => _spinButtonStyles;
 
+		/// <summary>
+		/// Gets the collection of horizontal slider styles.
+		/// </summary>
 		public Dictionary<string, SliderStyle> HorizontalSliderStyles => _horizontalSliderStyles;
 
+		/// <summary>
+		/// Gets the collection of vertical slider styles.
+		/// </summary>
 		public Dictionary<string, SliderStyle> VerticalSliderStyles => _verticalSliderStyles;
 
+		/// <summary>
+		/// Gets the collection of horizontal progress bar styles.
+		/// </summary>
 		public Dictionary<string, ProgressBarStyle> HorizontalProgressBarStyles => _horizontalProgressBarStyles;
 
+		/// <summary>
+		/// Gets the collection of vertical progress bar styles.
+		/// </summary>
 		public Dictionary<string, ProgressBarStyle> VerticalProgressBarStyles => _verticalProgressBarStyles;
 
+		/// <summary>
+		/// Gets the collection of horizontal separator styles.
+		/// </summary>
 		public Dictionary<string, SeparatorStyle> HorizontalSeparatorStyles => _horizontalSeparatorStyles;
 
+		/// <summary>
+		/// Gets the collection of vertical separator styles.
+		/// </summary>
 		public Dictionary<string, SeparatorStyle> VerticalSeparatorStyles => _verticalSeparatorStyles;
 
+		/// <summary>
+		/// Gets the collection of combo box styles.
+		/// </summary>
 		public Dictionary<string, ComboBoxStyle> ComboBoxStyles => _comboBoxStyles;
 
+		/// <summary>
+		/// Gets the collection of list box styles.
+		/// </summary>
 		public Dictionary<string, ListBoxStyle> ListBoxStyles => _listBoxStyles;
 
+		/// <summary>
+		/// Gets the collection of tab control styles.
+		/// </summary>
 		public Dictionary<string, TabControlStyle> TabControlStyles => _tabControlStyles;
 
+		/// <summary>
+		/// Gets the collection of tree view styles.
+		/// </summary>
 		public Dictionary<string, TreeStyle> TreeStyles => _treeStyles;
 
+		/// <summary>
+		/// Gets the collection of horizontal split pane styles.
+		/// </summary>
 		public Dictionary<string, SplitPaneStyle> HorizontalSplitPaneStyles => _horizontalSplitPaneStyles;
 
+		/// <summary>
+		/// Gets the collection of vertical split pane styles.
+		/// </summary>
 		public Dictionary<string, SplitPaneStyle> VerticalSplitPaneStyles => _verticalSplitPaneStyles;
 
+		/// <summary>
+		/// Gets the collection of scroll viewer styles.
+		/// </summary>
 		public Dictionary<string, ScrollViewerStyle> ScrollViewerStyles => _scrollViewerStyles;
 
+		/// <summary>
+		/// Gets the collection of horizontal menu styles.
+		/// </summary>
 		public Dictionary<string, MenuStyle> HorizontalMenuStyles => _horizontalMenuStyles;
 
+		/// <summary>
+		/// Gets the collection of vertical menu styles.
+		/// </summary>
 		public Dictionary<string, MenuStyle> VerticalMenuStyles => _verticalMenuStyles;
 
+		/// <summary>
+		/// Gets the collection of window styles.
+		/// </summary>
 		public Dictionary<string, WindowStyle> WindowStyles => _windowStyles;
 
+		/// <summary>
+		/// Gets the collection of file dialog styles.
+		/// </summary>
 		public Dictionary<string, FileDialogStyle> FileDialogStyles => _fileDialogStyles;
 
+		/// <summary>
+		/// Gets the collection of color picker dialog styles.
+		/// </summary>
 		public Dictionary<string, ColorPickerDialogStyle> ColorPickerDialogStyles => _colorPickerDialogStyles;
 
 		static Stylesheet()
@@ -354,6 +525,13 @@ namespace Myra.Graphics2D.UI.Styles
 			styles[DefaultStyleName] = value;
 		}
 
+		/// <summary>
+		/// Loads a stylesheet from XML source code.
+		/// </summary>
+		/// <param name="stylesheetXml">The XML string containing the stylesheet definition.</param>
+		/// <param name="textureRegionAtlas">The texture atlas containing style images.</param>
+		/// <param name="fonts">The collection of sprite fonts available in the stylesheet.</param>
+		/// <returns>A new Stylesheet instance loaded from the XML source.</returns>
 		public static Stylesheet LoadFromSource(string stylesheetXml,
 			TextureRegionAtlas textureRegionAtlas,
 			Dictionary<string, SpriteFontBase> fonts)
@@ -427,6 +605,11 @@ namespace Myra.Graphics2D.UI.Styles
 			return result;
 		}
 
+		/// <summary>
+		/// Retrieves the identifiers of all styles for a given widget type.
+		/// </summary>
+		/// <param name="name">The widget type name to retrieve styles for.</param>
+		/// <returns>An array of style identifiers for the widget type, or null if no styles are found.</returns>
 		public string[] GetStylesByWidgetName(string name)
 		{
 			// Special case
@@ -465,6 +648,10 @@ namespace Myra.Graphics2D.UI.Styles
 			}
 		}
 
+		/// <summary>
+		/// Creates a deep copy of this stylesheet with all styles cloned.
+		/// </summary>
+		/// <returns>A new Stylesheet instance with cloned styles and fonts.</returns>
 		public Stylesheet Clone()
 		{
 			var result = new Stylesheet

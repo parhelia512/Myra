@@ -23,15 +23,25 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Specifies the allowed directions for dragging a widget.
+	/// </summary>
 	[Flags]
 	public enum DragDirection
 	{
+		/// <summary>No dragging is allowed.</summary>
 		None = 0,
+		/// <summary>Dragging is allowed in the vertical direction.</summary>
 		Vertical = 1,
+		/// <summary>Dragging is allowed in the horizontal direction.</summary>
 		Horizontal = 2,
+		/// <summary>Dragging is allowed in both vertical and horizontal directions.</summary>
 		Both = Vertical | Horizontal
 	}
 
+	/// <summary>
+	/// Base class for all UI widgets. Provides layout, rendering, input handling, and transformation capabilities.
+	/// </summary>
 	public partial class Widget : BaseObject, ITransformable
 	{
 		private MouseCursorType? _mouseCursorType;

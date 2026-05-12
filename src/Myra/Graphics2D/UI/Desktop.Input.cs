@@ -21,12 +21,34 @@ using Matrix = System.Numerics.Matrix3x2;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Contains information about the current mouse state including position and button states.
+	/// </summary>
 	public struct MouseInfo
 	{
+		/// <summary>
+		/// Gets or sets the current mouse position.
+		/// </summary>
 		public Point Position;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the left mouse button is currently pressed.
+		/// </summary>
 		public bool IsLeftButtonDown;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the middle mouse button is currently pressed.
+		/// </summary>
 		public bool IsMiddleButtonDown;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the right mouse button is currently pressed.
+		/// </summary>
 		public bool IsRightButtonDown;
+
+		/// <summary>
+		/// Gets or sets the mouse wheel delta value.
+		/// </summary>
 		public float Wheel;
 	}
 
@@ -41,18 +63,17 @@ namespace Myra.Graphics2D.UI
 		private float _mouseWheelDelta;
 
 		/// <summary>
-		/// Previous mouse position in the global coordinates
+		/// Gets the previous mouse position in global coordinates.
 		/// </summary>
 		public Point PreviousMousePosition { get; private set; }
 
 		/// <summary>
-		/// Previous touch position in the global coordinates
-		/// Null if there was no touch
+		/// Gets the previous touch position in global coordinates, or null if there was no touch.
 		/// </summary>
 		public Point? PreviousTouchPosition { get; private set; }
 
 		/// <summary>
-		/// Current mouse position in the global coordinates
+		/// Gets or sets the current mouse position in global coordinates.
 		/// </summary>
 		public Point MousePosition
 		{
@@ -70,8 +91,7 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Current touch position in the global coordinates
-		/// Null if there is no touch
+		/// Gets or sets the current touch position in global coordinates, or null if there is no touch.
 		/// </summary>
 		public Point? TouchPosition
 		{

@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace Myra.Graphics2D.UI.Properties
 {
+	/// <summary>
+	/// A widget that provides a user interface for editing collection items with property editors and item management.
+	/// </summary>
 	public class CollectionEditor : Widget
 	{
 		private readonly StackPanelLayout _layout = new StackPanelLayout(Orientation.Vertical);
@@ -12,6 +15,11 @@ namespace Myra.Graphics2D.UI.Properties
 		private readonly PropertyGrid _propertyGrid;
 		private readonly Button _buttonDelete, _buttonMoveUp, _buttonMoveDown;
 
+		/// <summary>
+		/// Initializes a new instance of the CollectionEditor class.
+		/// </summary>
+		/// <param name="collection">The collection to edit.</param>
+		/// <param name="type">The type of items in the collection.</param>
 		public CollectionEditor(IList collection, Type type)
 		{
 			ChildrenLayout = _layout;
@@ -86,11 +94,19 @@ namespace Myra.Graphics2D.UI.Properties
 			UpdateButtonsEnabled();
 		}
 
+		/// <summary>
+		/// Builds a display text string for the specified item.
+		/// </summary>
+		/// <param name="item">The item to build text for.</param>
+		/// <returns>The display text for the item.</returns>
 		private string BuildItemText(object item)
 		{
 			return item.ToString();
 		}
 
+		/// <summary>
+		/// Updates the enabled state of the action buttons based on the current selection.
+		/// </summary>
 		private void UpdateButtonsEnabled()
 		{
 			_buttonDelete.Enabled = _listItems.SelectedIndex >= 0;
@@ -98,6 +114,10 @@ namespace Myra.Graphics2D.UI.Properties
 			_buttonMoveDown.Enabled = _listItems.Widgets.Count > 1 && _listItems.SelectedIndex < _listItems.Widgets.Count - 1;
 		}
 
+		/// <summary>
+		/// Moves the currently selected item to a new position in the list.
+		/// </summary>
+		/// <param name="newIndex">The new position for the selected item.</param>
 		private void MoveSelectedItem(int newIndex)
 		{
 			var removed = _listItems.SelectedItem;
@@ -138,6 +158,9 @@ namespace Myra.Graphics2D.UI.Properties
 			UpdateButtonsEnabled();
 		}
 
+		/// <summary>
+		/// Handles property grid changes by updating the selected item's display text.
+		/// </summary>
 		private void PropertyGridOnPropertyChanged(object sender, EventArgs eventArgs)
 		{
 			if (_listItems.SelectedItem == null)
@@ -148,6 +171,9 @@ namespace Myra.Graphics2D.UI.Properties
 			((Label)_listItems.SelectedItem).Text = BuildItemText(_listItems.SelectedItem.Tag);
 		}
 
+		/// <summary>
+		/// Handles list selection changes by updating the property grid to show the selected item's properties.
+		/// </summary>
 		private void ListItemsOnSelectedIndexChanged(object sender, EventArgs eventArgs)
 		{
 			if (_listItems.SelectedItem != null)
@@ -162,6 +188,9 @@ namespace Myra.Graphics2D.UI.Properties
 			UpdateButtonsEnabled();
 		}
 
+		/// <summary>
+		/// Saves the edited collection back to the original collection.
+		/// </summary>
 		public void SaveChanges()
 		{
 			_collection.Clear();

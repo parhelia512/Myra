@@ -31,10 +31,16 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI.Properties
 {
+	/// <summary>
+	/// A widget that displays the properties of an object in an editable grid format, organized by category.
+	/// </summary>
 	public class PropertyGrid : Widget
 	{
 		private const string DefaultCategoryName = "Miscellaneous";
 
+		/// <summary>
+		/// A collapsible sub-grid for displaying properties in a specific category.
+		/// </summary>
 		private class SubGrid : Widget
 		{
 			private readonly GridLayout _layout = new GridLayout();
@@ -42,16 +48,25 @@ namespace Myra.Graphics2D.UI.Properties
 			private readonly ToggleButton _mark;
 			private readonly PropertyGrid _propertyGrid;
 
+			/// <summary>
+			/// Gets the expand/collapse mark button for this sub-grid.
+			/// </summary>
 			public ToggleButton Mark
 			{
 				get { return _mark; }
 			}
 
+			/// <summary>
+			/// Gets the nested property grid for this category.
+			/// </summary>
 			public PropertyGrid PropertyGrid
 			{
 				get { return _propertyGrid; }
 			}
 
+			/// <summary>
+			/// Gets the bounding rectangle of the category header.
+			/// </summary>
 			public Rectangle HeaderBounds
 			{
 				get
@@ -62,6 +77,9 @@ namespace Myra.Graphics2D.UI.Properties
 				}
 			}
 
+			/// <summary>
+			/// Gets a value indicating whether this sub-grid contains any properties.
+			/// </summary>
 			[Browsable(false)]
 			[XmlIgnore]
 			public bool IsEmpty
@@ -72,6 +90,15 @@ namespace Myra.Graphics2D.UI.Properties
 				}
 			}
 
+			/// <summary>
+			/// Initializes a new instance of the SubGrid class.
+			/// </summary>
+			/// <param name="parent">The parent property grid.</param>
+			/// <param name="value">The object whose properties to display.</param>
+			/// <param name="header">The header text for this category.</param>
+			/// <param name="category">The category name.</param>
+			/// <param name="filter">Optional filter for property names.</param>
+			/// <param name="parentProperty">Optional parent property record for attribute inspection.</param>
 			public SubGrid(PropertyGrid parent, object value, string header, string category, string filter, Record parentProperty)
 			{
 				ChildrenLayout = _layout;

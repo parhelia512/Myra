@@ -17,6 +17,9 @@ using ColorHSV = Myra.Utility.ColorHSV;
 
 namespace Myra.Graphics2D.UI.ColorPicker
 {
+	/// <summary>
+	/// A panel widget for selecting colors using a color wheel and gradient picker with RGB, HSV, and hex input.
+	/// </summary>
 	public partial class ColorPickerPanel
 	{
 		private enum ActiveState
@@ -36,6 +39,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 		private readonly List<Image> _userColorDisplays = new List<Image>();
 		private ActiveState _activeState;
 
+		/// <summary>
+		/// Gets or sets the array of user-defined colors available in the color picker.
+		/// </summary>
 		public static readonly Color[] UserColors = new[]
 		{
 			new Color(255, 255, 255),
@@ -56,6 +62,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			new Color(207, 86, 191)
 		};
 
+		/// <summary>
+		/// Gets or sets the currently selected color.
+		/// </summary>
 		public Color Color
 		{
 			get
@@ -78,24 +87,36 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the red component (0-255) of the selected color.
+		/// </summary>
 		public byte R
 		{
 			get => Color.R;
 			set => Color = new Color(value, Color.G, Color.B, Color.A);
 		}
 
+		/// <summary>
+		/// Gets or sets the green component (0-255) of the selected color.
+		/// </summary>
 		public byte G
 		{
 			get => Color.G;
 			set => Color = new Color(Color.R, value, Color.B, Color.A);
 		}
 
+		/// <summary>
+		/// Gets or sets the blue component (0-255) of the selected color.
+		/// </summary>
 		public byte B
 		{
 			get => Color.B;
 			set => Color = new Color(Color.R, Color.G, value, Color.A);
 		}
 
+		/// <summary>
+		/// Gets or sets the alpha (opacity) component (0.0-1.0) of the selected color.
+		/// </summary>
 		public float A
 		{
 			get => _colorDisplay.Opacity;
@@ -122,6 +143,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 
 		private ColorHSV colorHSV;
 
+		/// <summary>
+		/// Initializes a new instance of the ColorPickerPanel class.
+		/// </summary>
 		public ColorPickerPanel()
 		{
 			BuildUI();

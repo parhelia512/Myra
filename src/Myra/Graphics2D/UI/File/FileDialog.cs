@@ -7,13 +7,31 @@ using Myra.Utility;
 
 namespace Myra.Graphics2D.UI.File
 {
+	/// <summary>
+	/// A dialog for selecting files or folders with navigation history and filtering options.
+	/// </summary>
 	public partial class FileDialog
 	{
+		/// <summary>
+		/// Contains information about a file system path (file or drive).
+		/// </summary>
 		protected class PathInfo
 		{
+			/// <summary>
+			/// Gets the file system path.
+			/// </summary>
 			public string Path { get; }
+
+			/// <summary>
+			/// Gets a value indicating whether this path represents a drive.
+			/// </summary>
 			public bool IsDrive { get; }
 
+			/// <summary>
+			/// Initializes a new instance of the PathInfo class.
+			/// </summary>
+			/// <param name="path">The file system path.</param>
+			/// <param name="isDrive">Whether this path is a drive.</param>
 			public PathInfo(string path, bool isDrive)
 			{
 				Path = path;
@@ -46,6 +64,9 @@ namespace Myra.Graphics2D.UI.File
 		private int _historyPosition;
 		private readonly FileDialogMode _mode;
 
+		/// <summary>
+		/// Gets or sets the current folder path displayed in the file dialog.
+		/// </summary>
 		public string Folder
 		{
 			get => _textFieldPath.Text;
@@ -53,16 +74,22 @@ namespace Myra.Graphics2D.UI.File
 		}
 
 		/// <summary>
-		/// File filter that is used as 2nd parameter for Directory.EnumerateFiles call
+		/// Gets or sets the file filter used when enumerating files (e.g., "*.txt" for text files).
 		/// </summary>
 		public string Filter { get; set; }
 
+		/// <summary>
+		/// Gets or sets the selected file name.
+		/// </summary>
 		internal string FileName
 		{
 			get => _textFieldFileName.Text;
 			set => _textFieldFileName.Text = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the complete file path (folder + filename).
+		/// </summary>
 		public string FilePath
 		{
 			get
@@ -111,12 +138,30 @@ namespace Myra.Graphics2D.UI.File
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether to automatically add the filter extension to the selected file.
+		/// </summary>
 		public bool AutoAddFilterExtension { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether to show hidden files and folders.
+		/// </summary>
 		public bool ShowHiddenFiles { get; set; }
 
+		/// <summary>
+		/// Gets or sets the image displayed for folder items in the file browser.
+		/// </summary>
 		public IImage IconFolder { get; set; }
+
+		/// <summary>
+		/// Gets or sets the image displayed for drive items in the file browser.
+		/// </summary>
 		public IImage IconDrive { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the FileDialog class.
+		/// </summary>
+		/// <param name="mode">The mode of the file dialog (OpenFile, SaveFile, or ChooseFolder).</param>
 		public FileDialog(FileDialogMode mode) : base(null)
 		{
 			_mode = mode;
@@ -186,8 +231,9 @@ namespace Myra.Graphics2D.UI.File
 		}
 
 		/// <summary>
-		/// Create the navigation menu of places we can visit.
+		/// Creates the navigation menu of quick access places (user directories, drives, etc.) that can be visited.
 		/// </summary>
+		/// <param name="listView">The list view widget to populate with place shortcuts.</param>
 		protected virtual void PopulatePlacesListUI(ListView listView)
 		{
 			List<Location> placeList = new List<Location>(8);

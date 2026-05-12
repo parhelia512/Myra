@@ -2,6 +2,9 @@ using System;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A window for configuring debug visualization options for the UI system.
+	/// </summary>
 	public partial class DebugOptionsWindow
 	{
 		public bool ShowDebugInfo { get; set; }
