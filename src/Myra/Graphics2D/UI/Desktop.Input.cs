@@ -123,8 +123,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether a touch input is currently active.
+		/// </summary>
 		public bool IsTouchDown => TouchPosition != null;
 
+		/// <summary>
+		/// Gets or sets the mouse wheel delta value.
+		/// </summary>
 		public float MouseWheelDelta
 		{
 			get => _mouseWheelDelta;
@@ -140,11 +146,24 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets an array indicating which keyboard keys are currently pressed.
+		/// </summary>
 		public bool[] DownKeys => _downKeys;
+
+		/// <summary>
+		/// Gets or sets the time in milliseconds before a key starts repeating. Default is 500ms.
+		/// </summary>
 		public int RepeatKeyDownStartInMs { get; set; } = 500;
 
+		/// <summary>
+		/// Gets or sets the interval in milliseconds between key repeats. Default is 50ms.
+		/// </summary>
 		public int RepeatKeyDownInternalInMs { get; set; } = 50;
 
+		/// <summary>
+		/// Gets a value indicating whether the platform is a mobile device.
+		/// </summary>
 		public static bool IsMobile
 		{
 			get
@@ -158,17 +177,49 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Raised when the mouse position changes.
+		/// </summary>
 		public event EventHandler MouseMoved;
 
+		/// <summary>
+		/// Raised when a touch moves.
+		/// </summary>
 		public event EventHandler TouchMoved;
+
+		/// <summary>
+		/// Raised when a touch input begins.
+		/// </summary>
 		public event EventHandler TouchDown;
+
+		/// <summary>
+		/// Raised when a touch input ends.
+		/// </summary>
 		public event EventHandler TouchUp;
+
+		/// <summary>
+		/// Raised when a double-click touch input occurs.
+		/// </summary>
 		public event EventHandler TouchDoubleClick;
 
+		/// <summary>
+		/// Raised when the mouse wheel is rotated.
+		/// </summary>
 		public event EventHandler<GenericEventArgs<float>> MouseWheelChanged;
 
+		/// <summary>
+		/// Raised when a keyboard key is released.
+		/// </summary>
 		public event EventHandler<GenericEventArgs<Keys>> KeyUp;
+
+		/// <summary>
+		/// Raised when a keyboard key is pressed.
+		/// </summary>
 		public event EventHandler<GenericEventArgs<Keys>> KeyDown;
+
+		/// <summary>
+		/// Raised when a character is input.
+		/// </summary>
 		public event EventHandler<GenericEventArgs<char>> Char;
 
 		public void UpdateMouseInput()

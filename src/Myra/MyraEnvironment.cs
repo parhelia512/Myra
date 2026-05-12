@@ -28,6 +28,10 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra
 {
+	/// <summary>
+	/// Provides global configuration and utility methods for the Myra UI framework.
+	/// This class manages the game instance, asset manager, input handling, and various UI settings.
+	/// </summary>
 	public static class MyraEnvironment
 	{
 #if MONOGAME
@@ -83,8 +87,14 @@ namespace Myra
 		private static MouseCursorType _mouseCursorType;
 		private static AssetManager _defaultAssetManager;
 
+		/// <summary>
+		/// Gets or sets whether the mouse cursor type should be automatically updated based on widget properties.
+		/// </summary>
 		public static bool SetMouseCursorFromWidget { get; set; } = true;
 
+		/// <summary>
+		/// Gets or sets the current mouse cursor type displayed on screen.
+		/// </summary>
 		public static MouseCursorType MouseCursorType
 		{
 			get => _mouseCursorType;
@@ -119,12 +129,19 @@ namespace Myra
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the default mouse cursor type to use when no widget-specific cursor is set.
+		/// </summary>
 		public static MouseCursorType DefaultMouseCursorType { get; set; }
 
 #if MONOGAME || FNA || STRIDE
 
 		private static Game _game;
 
+		/// <summary>
+		/// Gets or sets the Game instance that Myra is running within.
+		/// Must be set before using Myra in MonoGame, FNA, or Stride projects.
+		/// </summary>
 		public static Game Game
 		{
 			get
@@ -167,6 +184,9 @@ namespace Myra
 			}
 		}
 
+		/// <summary>
+		/// Gets the graphics device used for rendering.
+		/// </summary>
 		public static GraphicsDevice GraphicsDevice
 		{
 			get => Game.GraphicsDevice;
@@ -175,6 +195,10 @@ namespace Myra
 
 		private static IMyraPlatform _platform;
 
+		/// <summary>
+		/// Gets or sets the platform abstraction layer used by Myra.
+		/// Must be set before using Myra in platform-agnostic projects.
+		/// </summary>
 		public static IMyraPlatform Platform
 		{
 			get
@@ -200,7 +224,7 @@ namespace Myra
 #endif
 
 		/// <summary>
-		/// Default Assets Manager
+		/// Gets or sets the default asset manager used for loading resources.
 		/// </summary>
 		public static AssetManager DefaultAssetManager
 		{
@@ -225,19 +249,63 @@ namespace Myra
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets whether to draw debug frames around all widgets.
+		/// </summary>
 		public static bool DrawWidgetsFrames { get; set; }
+
+		/// <summary>
+		/// Gets or sets whether to draw a debug frame around the widget with keyboard focus.
+		/// </summary>
 		public static bool DrawKeyboardFocusedWidgetFrame { get; set; }
+
+		/// <summary>
+		/// Gets or sets whether to draw a debug frame around the widget the mouse is hovering over.
+		/// </summary>
 		public static bool DrawMouseHoveredWidgetFrame { get; set; }
+
+		/// <summary>
+		/// Gets or sets whether to draw debug frames around text glyphs.
+		/// </summary>
 		public static bool DrawTextGlyphsFrames { get; set; }
+
+		/// <summary>
+		/// Gets or sets whether to disable scissor clipping for rendering.
+		/// </summary>
 		public static bool DisableClipping { get; set; }
 
+		/// <summary>
+		/// Gets or sets the function that provides the current mouse state.
+		/// </summary>
 		public static Func<MouseInfo> MouseInfoGetter { get; set; } = DefaultMouseInfoGetter;
+
+		/// <summary>
+		/// Gets or sets the function that fills an array with the current key down states.
+		/// </summary>
 		public static Action<bool[]> DownKeysGetter { get; set; } = DefaultDownKeysGetter;
 
+		/// <summary>
+		/// Gets or sets the interval in milliseconds for detecting double-clicks.
+		/// </summary>
 		public static int DoubleClickIntervalInMs { get; set; } = 500;
+
+		/// <summary>
+		/// Gets or sets the maximum pixel distance for clicks to be considered part of a double-click.
+		/// </summary>
 		public static int DoubleClickRadius { get; set; } = 2;
+
+		/// <summary>
+		/// Gets or sets the delay in milliseconds before a tooltip appears when hovering over a widget.
+		/// </summary>
 		public static int TooltipDelayInMs { get; set; } = 500;
+
+		/// <summary>
+		/// Gets or sets the offset in pixels from the mouse cursor to display a tooltip.
+		/// </summary>
 		public static Point TooltipOffset { get; set; } = new Point(0, 20);
+		/// <summary>
+		/// Gets or sets the function that creates a tooltip widget for a given widget.
+		/// </summary>
 		public static Func<Widget, Widget> TooltipCreator { get; set; } = w =>
 		{
 			var tooltip = new Label(null)
@@ -252,11 +320,18 @@ namespace Myra
 		};
 
 		/// <summary>
-		/// Makes the text rendering more smooth(especially when scaling) for the cost of sacrificing some performance 
+		/// Gets or sets whether to apply smooth text rendering. Improves text quality when scaling but reduces performance.
 		/// </summary>
 		public static bool SmoothText { get; set; }
+
+		/// <summary>
+		/// Gets or sets whether to darken the background when modal dialogs are displayed.
+		/// </summary>
 		public static bool EnableModalDarkening { get; set; }
 
+		/// <summary>
+		/// Gets or sets the color used to darken the background when modal dialogs are displayed.
+		/// </summary>
 		public static Color DarkeningColor { get; set; } = new Color(0, 0, 0, 192);
 
 		private static void GameOnDisposed(object sender, EventArgs eventArgs)
@@ -265,7 +340,7 @@ namespace Myra
 		}
 
 		/// <summary>
-		/// 
+		/// Resets Myra environment, disposing of default assets and clearing the current stylesheet.
 		/// </summary>
 		public static void Reset()
 		{
@@ -273,6 +348,9 @@ namespace Myra
 			Stylesheet.Current = null;
 		}
 
+		/// <summary>
+		/// Gets the version number of the Myra library.
+		/// </summary>
 		public static string Version
 		{
 			get
@@ -286,6 +364,11 @@ namespace Myra
 
 		internal static string InternalClipboard;
 
+		/// <summary>
+		/// Gets the default mouse information including position and button states.
+		/// This is the default implementation of MouseInfoGetter.
+		/// </summary>
+		/// <returns>A MouseInfo struct containing the current mouse state.</returns>
 		public static MouseInfo DefaultMouseInfoGetter()
 		{
 #if MONOGAME || FNA
@@ -319,6 +402,11 @@ namespace Myra
 #endif
 		}
 
+		/// <summary>
+		/// Fills the provided array with the current state of all keyboard keys.
+		/// This is the default implementation of DownKeysGetter.
+		/// </summary>
+		/// <param name="keys">An array of booleans where true indicates a key is pressed and false indicates it is released.</param>
 		public static void DefaultDownKeysGetter(bool[] keys)
 		{
 #if MONOGAME || FNA

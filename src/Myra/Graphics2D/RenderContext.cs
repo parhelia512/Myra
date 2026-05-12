@@ -67,6 +67,10 @@ namespace Myra.Graphics2D
 			FilterMode = TextureFilterMode.Default
 		};
 
+		/// <summary>
+		/// Sets whether anisotropic filtering should be used for texture rendering.
+		/// </summary>
+		/// <param name="isAnisotropicFiltering">True to enable anisotropic filtering, false to disable it.</param>
 		public void SetAnisotropicFilteringMode(bool isAnisotropicFiltering)
 		{
 			_isAnisotropicFilteringOn = isAnisotropicFiltering;
@@ -154,6 +158,9 @@ namespace Myra.Graphics2D
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the scissor rectangle that limits the drawing area.
+		/// </summary>
 		public Rectangle Scissor
 		{
 			get
@@ -184,8 +191,14 @@ namespace Myra.Graphics2D
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the opacity value applied to all rendered content (0-1 range).
+		/// </summary>
 		public float Opacity { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RenderContext"/> class.
+		/// </summary>
 		public RenderContext()
 		{
 #if MONOGAME || FNA || STRIDE
@@ -430,6 +443,15 @@ namespace Myra.Graphics2D
 #endif
 		}
 
+		/// <summary>
+		/// Draws a text string.
+		/// </summary>
+		/// <param name="font">The font to use for drawing.</param>
+		/// <param name="text">The text to draw.</param>
+		/// <param name="position">The drawing location on screen.</param>
+		/// <param name="color">A color mask.</param>
+		/// <param name="scale">A scaling of this text.</param>
+		/// <param name="layerDepth">A depth of the layer of this string.</param>
 		public void DrawString(SpriteFontBase font, string text, Vector2 position, Color color, Vector2 scale, float layerDepth = 0.0f) =>
 			DrawString(font, text, position, color, scale, 0, layerDepth);
 

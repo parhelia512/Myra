@@ -120,30 +120,45 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the background image for the horizontal scrollbar.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage HorizontalScrollBackground
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the knob/thumb image for the horizontal scrollbar.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage HorizontalScrollKnob
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the background image for the vertical scrollbar.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage VerticalScrollBackground
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the knob/thumb image for the vertical scrollbar.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage VerticalScrollKnob
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the scroll multiplier for mouse wheel scrolling. Default is 10.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(10)]
 		public int ScrollMultiplier { get; set; } = 10;

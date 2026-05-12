@@ -208,26 +208,44 @@ namespace Myra.Graphics2D.UI
 		[DefaultValue(false)]
 		public bool CanSelectNothing { get; set; }
 
+		/// <summary>
+		/// Gets the list of X coordinates where grid lines should be drawn vertically for debugging.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public List<int> GridLinesX => _layout.GridLinesX;
 
+		/// <summary>
+		/// Gets the list of Y coordinates where grid lines should be drawn horizontally for debugging.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public List<int> GridLinesY => _layout.GridLinesY;
 
+		/// <summary>
+		/// Gets the list of column widths.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public List<int> ColWidths => _layout.ColWidths;
 
+		/// <summary>
+		/// Gets the list of row heights.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public List<int> RowHeights => _layout.RowHeights;
 
+		/// <summary>
+		/// Gets the list of X coordinates for cell locations.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public List<int> CellLocationsX => _layout.CellLocationsX;
 
+		/// <summary>
+		/// Gets the list of Y coordinates for cell locations.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public List<int> CellLocationsY => _layout.CellLocationsY;

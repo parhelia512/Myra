@@ -80,6 +80,9 @@ namespace Myra.Graphics2D.UI
 		[DefaultValue(Stylesheet.DefaultStyleName)]
 		public string StyleName { get; set; }
 
+		/// <summary>
+		/// Gets or sets the left position of the widget in pixels.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(0)]
 		public int Left
@@ -99,6 +102,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the top position of the widget in pixels.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(0)]
 		public int Top
@@ -118,6 +124,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the minimum width of the widget in pixels. Null means no minimum width constraint.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(null)]
 		public int? MinWidth
@@ -136,6 +145,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the maximum width of the widget in pixels. Null means no maximum width constraint.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(null)]
 		public int? MaxWidth
@@ -154,6 +166,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the explicit width of the widget in pixels. Null means the width is determined by content or layout.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(null)]
 		public int? Width
@@ -176,6 +191,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the minimum height of the widget in pixels. Null means no minimum height constraint.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(null)]
 		public int? MinHeight
@@ -194,6 +212,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the maximum height of the widget in pixels. Null means no maximum height constraint.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(null)]
 		public int? MaxHeight
@@ -212,6 +233,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the explicit height of the widget in pixels. Null means the height is determined by content or layout.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(null)]
 		public int? Height
@@ -234,6 +258,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the outer spacing around the widget.
+		/// </summary>
 		[Category("Layout")]
 		[DesignerFolded]
 		public Thickness Margin
@@ -255,9 +282,15 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's border.
+		/// </summary>
 		[Category("Layout")]
 		public IBrush Border { get; set; }
 
+		/// <summary>
+		/// Gets or sets the thickness of the widget's border on all sides.
+		/// </summary>
 		[Category("Layout")]
 		[DesignerFolded]
 		public Thickness BorderThickness
@@ -279,6 +312,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the inner spacing between the border and the widget's content.
+		/// </summary>
 		[Category("Layout")]
 		[DesignerFolded]
 		public Thickness Padding
@@ -300,6 +336,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the widget within its container.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(HorizontalAlignment.Left)]
 		public virtual HorizontalAlignment HorizontalAlignment
@@ -318,6 +357,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the widget within its container.
+		/// </summary>
 		[Category("Layout")]
 		[DefaultValue(VerticalAlignment.Top)]
 		public virtual VerticalAlignment VerticalAlignment
@@ -369,6 +411,9 @@ namespace Myra.Graphics2D.UI
 			set => Grid.SetRowSpan(this, value);
 		}
 
+		/// <summary>
+		/// Gets or sets whether the widget is enabled for interaction. Disabled widgets and their children cannot receive input events.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(true)]
 		public bool Enabled
@@ -396,6 +441,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets whether the widget is visible on screen. Hidden widgets do not render or receive input.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(true)]
 		public bool Visible
@@ -417,6 +465,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the directions in which this widget can be dragged.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(DragDirection.None)]
 		public virtual DragDirection DragDirection { get; set; } = DragDirection.None;
@@ -425,6 +476,9 @@ namespace Myra.Graphics2D.UI
 		[Browsable(false)]
 		internal bool IsDraggable { get => DragDirection != DragDirection.None; }
 
+		/// <summary>
+		/// Gets or sets the z-index (stacking order) of the widget. Higher values appear on top.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0)]
 		public int ZIndex
@@ -442,6 +496,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the mouse cursor type to display when hovering over this widget.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(null)]
 		public virtual MouseCursorType? MouseCursor
@@ -462,11 +519,17 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text displayed in a tooltip when hovering over this widget.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(null)]
 		public string Tooltip { get; set; }
 
 
+		/// <summary>
+		/// Gets or sets the scale transformation applied to the widget. Default is (1, 1) for normal size.
+		/// </summary>
 		[Category("Transform")]
 		[DefaultValue("1, 1")]
 		[DesignerFolded]
@@ -485,6 +548,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the origin point for scale and rotation transformations. Default is (0.5, 0.5) for center.
+		/// </summary>
 		[Category("Transform")]
 		[DefaultValue("0.5, 0.5")]
 		[DesignerFolded]
@@ -503,6 +569,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the rotation angle in degrees applied to the widget. Rotation is applied around the TransformOrigin.
+		/// </summary>
 		[Category("Transform")]
 		[DefaultValue(0.0f)]
 		[DesignerFolded]
@@ -588,6 +657,9 @@ namespace Myra.Graphics2D.UI
 		[Browsable(false)]
 		public bool IsModal { get; set; }
 
+		/// <summary>
+		/// Gets or sets the opacity of the widget. Valid range is 0.0 (fully transparent) to 1.0 (fully opaque).
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(1.0f)]
 		[Range(0.0f, 1.0f)]
@@ -610,67 +682,100 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Dynamic layout expression
+		/// Gets or sets the dynamic layout expression for this widget.
 		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public Layout2D Layout2d { get; set; } = Layout2D.NullLayout;
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's background.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush Background { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's background when the mouse is over it.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush OverBackground { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's background when it is disabled.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush DisabledBackground { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's background when it has keyboard focus.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush FocusedBackground { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's border when the mouse is over it.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush OverBorder
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's border when it is disabled.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush DisabledBorder
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the widget's border when it has keyboard focus.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush FocusedBorder
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets whether the widget's content is clipped to its bounds to prevent overflow.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public virtual bool ClipToBounds { get; set; }
 
+		/// <summary>
+		/// Gets the parent widget that contains this widget. Null if this widget is at the root level.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Widget Parent { get; internal set; }
 
+		/// <summary>
+		/// Gets or sets custom data associated with this widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public object Tag { get; set; }
 
 		/// <summary>
-		/// Zero-based bounds
+		/// Gets the bounds of the widget with (0, 0) as the top-left corner.
 		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Rectangle Bounds => new Rectangle(0, 0, _layoutBounds.Width, _layoutBounds.Height);
 
+		/// <summary>
+		/// Gets the bounds of the widget's content area, excluding margin, border, and padding.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Rectangle ActualBounds => Bounds - _margin - _borderThickness - _padding;
 
 		/// <summary>
-		/// Bounds - Margin
+		/// Gets the bounds of the widget excluding the margin.
 		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
@@ -679,16 +784,25 @@ namespace Myra.Graphics2D.UI
 		[Browsable(false)]
 		[XmlIgnore] protected Rectangle BackgroundBounds => BorderBounds - _borderThickness;
 
+		/// <summary>
+		/// Gets the container bounds in which this widget is arranged.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Rectangle ContainerBounds => _containerBounds;
 
+		/// <summary>
+		/// Gets the total width of margin, border, and padding on left and right sides.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int MBPWidth => Margin.Left + Margin.Right +
 					BorderThickness.Left + BorderThickness.Right +
 					Padding.Left + Padding.Right;
 
+		/// <summary>
+		/// Gets the total height of margin, border, and padding on top and bottom sides.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int MBPHeight => Margin.Top + Margin.Bottom +
@@ -696,13 +810,15 @@ namespace Myra.Graphics2D.UI
 					Padding.Top + Padding.Bottom;
 
 		/// <summary>
-		/// Determines whether a widget accepts keyboard focus
+		/// Gets or sets whether this widget can receive keyboard focus.
 		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool AcceptsKeyboardFocus { get; set; }
 
-
+		/// <summary>
+		/// Gets whether this widget currently has keyboard focus.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool IsKeyboardFocused
@@ -789,6 +905,9 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Brings this widget to the front of its siblings, making it render on top.
+		/// </summary>
 		public void BringToFront()
 		{
 			var widgets = Parent != null ? Parent.Children : Desktop.Widgets;
@@ -799,6 +918,9 @@ namespace Myra.Graphics2D.UI
 			widgets.Add(this);
 		}
 
+		/// <summary>
+		/// Sends this widget to the back of its siblings, making it render behind others.
+		/// </summary>
 		public void BringToBack()
 		{
 			var widgets = Parent != null ? Parent.Children : Desktop.Widgets;
@@ -809,6 +931,10 @@ namespace Myra.Graphics2D.UI
 			widgets.Insert(0, this);
 		}
 
+		/// <summary>
+		/// Renders this widget and all its children to the render context.
+		/// </summary>
+		/// <param name="context">The render context to render to.</param>
 		public void Render(RenderContext context)
 		{
 			if (!Visible)
@@ -922,6 +1048,10 @@ namespace Myra.Graphics2D.UI
 			context.Opacity = oldOpacity;
 		}
 
+		/// <summary>
+		/// Internal method that renders the widget's specific content. Subclasses override this to provide custom rendering.
+		/// </summary>
+		/// <param name="context">The render context to render to.</param>
 		public virtual void InternalRender(RenderContext context)
 		{
 			foreach (var child in ChildrenCopy)
@@ -930,6 +1060,11 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Measures the widget's desired size based on available space.
+		/// </summary>
+		/// <param name="availableSize">The maximum size available for the widget.</param>
+		/// <returns>The desired size of the widget.</returns>
 		public Point Measure(Point availableSize)
 		{
 			if (!_measureDirty && _lastMeasureAvailableSize == availableSize)
@@ -1012,6 +1147,10 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Arranges the widget within the given container bounds.
+		/// </summary>
+		/// <param name="containerBounds">The bounds in which to arrange the widget.</param>
 		public void Arrange(Rectangle containerBounds)
 		{
 			if (!_arrangeDirty && _containerBounds == containerBounds)
@@ -1024,6 +1163,9 @@ namespace Myra.Graphics2D.UI
 			UpdateArrange();
 		}
 
+		/// <summary>
+		/// Updates the widget's arrangement within its container bounds.
+		/// </summary>
 		public void UpdateArrange()
 		{
 			if (!_arrangeDirty)
@@ -1098,17 +1240,20 @@ namespace Myra.Graphics2D.UI
 		}
 
 
+		/// <summary>
+		/// Marks the widget's arrangement as dirty, forcing it to be re-arranged on the next update.
+		/// </summary>
 		public void InvalidateArrange()
 		{
 			_arrangeDirty = true;
 		}
 
 		/// <summary>
-		/// Find a widget by id
-		/// Throws exception if not found
+		/// Finds a child widget by its ID. Throws an exception if not found.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="id">The ID of the widget to find.</param>
+		/// <returns>The widget with the specified ID.</returns>
+		/// <exception cref="Exception">Thrown when the widget with the specified ID is not found.</exception>
 		public Widget EnsureWidgetById(string id)
 		{
 			var result = FindChildById(id);
@@ -1120,6 +1265,9 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Internal method that marks the widget's transform as dirty, forcing recalculation.
+		/// </summary>
 		internal virtual void InvalidateTransform()
 		{
 			_transformDirty = true;
@@ -1130,6 +1278,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Marks the widget's measurement as dirty, forcing it to be re-measured and re-arranged.
+		/// </summary>
 		public virtual void InvalidateMeasure()
 		{
 			_measureDirty = true;
@@ -1146,6 +1297,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a widget style to this widget.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyWidgetStyle(WidgetStyle style)
 		{
 			Width = style.Width;
@@ -1170,6 +1325,11 @@ namespace Myra.Graphics2D.UI
 			Padding = style.Padding;
 		}
 
+		/// <summary>
+		/// Sets the style of this widget from the specified stylesheet.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the style to apply.</param>
 		public void SetStyle(Stylesheet stylesheet, string name)
 		{
 			StyleName = name;
@@ -1180,11 +1340,20 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Sets the style of this widget from the current default stylesheet.
+		/// </summary>
+		/// <param name="name">The name of the style to apply.</param>
 		public void SetStyle(string name)
 		{
 			SetStyle(Stylesheet.Current, name);
 		}
 
+		/// <summary>
+		/// Internal method for subclasses to apply style properties. Override in derived classes.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the style being applied.</param>
 		protected virtual void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 		}
@@ -1194,42 +1363,69 @@ namespace Myra.Graphics2D.UI
 			KeyDown.Invoke(this, k);
 		}
 
+		/// <summary>
+		/// Called when a keyboard key is pressed while this widget has focus.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public virtual void OnKeyDown(Keys k)
 		{
 			FireKeyDown(k);
 		}
 
+		/// <summary>
+		/// Called when a keyboard key is released while this widget has focus.
+		/// </summary>
+		/// <param name="k">The key that was released.</param>
 		public virtual void OnKeyUp(Keys k)
 		{
 			KeyUp.Invoke(this, k);
 		}
 
+		/// <summary>
+		/// Called when a character is typed while this widget has focus.
+		/// </summary>
+		/// <param name="c">The character that was typed.</param>
 		public virtual void OnChar(char c)
 		{
 			Char.Invoke(this, c);
 		}
 
+		/// <summary>
+		/// Called when this widget is placed on or removed from a desktop.
+		/// </summary>
 		protected virtual void OnPlacedChanged()
 		{
 			PlacedChanged?.Invoke(this);
 		}
 
+		/// <summary>
+		/// Called when the visibility of this widget changes.
+		/// </summary>
 		public virtual void OnVisibleChanged()
 		{
 			InvalidateMeasure();
 			VisibleChanged.Invoke(this);
 		}
 
+		/// <summary>
+		/// Called when this widget loses keyboard focus.
+		/// </summary>
 		public virtual void OnLostKeyboardFocus()
 		{
 			IsKeyboardFocused = false;
 		}
 
+		/// <summary>
+		/// Called when this widget gains keyboard focus.
+		/// </summary>
 		public virtual void OnGotKeyboardFocus()
 		{
 			IsKeyboardFocused = true;
 		}
 
+		/// <summary>
+		/// Removes this widget from its parent container.
+		/// </summary>
 		public void RemoveFromParent()
 		{
 			if (Parent == null)
@@ -1240,6 +1436,9 @@ namespace Myra.Graphics2D.UI
 			Parent.Children.Remove(this);
 		}
 
+		/// <summary>
+		/// Removes this widget from the desktop.
+		/// </summary>
 		public void RemoveFromDesktop()
 		{
 			Desktop.Widgets.Remove(this);
@@ -1255,6 +1454,9 @@ namespace Myra.Graphics2D.UI
 			SizeChanged.Invoke(this);
 		}
 
+		/// <summary>
+		/// Sets keyboard focus to this widget.
+		/// </summary>
 		public void SetKeyboardFocus()
 		{
 			Desktop.FocusedKeyboardWidget = this;
@@ -1336,6 +1538,11 @@ namespace Myra.Graphics2D.UI
 			Top = newTop;
 		}
 
+		/// <summary>
+		/// Converts a position from local widget coordinates to global screen coordinates.
+		/// </summary>
+		/// <param name="pos">The position in local coordinates.</param>
+		/// <returns>The position in global coordinates.</returns>
 		public Vector2 ToGlobal(Vector2 pos)
 		{
 			UpdateTransform();
@@ -1343,6 +1550,11 @@ namespace Myra.Graphics2D.UI
 			return Transform.Apply(pos);
 		}
 
+		/// <summary>
+		/// Converts a position from local widget coordinates to global screen coordinates.
+		/// </summary>
+		/// <param name="pos">The position in local coordinates.</param>
+		/// <returns>The position in global coordinates.</returns>
 		public Point ToGlobal(Point pos)
 		{
 			UpdateTransform();
@@ -1350,6 +1562,11 @@ namespace Myra.Graphics2D.UI
 			return Transform.Apply(pos);
 		}
 
+		/// <summary>
+		/// Converts a position from global screen coordinates to local widget coordinates.
+		/// </summary>
+		/// <param name="pos">The position in global coordinates.</param>
+		/// <returns>The position in local coordinates.</returns>
 		public Vector2 ToLocal(Vector2 pos)
 		{
 			UpdateTransform();
@@ -1357,8 +1574,18 @@ namespace Myra.Graphics2D.UI
 			return Transform.InverseApply(pos);
 		}
 
+		/// <summary>
+		/// Converts a position from global screen coordinates to local widget coordinates.
+		/// </summary>
+		/// <param name="pos">The position in global coordinates.</param>
+		/// <returns>The position in local coordinates.</returns>
 		public Point ToLocal(Point pos) => ToLocal(new Vector2(pos.X, pos.Y)).ToPoint();
 
+		/// <summary>
+		/// Determines whether a global screen position falls within this widget's border bounds.
+		/// </summary>
+		/// <param name="globalPos">The position in global coordinates.</param>
+		/// <returns>True if the position is within the widget's border bounds; otherwise, false.</returns>
 		public bool ContainsGlobalPoint(Point globalPos)
 		{
 			var localPos = ToLocal(globalPos);
@@ -1405,6 +1632,11 @@ namespace Myra.Graphics2D.UI
 			_startPos = null;
 		}
 
+		/// <summary>
+		/// Performs hit testing to find which widget is at the given screen position.
+		/// </summary>
+		/// <param name="p">The position in global screen coordinates.</param>
+		/// <returns>The widget at the position, or null if no widget is there.</returns>
 		public virtual Widget HitTest(Point p)
 		{
 			if (Desktop == null || !Visible || !ContainsGlobalPoint(p))
@@ -1432,8 +1664,17 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Determines whether input at the given local position should pass through this widget to underlying widgets.
+		/// </summary>
+		/// <param name="localPos">The position in local widget coordinates.</param>
+		/// <returns>True if input should pass through; otherwise, false.</returns>
 		public virtual bool InputFallsThrough(Point localPos) => false;
 
+		/// <summary>
+		/// Creates a deep copy of this widget with all its properties and child widgets.
+		/// </summary>
+		/// <returns>A new widget that is a copy of this widget.</returns>
 		public Widget Clone()
 		{
 			// Firstly try to use parameterless constructor
@@ -1462,6 +1703,10 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Internal method that copies properties from another widget. Override in derived classes to copy custom properties.
+		/// </summary>
+		/// <param name="w">The widget to copy properties from.</param>
 		protected internal virtual void CopyFrom(Widget w)
 		{
 			StyleName = w.StyleName;

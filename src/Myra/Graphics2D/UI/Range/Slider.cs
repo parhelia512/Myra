@@ -84,11 +84,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the slider can be adjusted using the mouse wheel.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool WheelAdjustment
 		{
-			get 
+			get
 			{
 				return _wheelAdjustment;
 			}
@@ -99,6 +102,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the amount to change the slider value when using the mouse wheel. Default is 1.0.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(1.0f)]
 		public float WheelStep
