@@ -349,6 +349,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			ProcessTouch();
 		}
 
+		/// <summary>
+		/// Called when a touch input leaves this color picker panel.
+		/// </summary>
 		public override void OnTouchLeft()
 		{
 			base.OnTouchLeft();
@@ -356,6 +359,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			_activeState = ActiveState.None;
 		}
 
+		/// <summary>
+		/// Called when a touch input is released over this color picker panel.
+		/// </summary>
 		public override void OnTouchUp()
 		{
 			base.OnTouchUp();

@@ -7,8 +7,14 @@ namespace Myra.Graphics2D.UI
 	/// </summary>
 	public partial class DebugOptionsWindow
 	{
+		/// <summary>
+		/// Gets or sets a value indicating whether debug information is displayed.
+		/// </summary>
 		public bool ShowDebugInfo { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DebugOptionsWindow"/> class.
+		/// </summary>
 		public DebugOptionsWindow()
 		{
 			Title = "UI Debug Options";
@@ -52,6 +58,12 @@ namespace Myra.Graphics2D.UI
 			};
 		}
 
+		/// <summary>
+		/// Adds a custom debug option as a checkbox to the debug options window.
+		/// </summary>
+		/// <param name="text">The display text for the checkbox.</param>
+		/// <param name="onEnabled">The action to execute when the option is enabled.</param>
+		/// <param name="onDisabled">The action to execute when the option is disabled.</param>
 		public void AddOption(string text, Action onEnabled, Action onDisabled)
 		{
 			var optionsCheckBox = new CheckButton

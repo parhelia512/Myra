@@ -378,6 +378,9 @@ namespace Myra.Graphics2D.UI
 		/// </summary>
 		public Action<Keys> KeyDownHandler;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Desktop"/> class.
+		/// </summary>
 		public Desktop()
 		{
 			Opacity = 1.0f;

@@ -151,6 +151,10 @@ namespace Myra.Graphics2D.UI
 			base.InternalArrange();
 		}
 
+		/// <summary>
+		/// Renders this stack panel and optionally displays grid lines for debugging layout.
+		/// </summary>
+		/// <param name="context">The render context to draw to.</param>
 		public override void InternalRender(RenderContext context)
 		{
 
@@ -177,6 +181,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Called when an attached property of this stack panel or its children changes.
+		/// </summary>
+		/// <param name="propertyInfo">The attached property info that changed.</param>
 		public override void OnAttachedPropertyChanged(BaseAttachedPropertyInfo propertyInfo)
 		{
 			base.OnAttachedPropertyChanged(propertyInfo);

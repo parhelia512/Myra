@@ -553,6 +553,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Renders this grid and optionally displays grid lines for debugging layout.
+		/// </summary>
+		/// <param name="context">The render context to draw to.</param>
 		public override void InternalRender(RenderContext context)
 		{
 			var bounds = ActualBounds;
@@ -628,6 +632,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Called when the mouse leaves this grid.
+		/// </summary>
 		public override void OnMouseLeft()
 		{
 			base.OnMouseLeft();
@@ -635,6 +642,9 @@ namespace Myra.Graphics2D.UI
 			UpdateHoverPosition(null);
 		}
 
+		/// <summary>
+		/// Called when the mouse enters this grid.
+		/// </summary>
 		public override void OnMouseEntered()
 		{
 			base.OnMouseEntered();

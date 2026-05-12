@@ -88,6 +88,11 @@ namespace Myra.Graphics2D.UI
 			Widgets.Remove(child);
 		}
 
+		/// <summary>
+		/// Determines whether input events fall through to widgets behind this container.
+		/// </summary>
+		/// <param name="localPos">The local position to check.</param>
+		/// <returns>true if input falls through (no background is set); otherwise, false.</returns>
 		public override bool InputFallsThrough(Point localPos) => Background == null;
 
 		protected internal override void CopyFrom(Widget w)

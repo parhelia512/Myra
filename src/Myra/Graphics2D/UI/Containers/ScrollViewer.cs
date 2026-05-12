@@ -378,6 +378,9 @@ namespace Myra.Graphics2D.UI
 			ScrollPosition = scrollPosition;
 		}
 
+		/// <summary>
+		/// Called when a touch input is released.
+		/// </summary>
 		public override void OnTouchUp()
 		{
 			base.OnTouchUp();
@@ -385,6 +388,9 @@ namespace Myra.Graphics2D.UI
 			_startBoundsPos = null;
 		}
 
+		/// <summary>
+		/// Called when a touch input is pressed.
+		/// </summary>
 		public override void OnTouchDown()
 		{
 			base.OnTouchDown();
@@ -414,6 +420,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Called when the mouse wheel is scrolled over this scroll viewer.
+		/// </summary>
+		/// <param name="delta">The mouse wheel delta value.</param>
 		public override void OnMouseWheel(float delta)
 		{
 			base.OnMouseWheel(delta);
@@ -436,6 +446,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Renders this scroll viewer, including the content and scrollbars.
+		/// </summary>
+		/// <param name="context">The render context to draw to.</param>
 		public override void InternalRender(RenderContext context)
 		{
 			if (Content == null || !Content.Visible)
@@ -472,6 +486,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies the scrollbar style to this scroll viewer.
+		/// </summary>
+		/// <param name="style">The scroll viewer style to apply.</param>
 		public void ApplyScrollViewerStyle(ScrollViewerStyle style)
 		{
 			HorizontalScrollBackground = style.HorizontalScrollBackground;
