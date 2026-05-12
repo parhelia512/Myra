@@ -1,15 +1,30 @@
 ﻿namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An internal toggle button used in list views to represent a selectable item.
+	/// </summary>
 	internal class ListViewButton : ToggleButton
 	{
+		/// <summary>
+		/// Gets or sets the container holding multiple buttons.
+		/// </summary>
 		public Widget ButtonsContainer { get; set; }
+
+		/// <summary>
+		/// Gets the top parent container.
+		/// </summary>
 		public Widget TopParent => ButtonsContainer ?? Parent;
 
-
+		/// <summary>
+		/// Initializes a new instance of the ListViewButton class.
+		/// </summary>
 		public ListViewButton() : base(null)
 		{
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this list view button is pressed (selected).
+		/// </summary>
 		public override bool IsPressed
 		{
 			get => base.IsPressed;
@@ -55,6 +70,9 @@
 			}
 		}
 
+		/// <summary>
+		/// Raises the PressedChanged event and deselects other items.
+		/// </summary>
 		public override void OnPressedChanged()
 		{
 			base.OnPressedChanged();

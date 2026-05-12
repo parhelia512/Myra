@@ -14,22 +14,43 @@ using System.Drawing;
 
 namespace Myra.Graphics2D
 {
+	/// <summary>
+	/// Represents the thickness (margins) of a rectangle, with values for each edge.
+	/// </summary>
 	public struct Thickness
 	{
+		/// <summary>
+		/// A thickness with all values set to zero.
+		/// </summary>
 		public static readonly Thickness Zero = new Thickness();
 
+		/// <summary>
+		/// Gets or sets the left thickness value.
+		/// </summary>
 		[Range(0)]
 		public int Left { get; set; }
 
+		/// <summary>
+		/// Gets or sets the right thickness value.
+		/// </summary>
 		[Range(0)]
 		public int Right { get; set; }
 
+		/// <summary>
+		/// Gets or sets the top thickness value.
+		/// </summary>
 		[Range(0)]
 		public int Top { get; set; }
 
+		/// <summary>
+		/// Gets or sets the bottom thickness value.
+		/// </summary>
 		[Range(0)]
 		public int Bottom { get; set; }
 
+		/// <summary>
+		/// Gets the combined horizontal thickness (left + right).
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int Width
@@ -40,6 +61,9 @@ namespace Myra.Graphics2D
 			}
 		}
 
+		/// <summary>
+		/// Gets the combined vertical thickness (top + bottom).
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int Height
@@ -50,6 +74,9 @@ namespace Myra.Graphics2D
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether all sides have the same thickness.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool SameSize
@@ -60,6 +87,13 @@ namespace Myra.Graphics2D
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Thickness"/> struct with individual values for each edge.
+		/// </summary>
+		/// <param name="left">The left thickness value.</param>
+		/// <param name="top">The top thickness value.</param>
+		/// <param name="right">The right thickness value.</param>
+		/// <param name="bottom">The bottom thickness value.</param>
 		public Thickness(int left, int top, int right, int bottom)
 		{
 			Left = left;
@@ -68,14 +102,27 @@ namespace Myra.Graphics2D
 			Bottom = bottom;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Thickness"/> struct with separate horizontal and vertical values.
+		/// </summary>
+		/// <param name="horizontalValue">The value for left and right edges.</param>
+		/// <param name="verticalValue">The value for top and bottom edges.</param>
 		public Thickness(int horizontalValue, int verticalValue) : this(horizontalValue, verticalValue, horizontalValue, verticalValue)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Thickness"/> struct with the same value for all edges.
+		/// </summary>
+		/// <param name="value">The value for all edges.</param>
 		public Thickness(int value) : this(value, value, value, value)
 		{
 		}
 
+		/// <summary>
+		/// Converts the thickness to a string representation.
+		/// </summary>
+		/// <returns>A string representation of the thickness.</returns>
 		public override string ToString()
 		{
 			if (SameSize)
@@ -91,6 +138,11 @@ namespace Myra.Graphics2D
 			return string.Format("{0}, {1}, {2}, {3}", Left, Top, Right, Bottom);
 		}
 
+		/// <summary>
+		/// Parses a string representation into a <see cref="Thickness"/> struct.
+		/// </summary>
+		/// <param name="s">The string to parse.</param>
+		/// <returns>A new <see cref="Thickness"/> instance parsed from the string.</returns>
 		public static Thickness FromString(string s)
 		{
 			if (string.IsNullOrEmpty(s))
@@ -120,6 +172,11 @@ namespace Myra.Graphics2D
 				int.Parse(parts[3]));
 		}
 
+		/// <summary>
+		/// Determines whether the specified object is equal to the current thickness.
+		/// </summary>
+		/// <param name="obj">The object to compare.</param>
+		/// <returns>true if the object is equal to the current thickness; otherwise, false.</returns>
 		public override bool Equals(object obj)
 		{
 			if (!(obj is Thickness))
@@ -134,6 +191,10 @@ namespace Myra.Graphics2D
 				   Bottom == thickness.Bottom;
 		}
 
+		/// <summary>
+		/// Serves as the default hash function.
+		/// </summary>
+		/// <returns>A hash code for the current thickness.</returns>
 		public override int GetHashCode()
 		{
 			var hashCode = 551583723;
@@ -144,16 +205,34 @@ namespace Myra.Graphics2D
 			return hashCode;
 		}
 
+		/// <summary>
+		/// Determines whether two specified thicknesses are equal.
+		/// </summary>
+		/// <param name="a">The first thickness to compare.</param>
+		/// <param name="b">The second thickness to compare.</param>
+		/// <returns>true if the thicknesses are equal; otherwise, false.</returns>
 		public static bool operator ==(Thickness a, Thickness b)
 		{
 			return a.Equals(b);
 		}
 
+		/// <summary>
+		/// Determines whether two specified thicknesses are not equal.
+		/// </summary>
+		/// <param name="a">The first thickness to compare.</param>
+		/// <param name="b">The second thickness to compare.</param>
+		/// <returns>true if the thicknesses are not equal; otherwise, false.</returns>
 		public static bool operator !=(Thickness a, Thickness b)
 		{
 			return !(a == b);
 		}
 
+		/// <summary>
+		/// Subtracts a thickness from a rectangle, reducing the rectangle's size.
+		/// </summary>
+		/// <param name="a">The rectangle to reduce.</param>
+		/// <param name="b">The thickness to subtract.</param>
+		/// <returns>A new rectangle with the thickness subtracted from all sides.</returns>
 		public static Rectangle operator -(Rectangle a, Thickness b)
 		{
 			var result = a;

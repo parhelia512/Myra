@@ -26,13 +26,30 @@ using Matrix = System.Numerics.Matrix3x2;
 
 namespace Myra.Graphics2D
 {
+	/// <summary>
+	/// Specifies the texture filtering mode.
+	/// </summary>
 	public enum TextureFiltering
 	{
+		/// <summary>
+		/// Nearest-neighbor (point) filtering.
+		/// </summary>
 		Nearest,
+
+		/// <summary>
+		/// Linear filtering.
+		/// </summary>
 		Linear,
+
+		/// <summary>
+		/// Anisotropic filtering.
+		/// </summary>
 		Anisotropic
 	}
 
+	/// <summary>
+	/// Provides a context for rendering 2D graphics.
+	/// </summary>
 	public partial class RenderContext : IDisposable
 	{
 #if MONOGAME

@@ -16,17 +16,30 @@ using Color = FontStashSharp.FSColor;
 namespace Myra.Graphics2D.UI
 {
 
+	/// <summary>
+	/// A button control that displays both an image and text with flexible positioning options.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use Button with a HorizontalStackPanel or custom layout instead.</remarks>
 	[Obsolete("Use Button")]
 	[StyleTypeName("Button")]
 	public class ImageTextButton : ButtonBase<Grid>
 	{
+		/// <summary>
+		/// Specifies the position of text relative to the image in an ImageTextButton.
+		/// </summary>
 		public enum TextPositionEnum
 		{
+			/// <summary>Text is positioned to the right of the image.</summary>
 			Right,
+			/// <summary>Text is positioned to the left of the image.</summary>
 			Left,
+			/// <summary>Text is positioned above the image.</summary>
 			Top,
+			/// <summary>Text is positioned below the image.</summary>
 			Bottom,
+			/// <summary>Text is positioned overlapping the image.</summary>
 			OverlapsImage,
+			/// <summary>Text is positioned behind the image.</summary>
 			BehindImage
 		}
 
@@ -34,6 +47,9 @@ namespace Myra.Graphics2D.UI
 		private readonly Label _label;
 		private TextPositionEnum _textPosition;
 
+		/// <summary>
+		/// Gets or sets the text content of this button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -48,6 +64,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text color of this button.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/TextColor")]
 		public Color TextColor
@@ -103,6 +122,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed on this button.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage Image
 		{
@@ -117,6 +139,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when the mouse is over this button.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage OverImage
 		{
@@ -131,6 +156,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when this button is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage PressedImage
 		{
@@ -145,6 +173,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the width of the displayed image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public int? ImageWidth
@@ -159,6 +190,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the height of the displayed image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public int? ImageHeight
@@ -173,6 +207,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the image is visible.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(true)]
 		public bool ImageVisible
@@ -188,6 +225,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the spacing between the image and text.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(0)]
 		public int ImageTextSpacing
@@ -204,6 +244,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the position of the text relative to the image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(TextPositionEnum.Right)]
 		public TextPositionEnum TextPosition

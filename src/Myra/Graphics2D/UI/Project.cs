@@ -19,21 +19,63 @@ using AssetManagementBase;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Specifies options for exporting a UI project.
+	/// </summary>
 	public class ExportOptions
 	{
+		/// <summary>
+		/// Gets or sets the namespace for the exported code.
+		/// </summary>
 		public string Namespace { get; set; }
+
+		/// <summary>
+		/// Gets or sets the class name for the exported code.
+		/// </summary>
 		public string Class { get; set; }
+
+		/// <summary>
+		/// Gets or sets the output path for the exported files.
+		/// </summary>
 		public string OutputPath { get; set; }
+
+		/// <summary>
+		/// Gets or sets the template for the designer file.
+		/// </summary>
 		public string TemplateDesigner { get; set; }
+
+		/// <summary>
+		/// Gets or sets the template for the main file.
+		/// </summary>
 		public string TemplateMain { get; set; }
 	}
 
+	/// <summary>
+	/// Represents the position of an object in a document.
+	/// </summary>
 	public class ObjectPosition
 	{
+		/// <summary>
+		/// Gets the object.
+		/// </summary>
 		public object Object { get; private set; }
+
+		/// <summary>
+		/// Gets the starting position.
+		/// </summary>
 		public int Start { get; private set; }
+
+		/// <summary>
+		/// Gets the ending position.
+		/// </summary>
 		public int End { get; private set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ObjectPosition"/> class.
+		/// </summary>
+		/// <param name="obj">The object.</param>
+		/// <param name="start">The starting position.</param>
+		/// <param name="end">The ending position.</param>
 		public ObjectPosition(object obj, int start, int end)
 		{
 			Object = obj;
@@ -42,6 +84,9 @@ namespace Myra.Graphics2D.UI
 		}
 	}
 
+	/// <summary>
+	/// Represents a UI project containing widgets and styles.
+	/// </summary>
 	public class Project
 	{
 		private struct StylesheetChanger: IDisposable
@@ -60,21 +105,42 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Constant name for proportion.
+		/// </summary>
 		public const string ProportionName = "Proportion";
+
+		/// <summary>
+		/// Constant name for default proportion.
+		/// </summary>
 		public const string DefaultProportionName = "DefaultProportion";
+
+		/// <summary>
+		/// Constant name for default column proportion.
+		/// </summary>
 		public const string DefaultColumnProportionName = "DefaultColumnProportion";
+
+		/// <summary>
+		/// Constant name for default row proportion.
+		/// </summary>
 		public const string DefaultRowProportionName = "DefaultRowProportion";
 
 		private static readonly Dictionary<string, string> LegacyClassNames = new Dictionary<string, string>();
 
 		private readonly ExportOptions _exportOptions = new ExportOptions();
 
+		/// <summary>
+		/// Gets the export options for this project.
+		/// </summary>
 		[Browsable(false)]
 		public ExportOptions ExportOptions
 		{
 			get { return _exportOptions; }
 		}
 
+		/// <summary>
+		/// Gets or sets the root widget of this project.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public Widget Root { get; set; }

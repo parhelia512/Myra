@@ -15,6 +15,9 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A numeric input control with up/down buttons to increment/decrement the value.
+	/// </summary>
 	public class SpinButton : Widget
 	{
 		private readonly GridLayout _layout = new GridLayout();
@@ -25,18 +28,30 @@ namespace Myra.Graphics2D.UI
 		private int _decimalPlaces = 0;
 		private float _increment = 1f;
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the spin button value can be null.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool Nullable { get; set; }
 
+		/// <summary>
+		/// Gets or sets the maximum value for the spin button.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(null)]
 		public float? Maximum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the minimum value for the spin button.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(null)]
 		public float? Minimum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of this spin button.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Left)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -50,6 +65,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of this spin button.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Top)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -63,6 +81,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the current value of the spin button.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float? Value

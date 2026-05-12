@@ -13,21 +13,37 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A dialog window with OK and Cancel buttons.
+	/// </summary>
 	[StyleTypeName("Window")]
 	public class Dialog : Window
 	{
+		/// <summary>
+		/// Gets the OK button of this dialog.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Button ButtonOk { get; private set; }
 
+		/// <summary>
+		/// Gets the Cancel button of this dialog.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Button ButtonCancel { get; private set; }
 
+		/// <summary>
+		/// Gets or sets the key used to confirm the dialog (typically Enter).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(Keys.Enter)]
 		public Keys ConfirmKey { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Dialog"/> class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public Dialog(string styleName = Stylesheet.DefaultStyleName) : base(styleName)
 		{
 			ConfirmKey = Keys.Enter;

@@ -13,11 +13,17 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A toggle button that can be toggled on and off by clicking or pressing Space.
+	/// </summary>
 	[StyleTypeName("Button")]
 	public class ToggleButton : ButtonBase2
 	{
 		private readonly SingleItemLayout<Widget> _layout;
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this toggle button is currently toggled on.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool IsToggled
@@ -26,7 +32,9 @@ namespace Myra.Graphics2D.UI
 			set => IsPressed = value;
 		}
 
-
+		/// <summary>
+		/// Gets or sets the content widget displayed inside this toggle button.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public override Widget Content
@@ -35,6 +43,9 @@ namespace Myra.Graphics2D.UI
 			set => _layout.Child = value;
 		}
 
+		/// <summary>
+		/// Raised when the toggle state changes.
+		/// </summary>
 		public event EventHandler IsToggledChanged
 		{
 			add
@@ -48,6 +59,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the ToggleButton class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public ToggleButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			_layout = new SingleItemLayout<Widget>(this);

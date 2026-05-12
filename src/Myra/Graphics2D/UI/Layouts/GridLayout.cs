@@ -13,6 +13,9 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A layout engine that arranges widgets in a two-dimensional grid.
+	/// </summary>
 	public class GridLayout: ILayout
 	{
 		private readonly List<int> _measureColWidths = new List<int>();
@@ -21,30 +24,78 @@ namespace Myra.Graphics2D.UI
 		private List<Widget>[,] _widgetsByGridPosition;
 		private Point _actualSize;
 
+		/// <summary>
+		/// Gets or sets the horizontal spacing between columns.
+		/// </summary>
 		public int ColumnSpacing { get; set; }
 
+		/// <summary>
+		/// Gets or sets the vertical spacing between rows.
+		/// </summary>
 		public int RowSpacing { get; set; }
 
+		/// <summary>
+		/// Gets or sets the default proportion for columns.
+		/// </summary>
 		public Proportion DefaultColumnProportion { get; set; } = Proportion.GridDefault;
 
+		/// <summary>
+		/// Gets or sets the default proportion for rows.
+		/// </summary>
 		public Proportion DefaultRowProportion { get; set; } = Proportion.GridDefault;
 
+		/// <summary>
+		/// Gets the proportions for all columns.
+		/// </summary>
 		public ObservableCollection<Proportion> ColumnsProportions { get; } = new ObservableCollection<Proportion>();
 
+		/// <summary>
+		/// Gets the proportions for all rows.
+		/// </summary>
 		public ObservableCollection<Proportion> RowsProportions { get; } = new ObservableCollection<Proportion>();
-		
+
+		/// <summary>
+		/// Gets the X coordinates of the grid lines (for internal use).
+		/// </summary>
 		public List<int> GridLinesX { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the Y coordinates of the grid lines (for internal use).
+		/// </summary>
 		public List<int> GridLinesY { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the widths of all columns.
+		/// </summary>
 		public List<int> ColWidths { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the heights of all rows.
+		/// </summary>
 		public List<int> RowHeights { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the X coordinates of all cells.
+		/// </summary>
 		public List<int> CellLocationsX { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the Y coordinates of all cells.
+		/// </summary>
 		public List<int> CellLocationsY { get; } = new List<int>();
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GridLayout"/> class.
+		/// </summary>
 		public GridLayout()
 		{
 		}
 
+		/// <summary>
+		/// Gets the width of the column at the specified index.
+		/// </summary>
+		/// <param name="index">The column index.</param>
+		/// <returns>The width of the column.</returns>
 		public int GetColumnWidth(int index)
 		{
 			if (ColWidths == null || index < 0 || index >= ColWidths.Count)
@@ -55,6 +106,11 @@ namespace Myra.Graphics2D.UI
 			return ColWidths[index];
 		}
 
+		/// <summary>
+		/// Gets the height of the row at the specified index.
+		/// </summary>
+		/// <param name="index">The row index.</param>
+		/// <returns>The height of the row.</returns>
 		public int GetRowHeight(int index)
 		{
 			if (RowHeights == null || index < 0 || index >= RowHeights.Count)
@@ -65,6 +121,11 @@ namespace Myra.Graphics2D.UI
 			return RowHeights[index];
 		}
 
+		/// <summary>
+		/// Gets the X coordinate of the column at the specified index.
+		/// </summary>
+		/// <param name="col">The column index.</param>
+		/// <returns>The X coordinate of the column.</returns>
 		public int GetCellLocationX(int col)
 		{
 			if (col < 0 || col >= CellLocationsX.Count)
@@ -75,6 +136,11 @@ namespace Myra.Graphics2D.UI
 			return CellLocationsX[col];
 		}
 
+		/// <summary>
+		/// Gets the Y coordinate of the row at the specified index.
+		/// </summary>
+		/// <param name="row">The row index.</param>
+		/// <returns>The Y coordinate of the row.</returns>
 		public int GetCellLocationY(int row)
 		{
 			if (row < 0 || row >= CellLocationsY.Count)
@@ -85,6 +151,12 @@ namespace Myra.Graphics2D.UI
 			return CellLocationsY[row];
 		}
 
+		/// <summary>
+		/// Gets the rectangle bounds for the cell at the specified column and row.
+		/// </summary>
+		/// <param name="col">The column index.</param>
+		/// <param name="row">The row index.</param>
+		/// <returns>The rectangle representing the cell bounds.</returns>
 		public Rectangle GetCellRectangle(int col, int row)
 		{
 			if (col < 0 || col >= CellLocationsX.Count ||

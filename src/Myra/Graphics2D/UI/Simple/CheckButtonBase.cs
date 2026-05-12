@@ -14,16 +14,30 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Specifies the position of the check mark relative to the content.
+	/// </summary>
 	public enum CheckPosition
 	{
+		/// <summary>The check mark is displayed on the left.</summary>
 		Left,
+		/// <summary>The check mark is displayed on the right.</summary>
 		Right
 	}
 
+	/// <summary>
+	/// An abstract base class for checkbox and radio button controls.
+	/// </summary>
 	public class CheckButtonBase : ButtonBase2
 	{
+		/// <summary>
+		/// An internal image class that inherits the mouse-over state from its parent.
+		/// </summary>
 		private class CheckImageInternal : Image
 		{
+			/// <summary>
+			/// Gets whether the over background should be used based on parent's mouse state.
+			/// </summary>
 			protected override bool UseOverBackground
 			{
 				get
@@ -49,6 +63,9 @@ namespace Myra.Graphics2D.UI
 		private Widget _content;
 		private IImage _checkedImage, _uncheckedImage;
 
+		/// <summary>
+		/// Gets or sets the position of the check mark relative to the content.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(CheckPosition.Left)]
 		public CheckPosition CheckPosition
@@ -63,6 +80,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the spacing between the check mark and content.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0)]
 		public int CheckContentSpacing
@@ -71,6 +91,9 @@ namespace Myra.Graphics2D.UI
 			set => _layout.Spacing = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when the check button is unchecked.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage UncheckedImage
 		{
@@ -87,6 +110,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when the check button is checked.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage CheckedImage
 		{
@@ -103,6 +129,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the content widget displayed next to the check mark.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public override Widget Content
@@ -118,10 +147,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the internal check mark image widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Image CheckImage => _check;
 
+		/// <summary>
+		/// Initializes a new instance of the CheckButtonBase class.
+		/// </summary>
 		protected CheckButtonBase()
 		{
 			ChildrenLayout = _layout;
@@ -129,15 +164,24 @@ namespace Myra.Graphics2D.UI
 			UpdateChildren();
 		}
 
+		/// <summary>
+		/// Handles the touch up event (no action required).
+		/// </summary>
 		protected override void InternalOnTouchUp()
 		{
 		}
 
+		/// <summary>
+		/// Handles the touch down event by toggling the checked state.
+		/// </summary>
 		protected override void InternalOnTouchDown()
 		{
 			SetValueByUser(!IsPressed);
 		}
 
+		/// <summary>
+		/// Raises the PressedChanged event and updates the check mark image.
+		/// </summary>
 		public override void OnPressedChanged()
 		{
 			base.OnPressedChanged();
@@ -145,6 +189,9 @@ namespace Myra.Graphics2D.UI
 			_check.IsPressed = IsPressed;
 		}
 
+		/// <summary>
+		/// Handles keyboard input, toggling the checked state on Space key.
+		/// </summary>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -160,6 +207,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a check button style to this control.
+		/// </summary>
+		/// <param name="style">The image text button style to apply.</param>
 		public void ApplyCheckButtonStyle(ImageTextButtonStyle style)
 		{
 			ApplyButtonStyle(style);
@@ -175,6 +226,9 @@ namespace Myra.Graphics2D.UI
 			CheckContentSpacing = style.ImageTextSpacing;
 		}
 
+		/// <summary>
+		/// Updates the children layout based on the check position.
+		/// </summary>
 		private void UpdateChildren()
 		{
 			Children.Clear();
@@ -201,6 +255,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Copies the style properties from another check button.
+		/// </summary>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);
@@ -212,6 +269,9 @@ namespace Myra.Graphics2D.UI
 			CheckImage.CopyFrom(checkButtonBase.CheckImage);
 		}
 
+		/// <summary>
+		/// Updates the check mark image based on the pressed state.
+		/// </summary>
 		private void UpdateImage()
 		{
 			_check.Renderable = IsPressed ? _checkedImage : _uncheckedImage;

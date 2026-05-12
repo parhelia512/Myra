@@ -16,6 +16,10 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A tree control that displays a hierarchical structure of expandable nodes.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use TreeView instead.</remarks>
 	[Obsolete("Use TreeView")]
 	public class Tree : TreeNode
 	{
@@ -24,6 +28,9 @@ namespace Myra.Graphics2D.UI
 		private bool _rowInfosDirty = true;
 		private bool _hasRoot = true;
 
+		/// <summary>
+		/// Gets the list of all nodes in the tree.
+		/// </summary>
 		public List<TreeNode> AllNodes
 		{
 			get
@@ -34,6 +41,9 @@ namespace Myra.Graphics2D.UI
 
 		private TreeNode HoverRow { get; set; }
 
+		/// <summary>
+		/// Gets or sets the currently selected tree node.
+		/// </summary>
 		public TreeNode SelectedRow
 		{
 			get
@@ -58,6 +68,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the tree has a visible root node.
+		/// </summary>
 		[DefaultValue(true)]
 		public bool HasRoot
 		{
@@ -78,8 +91,15 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Raised when the selected tree node changes.
+		/// </summary>
 		public event EventHandler SelectionChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the Tree class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public Tree(string styleName = Stylesheet.DefaultStyleName) : base(null, styleName)
 		{
 			AcceptsKeyboardFocus = true;

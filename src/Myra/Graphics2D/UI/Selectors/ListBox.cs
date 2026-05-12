@@ -16,12 +16,19 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A list box control that displays a vertical list of selectable items with optional scrolling.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use ListView instead.</remarks>
 	[Obsolete("Use ListView")]
 	public class ListBox : Selector<ScrollViewer, ListItem>
 	{
 		private readonly VerticalStackPanel _box;
 		internal ComboBox _parentComboBox;
 
+		/// <summary>
+		/// Gets or sets the style applied to this list box.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ListBoxStyle ListBoxStyle
@@ -29,6 +36,9 @@ namespace Myra.Graphics2D.UI
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the selection mode for this list box (Single or Multiple).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(SelectionMode.Single)]
 		public override SelectionMode SelectionMode
@@ -44,10 +54,17 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the scroll viewer that manages the layout of this list box.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ScrollViewer ScrollViewer => InternalChild;
 
+		/// <summary>
+		/// Initializes a new instance of the ListBox class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public ListBox(string styleName = Stylesheet.DefaultStyleName) : base(new ScrollViewer())
 		{
 			AcceptsKeyboardFocus = true;
@@ -160,6 +177,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles key down events for navigation with Up/Down arrow keys and selection with Enter.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -235,6 +256,10 @@ namespace Myra.Graphics2D.UI
 			InternalChild.ScrollPosition = sp;
 		}
 
+		/// <summary>
+		/// Handles mouse wheel events for scrolling the list box contents.
+		/// </summary>
+		/// <param name="delta">The mouse wheel delta value (positive for scroll up, negative for scroll down).</param>
 		public override void OnMouseWheel(float delta)
 		{
 			base.OnMouseWheel(delta);
@@ -242,6 +267,10 @@ namespace Myra.Graphics2D.UI
 			InternalChild.OnMouseWheel(delta);
 		}
 
+		/// <summary>
+		/// Applies the specified list box style to this list box and all its items.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyListBoxStyle(ListBoxStyle style)
 		{
 			ApplyWidgetStyle(style);

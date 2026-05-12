@@ -15,22 +15,37 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Base abstract class for progress bar controls.
+	/// </summary>
 	public abstract class ProgressBar : Widget
 	{
 		private float _value;
 
+		/// <summary>
+		/// Gets the orientation (horizontal or vertical) of this progress bar.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public abstract Orientation Orientation { get; }
 
+		/// <summary>
+		/// Gets or sets the minimum value of the progress bar.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float Minimum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the maximum value of the progress bar.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(100.0f)]
 		public float Maximum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the current value of the progress bar.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float Value
@@ -53,17 +68,31 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to render the filled portion of the progress bar.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush Filler { get; set; }
 
+		/// <summary>
+		/// Raised when the value of the progress bar changes.
+		/// </summary>
 		public event EventHandler ValueChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ProgressBar"/> class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		protected ProgressBar(string styleName)
 		{
 			Maximum = 100;
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Applies a progress bar style to this progress bar.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyProgressBarStyle(ProgressBarStyle style)
 		{
 			ApplyWidgetStyle(style);

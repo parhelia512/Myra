@@ -17,6 +17,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A text display widget that renders text with optional wrapping, rich text commands, and multi-color support.
+	/// </summary>
 	public class Label : Widget
 	{
 		private readonly RichTextLayout _richText = new RichTextLayout
@@ -33,6 +36,9 @@ namespace Myra.Graphics2D.UI
 
 		private bool _singleLine = false;
 
+		/// <summary>
+		/// Gets or sets the vertical spacing between lines of text.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(0)]
 		public int VerticalSpacing
@@ -48,6 +54,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text content to display. Supports rich text commands for styling.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -68,6 +77,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the font used to render the text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase Font
 		{
@@ -82,6 +94,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether text wraps to the next line when it exceeds the available width.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public bool Wrap
@@ -103,6 +118,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the label displays text on a single line, clipping any overflow.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public bool SingleLine
@@ -125,7 +143,7 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// The method used to abbreviate overflowing text.
+		/// Gets or sets the method used to abbreviate text that overflows its bounds.
 		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(AutoEllipsisMethod.None)]
@@ -136,7 +154,7 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// The string to use as ellipsis.
+		/// Gets or sets the string to use as the ellipsis when abbreviating overflowing text.
 		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue("...")]
@@ -146,6 +164,9 @@ namespace Myra.Graphics2D.UI
 			set => _richText.AutoEllipsisString = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the text within the label.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(TextHorizontalAlignment.Left)]
 		public TextHorizontalAlignment TextAlign
@@ -153,18 +174,27 @@ namespace Myra.Graphics2D.UI
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
 		[Category("Appearance")]
 		public Color TextColor
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the text when the label is disabled.
+		/// </summary>
 		[Category("Appearance")]
 		public Color? DisabledTextColor
 		{
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the text when the mouse is over the label.
+		/// </summary>
 		[Category("Appearance")]
 		public Color? OverTextColor
 		{
@@ -181,6 +211,10 @@ namespace Myra.Graphics2D.UI
 			get; set;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the Label class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public Label(string styleName = Stylesheet.DefaultStyleName)
 		{
 			SetStyle(styleName);
@@ -295,6 +329,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies the specified label style to this label.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyLabelStyle(LabelStyle style)
 		{
 			ApplyWidgetStyle(style);

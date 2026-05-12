@@ -5,10 +5,17 @@ using Myra.Graphics2D.UI.Styles;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An image button control with image display and sizing options.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use Button with an Image as content instead.</remarks>
 	[Obsolete("Switch to Button")]
 	[StyleTypeName("Button")]
 	public class ImageButton : ButtonBase<Image>
 	{
+		/// <summary>
+		/// Gets or sets the image displayed on this button.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage Image
 		{
@@ -23,6 +30,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when the mouse is over this button.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage OverImage
 		{
@@ -37,6 +47,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when this button is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage PressedImage
 		{
@@ -51,6 +64,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the width of the displayed image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public int? ImageWidth
@@ -65,6 +81,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the height of the displayed image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public int? ImageHeight
@@ -79,6 +98,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the image within the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(HorizontalAlignment.Center)]
 		public HorizontalAlignment ImageHorizontalAlignment
@@ -87,6 +109,9 @@ namespace Myra.Graphics2D.UI
 			set => InternalChild.HorizontalAlignment = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the image within the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(VerticalAlignment.Center)]
 		public VerticalAlignment ImageVerticalAlignment
@@ -95,6 +120,10 @@ namespace Myra.Graphics2D.UI
 			set => InternalChild.VerticalAlignment = value;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the ImageButton class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public ImageButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			InternalChild = new Image

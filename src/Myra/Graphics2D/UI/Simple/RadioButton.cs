@@ -6,11 +6,18 @@ using System.Xml.Serialization;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A radio button control that ensures only one button in a group is selected at a time.
+	/// </summary>
 	[StyleTypeName("RadioButton")]
 	public class RadioButton : CheckButtonBase
 	{
 		private string _text;
 
+		/// <summary>
+		/// Gets or sets the text content of this radio button.
+		/// </summary>
+		/// <remarks>This property is obsolete. Set Content to a Label instead.</remarks>
 		[Obsolete("Set Content to Label instead")]
 		[Browsable(false)]
 		[XmlIgnore]
@@ -34,7 +41,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
-
+		/// <summary>
+		/// Gets or sets whether this radio button is pressed. Only one radio button in a parent can be pressed at a time.
+		/// </summary>
 		public override bool IsPressed
 		{
 			get => base.IsPressed;
@@ -71,6 +80,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the RadioButton class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public RadioButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			SetStyle(styleName);

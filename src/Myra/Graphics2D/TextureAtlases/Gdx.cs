@@ -15,6 +15,9 @@ using Texture2D = System.Object;
 
 namespace Myra.Graphics2D.TextureAtlases
 {
+	/// <summary>
+	/// Provides utility methods for loading texture atlases from GDX (LibGDX) format files.
+	/// </summary>
 	public static class Gdx
 	{
 		private enum GDXMode
@@ -39,6 +42,12 @@ namespace Myra.Graphics2D.TextureAtlases
 			public Point Offset;
 		}
 
+		/// <summary>
+		/// Parses a GDX (LibGDX) format texture atlas definition and creates a texture region atlas.
+		/// </summary>
+		/// <param name="data">The GDX format data string.</param>
+		/// <param name="textureLoader">A function to load textures by their name.</param>
+		/// <returns>A texture region atlas populated from the GDX data.</returns>
 		public static TextureRegionAtlas FromGDX(string data, Func<string, Texture2D> textureLoader)
 		{
 			GDXPageData pageData = null;

@@ -11,13 +11,22 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A horizontal menu control that displays menu items in a horizontal layout.
+	/// </summary>
 	public class HorizontalMenu : Menu
 	{
+		/// <summary>
+		/// Gets the orientation of this menu (always Horizontal).
+		/// </summary>
 		public override Orientation Orientation
 		{
 			get { return Orientation.Horizontal; }
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of this menu.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Stretch)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -31,6 +40,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of this menu.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Top)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -44,12 +56,20 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the HorizontalMenu class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public HorizontalMenu(string styleName = Stylesheet.DefaultStyleName) : base(styleName)
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;
 			VerticalAlignment = VerticalAlignment.Top;
 		}
 
+		/// <summary>
+		/// Handles key down events, with Left/Right arrow keys navigating the menu items.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);

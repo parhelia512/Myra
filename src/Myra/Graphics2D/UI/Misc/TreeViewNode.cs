@@ -11,6 +11,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A node within a tree view that can contain child nodes and arbitrary content.
+	/// </summary>
 	public class TreeViewNode : ContentControl, ITreeViewNode
 	{
 		private readonly GridLayout _layout = new GridLayout();
@@ -19,6 +22,9 @@ namespace Myra.Graphics2D.UI
 		private readonly ToggleButton _mark;
 		private Widget _content;
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this node is expanded to show child nodes.
+		/// </summary>
 		public bool IsExpanded
 		{
 			get { return _mark.IsPressed; }
@@ -26,18 +32,39 @@ namespace Myra.Graphics2D.UI
 			set { _mark.IsPressed = value; }
 		}
 
+		/// <summary>
+		/// Gets the toggle button used to expand/collapse this node.
+		/// </summary>
 		public ToggleButton Mark => _mark;
 
+		/// <summary>
+		/// Gets the grid that contains the child nodes.
+		/// </summary>
 		internal VerticalStackPanel ChildNodesGrid => _childNodesStackPanel;
 
+		/// <summary>
+		/// Gets the height of the content row.
+		/// </summary>
 		public int ContentHeight => _layout.GetRowHeight(0);
 
+		/// <summary>
+		/// Gets the number of child nodes.
+		/// </summary>
 		public int ChildNodesCount => _childNodesStackPanel.Children.Count;
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this node is visible in the tree view.
+		/// </summary>
 		internal bool RowVisible { get; set; }
 
+		/// <summary>
+		/// Gets or sets the parent node of this node.
+		/// </summary>
 		public TreeViewNode ParentNode { get; internal set; }
 
+		/// <summary>
+		/// Gets or sets the content widget displayed in this node.
+		/// </summary>
 		public override Widget Content
 		{
 			get => _content;
@@ -64,7 +91,11 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
-
+		/// <summary>
+		/// Initializes a new instance of the TreeViewNode class.
+		/// </summary>
+		/// <param name="topTree">The root tree view containing this node.</param>
+		/// <param name="styleName">The name of the style to apply.</param>
 		internal TreeViewNode(TreeView topTree, string styleName = Stylesheet.DefaultStyleName)
 		{
 			_layout.ColumnSpacing = 2;
@@ -116,22 +147,36 @@ namespace Myra.Graphics2D.UI
 			UpdateMark();
 		}
 
+		/// <summary>
+		/// Handles the mark button up event.
+		/// </summary>
 		private void MarkOnUp(object sender, EventArgs args)
 		{
 			_childNodesStackPanel.Visible = false;
 		}
 
+		/// <summary>
+		/// Updates the visibility of the expansion mark based on whether there are child nodes.
+		/// </summary>
 		protected virtual void UpdateMark()
 		{
 			_mark.Visible = _childNodesStackPanel.Children.Count > 0;
 		}
 
+		/// <summary>
+		/// Removes all child nodes.
+		/// </summary>
 		public virtual void RemoveAllSubNodes()
 		{
 			_childNodesStackPanel.Children.Clear();
 			UpdateMark();
 		}
 
+		/// <summary>
+		/// Adds a new child node with the specified content.
+		/// </summary>
+		/// <param name="content">The content widget for the new node.</param>
+		/// <returns>The newly created child node.</returns>
 		public TreeViewNode AddSubNode(Widget content)
 		{
 			var result = new TreeViewNode(_topTree, StyleName)
@@ -148,11 +193,20 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Gets the child node at the specified index.
+		/// </summary>
+		/// <param name="index">The index of the child node.</param>
+		/// <returns>The child node at the index.</returns>
 		public TreeViewNode GetSubNode(int index)
 		{
 			return (TreeViewNode)_childNodesStackPanel.Children[index];
 		}
 
+		/// <summary>
+		/// Removes the specified child node.
+		/// </summary>
+		/// <param name="subNode">The child node to remove.</param>
 		public void RemoveSubNode(TreeViewNode subNode)
 		{
 			_childNodesStackPanel.Children.Remove(subNode);
@@ -171,6 +225,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Removes the child node at the specified index.
+		/// </summary>
+		/// <param name="index">The index of the child node to remove.</param>
 		public void RemoveSubNodeAt(int index)
 		{
 			var subNode = (TreeViewNode)_childNodesStackPanel.Children[index];
@@ -182,6 +240,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a tree view node style to this node.
+		/// </summary>
+		/// <param name="style">The tree view style to apply.</param>
 		public void ApplyTreeViewNodeStyle(TreeStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -197,6 +259,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Sets the node's style using a stylesheet.
+		/// </summary>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyTreeViewNodeStyle(stylesheet.TreeStyles.SafelyGetStyle(name));

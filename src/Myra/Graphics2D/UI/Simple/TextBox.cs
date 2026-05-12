@@ -24,6 +24,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A text input widget that allows users to enter and edit text with support for undo/redo, hint text, and password masking.
+	/// </summary>
 	public class TextBox : Widget
 	{
 		private const int CursorUpdateDelayInMs = 30;
@@ -50,6 +53,9 @@ namespace Myra.Graphics2D.UI
 		private readonly UndoRedoStack UndoStack = new UndoRedoStack();
 		private readonly UndoRedoStack RedoStack = new UndoRedoStack();
 
+		/// <summary>
+		/// Gets or sets the vertical spacing between lines of text in multiline mode.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(0)]
 		public int VerticalSpacing
@@ -65,6 +71,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text content of this text box.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -80,6 +89,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the hint text displayed when the text box is empty.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string HintText
@@ -99,10 +111,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the hint text is currently displayed.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool HintTextEnabled { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this text box supports multiple lines of text.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool Multiline { get; set; }
@@ -124,6 +142,9 @@ namespace Myra.Graphics2D.UI
 
 		private bool InsertMode { get; set; }
 
+		/// <summary>
+		/// Gets or sets the font used to render the text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase Font
 		{
@@ -138,6 +159,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether text wraps to the next line when it exceeds the available width (multiline mode only).
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public bool Wrap
@@ -159,29 +183,53 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
 		[Category("Appearance")]
 		public Color TextColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the color of the text when the text box is disabled.
+		/// </summary>
 		[Category("Appearance")]
 		public Color? DisabledTextColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the color of the text when the text box has keyboard focus.
+		/// </summary>
 		[Category("Appearance")]
 		public Color? FocusedTextColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the image displayed as the text cursor.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage Cursor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw text selection.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush Selection { get; set; }
 
+		/// <summary>
+		/// Gets or sets the interval in milliseconds for cursor blinking.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(450)]
 		public int BlinkIntervalInMs { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this text box is read-only (text cannot be edited by the user).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool Readonly { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this text box is a password field (text is masked with asterisks).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool PasswordField

@@ -13,16 +13,15 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Specifies how an image is resized to fit its bounds.
+	/// </summary>
 	public enum ImageResizeMode
 	{
-		/// <summary>
-		/// Simply Stretch
-		/// </summary>
+		/// <summary>Stretch the image to fill the bounds, potentially distorting the aspect ratio.</summary>
 		Stretch,
 
-		/// <summary>
-		/// Keep Aspect Ratio
-		/// </summary>
+		/// <summary>Scale the image to fit the bounds while preserving the aspect ratio.</summary>
 		KeepAspectRatio
 	}
 
@@ -31,6 +30,9 @@ namespace Myra.Graphics2D.UI
 		bool IsPressed { get; set; }
 	}
 
+	/// <summary>
+	/// An image display widget that renders an image with optional hover and pressed states.
+	/// </summary>
 	public class Image : Widget, IPressable
 	{
 		private IImage _image, _overImage, _pressedImage;
@@ -38,6 +40,9 @@ namespace Myra.Graphics2D.UI
 #if MONOGAME
 		private bool _isAnisotropicFiltering = false;
 
+		/// <summary>
+		/// Gets or sets a value indicating whether anisotropic filtering is applied to this image.
+		/// </summary>
 		[DefaultValue(false)]
 		public bool IsAnisotropicFiltering
 		{
@@ -53,6 +58,9 @@ namespace Myra.Graphics2D.UI
 		}
 #endif
 
+		/// <summary>
+		/// Gets or sets the image to render.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage Renderable
 		{
@@ -73,6 +81,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when the mouse is over this image.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage OverRenderable
 		{
@@ -93,6 +104,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed when this image is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage PressedRenderable
 		{
@@ -121,10 +135,16 @@ namespace Myra.Graphics2D.UI
 			set => IsPressed = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the color tint applied to the rendered image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue("#FFFFFFFF")]
 		public Color Color { get; set; } = Color.White;
 
+		/// <summary>
+		/// Gets or sets how the image is resized to fit its bounds.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(ImageResizeMode.Stretch)]
 		public ImageResizeMode ResizeMode { get; set; }
@@ -192,6 +212,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies the specified pressable image style to this image.
+		/// </summary>
+		/// <param name="imageStyle">The style to apply.</param>
 		public void ApplyPressableImageStyle(PressableImageStyle imageStyle)
 		{
 			ApplyWidgetStyle(imageStyle);

@@ -21,6 +21,9 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A list view control that displays a scrollable list of arbitrary widgets with optional selection support.
+	/// </summary>
 	public class ListView : Widget, IContainer
 	{
 		private class WidgetsEnumerator : IEnumerator<Widget>, IEnumerator
@@ -261,22 +264,37 @@ namespace Myra.Graphics2D.UI
 
 		internal ComboView _parentCombo;
 
+		/// <summary>
+		/// Gets or sets the style applied to this list view.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ListBoxStyle ListBoxStyle { get; set; }
 
+		/// <summary>
+		/// Gets or sets the selection mode (Single or Multiple) for this list view.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(SelectionMode.Single)]
 		public SelectionMode SelectionMode { get; set; }
 
+		/// <summary>
+		/// Gets the scroll viewer that provides scrolling for this list view.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ScrollViewer ScrollViewer => _scrollViewer;
 
+		/// <summary>
+		/// Gets the collection of widgets displayed in this list view.
+		/// </summary>
 		[Content]
 		[Browsable(false)]
 		public IList<Widget> Widgets => _widgets;
 
+		/// <summary>
+		/// Gets or sets the index of the currently selected item.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int? SelectedIndex
@@ -309,6 +327,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the currently selected widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Widget SelectedItem
@@ -343,8 +364,15 @@ namespace Myra.Graphics2D.UI
 
 		private int ChildrenCount => _box.Children.Count;
 
+		/// <summary>
+		/// Raised when the selected index changes.
+		/// </summary>
 		public event EventHandler SelectedIndexChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the ListView class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public ListView(string styleName = Stylesheet.DefaultStyleName)
 		{
 			_scrollViewer = new ScrollViewer();
@@ -395,6 +423,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles key down events for navigation with Up/Down arrow keys and selection with Enter.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -492,6 +524,10 @@ namespace Myra.Graphics2D.UI
 			_scrollViewer.ScrollPosition = sp;
 		}
 
+		/// <summary>
+		/// Handles mouse wheel events for scrolling the list view contents.
+		/// </summary>
+		/// <param name="delta">The mouse wheel delta value (positive for scroll up, negative for scroll down).</param>
 		public override void OnMouseWheel(float delta)
 		{
 			base.OnMouseWheel(delta);
@@ -499,6 +535,10 @@ namespace Myra.Graphics2D.UI
 			_scrollViewer.OnMouseWheel(delta);
 		}
 
+		/// <summary>
+		/// Applies the specified list box style to this list view and all its items.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyListBoxStyle(ListBoxStyle style)
 		{
 			ApplyWidgetStyle(style);

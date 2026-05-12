@@ -14,6 +14,9 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Base abstract class for slider controls that allow selection of a value within a range.
+	/// </summary>
 	public abstract class Slider : Widget
 	{
 		private readonly SingleItemLayout<Button> _layout;
@@ -21,18 +24,30 @@ namespace Myra.Graphics2D.UI
 		private float _value, _wheelStep;
 		private bool _wheelAdjustment, _acceptWheelInput;
 
+		/// <summary>
+		/// Gets the orientation (horizontal or vertical) of this slider.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public abstract Orientation Orientation { get; }
 
+		/// <summary>
+		/// Gets or sets the minimum value of the slider.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float Minimum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the maximum value of the slider.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(100.0f)]
 		public float Maximum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the current value of the slider.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float Value
@@ -163,20 +178,27 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the button (knob) of the slider.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public Button ImageButton => _layout.Child;
 
 		/// <summary>
-		/// Fires when the value had been changed
+		/// Raised when the slider value changes (whether programmatically or by user).
 		/// </summary>
 		public event EventHandler<ValueChangedEventArgs<float>> ValueChanged;
 
 		/// <summary>
-		/// Fires only when the value had been changed by user(doesnt fire if it had been assigned through code)
+		/// Raised only when the slider value is changed by user interaction (not when set programmatically).
 		/// </summary>
 		public event EventHandler<ValueChangedEventArgs<float>> ValueChangedByUser;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Slider"/> class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		protected Slider(string styleName)
 		{
 			_layout = new SingleItemLayout<Button>(this)
@@ -208,6 +230,10 @@ namespace Myra.Graphics2D.UI
 			return Orientation == Orientation.Horizontal ? pos.X - bounds.Width / 2 : pos.Y - bounds.Height / 2;
 		}
 
+		/// <summary>
+		/// Applies a slider style to this slider.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplySliderStyle(SliderStyle style)
 		{
 			ApplyWidgetStyle(style);

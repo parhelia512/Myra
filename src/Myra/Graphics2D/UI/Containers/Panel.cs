@@ -10,6 +10,9 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A container that stacks child widgets and arranges them to overlap within the same bounds.
+	/// </summary>
 	public class Panel : Container
 	{
 		protected override void InternalArrange()

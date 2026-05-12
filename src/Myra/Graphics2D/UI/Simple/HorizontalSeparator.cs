@@ -3,8 +3,14 @@ using System.ComponentModel;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A horizontal separator widget that displays a horizontal dividing line.
+	/// </summary>
 	public class HorizontalSeparator : SeparatorWidget
 	{
+		/// <summary>
+		/// Gets or sets the horizontal alignment of this separator.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Stretch)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -18,6 +24,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of this separator.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Center)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -31,8 +40,15 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the orientation of this separator (always Horizontal).
+		/// </summary>
 		public override Orientation Orientation => Orientation.Horizontal;
 
+		/// <summary>
+		/// Initializes a new instance of the HorizontalSeparator class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public HorizontalSeparator(string styleName = Stylesheet.DefaultStyleName) : base(styleName)
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;

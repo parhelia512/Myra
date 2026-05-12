@@ -19,11 +19,18 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A dropdown combo box control that displays a single selection with a dropdown list.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use ComboView instead.</remarks>
 	[Obsolete("Use ComboView")]
 	public class ComboBox : SelectorBase<ImageTextButton, ListItem>
 	{
 		private readonly ListBox _listBox = new ListBox(null);
 
+		/// <summary>
+		/// Gets or sets the maximum height of the dropdown list.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(300)]
 		public int? DropdownMaximumHeight
@@ -39,6 +46,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the dropdown list is expanded.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool IsExpanded
@@ -46,6 +56,9 @@ namespace Myra.Graphics2D.UI
 			get { return InternalChild.IsPressed; }
 		}
 
+		/// <summary>
+		/// Gets or sets the desktop this combo box is attached to.
+		/// </summary>
 		public override Desktop Desktop
 		{
 			get
@@ -69,16 +82,36 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the internal list box used for dropdown display.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ListBox ListBox => _listBox;
 
+		/// <summary>
+		/// Gets the collection of items in the combo box.
+		/// </summary>
 		public override ObservableCollection<ListItem> Items => _listBox.Items;
 
+		/// <summary>
+		/// Gets or sets the currently selected item.
+		/// </summary>
 		public override ListItem SelectedItem { get => _listBox.SelectedItem; set => _listBox.SelectedItem = value; }
+
+		/// <summary>
+		/// Gets or sets the selection mode for the combo box.
+		/// </summary>
 		public override SelectionMode SelectionMode { get => _listBox.SelectionMode; set => _listBox.SelectionMode = value; }
+
+		/// <summary>
+		/// Gets or sets the index of the selected item.
+		/// </summary>
 		public override int? SelectedIndex { get => _listBox.SelectedIndex; set => _listBox.SelectedIndex = value; }
 
+		/// <summary>
+		/// Raised when the selected index changes.
+		/// </summary>
 		public override event EventHandler SelectedIndexChanged
 		{
 			add
@@ -92,6 +125,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the ComboBox class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public ComboBox(string styleName = Stylesheet.DefaultStyleName) :
 			base(new ImageTextButton(null)
 			{
@@ -114,6 +151,9 @@ namespace Myra.Graphics2D.UI
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Hides the dropdown list if it's currently visible.
+		/// </summary>
 		internal void HideDropdown()
 		{
 			if (Desktop != null && Desktop.ContextMenu == _listBox)
@@ -122,6 +162,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles the context menu closed event.
+		/// </summary>
 		private void DesktopOnContextMenuClosed(object sender, GenericEventArgs<Widget> genericEventArgs)
 		{
 			// Unpress the button only if mouse is outside
@@ -132,6 +175,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles the pressed state change of the dropdown button.
+		/// </summary>
 		private void InternalChild_PressedChanged(object sender, EventArgs e)
 		{
 			if (_listBox.Items.Count == 0)
@@ -152,6 +198,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles changes to list items.
+		/// </summary>
 		private void ItemOnChanged(object sender, EventArgs eventArgs)
 		{
 			var item = (ListItem)sender;
@@ -167,6 +216,9 @@ namespace Myra.Graphics2D.UI
 			InvalidateMeasure();
 		}
 
+		/// <summary>
+		/// Handles changes to the items collection.
+		/// </summary>
 		private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
 			switch (args.Action)
@@ -199,6 +251,9 @@ namespace Myra.Graphics2D.UI
 			InvalidateMeasure();
 		}
 
+		/// <summary>
+		/// Updates the display of the selected item.
+		/// </summary>
 		internal void UpdateSelectedItem()
 		{
 			var item = SelectedItem;
@@ -214,6 +269,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a combo box style to this control.
+		/// </summary>
+		/// <param name="style">The combo box style to apply.</param>
 		public void ApplyComboBoxStyle(ComboBoxStyle style)
 		{
 			if (style.ListBoxStyle != null)
@@ -226,6 +285,9 @@ namespace Myra.Graphics2D.UI
 			InternalChild.ApplyImageTextButtonStyle(style);
 		}
 
+		/// <summary>
+		/// Measures the required size for the combo box and its dropdown.
+		/// </summary>
 		protected override Point InternalMeasure(Point availableSize)
 		{
 			// Measure by the longest string
@@ -255,6 +317,9 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Arranges the combo box and sets the dropdown width.
+		/// </summary>
 		protected override void InternalArrange()
 		{
 			base.InternalArrange();
@@ -262,6 +327,9 @@ namespace Myra.Graphics2D.UI
 			_listBox.Width = BorderBounds.Width;
 		}
 
+		/// <summary>
+		/// Handles keyboard input and delegates it to the list box.
+		/// </summary>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -269,6 +337,9 @@ namespace Myra.Graphics2D.UI
 			_listBox.OnKeyDown(k);
 		}
 
+		/// <summary>
+		/// Sets the combo box's style using a stylesheet.
+		/// </summary>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyComboBoxStyle(stylesheet.ComboBoxStyles.SafelyGetStyle(name));

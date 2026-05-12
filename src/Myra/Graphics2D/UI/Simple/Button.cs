@@ -13,12 +13,18 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A clickable button control that can contain arbitrary content (text, image, or other widgets).
+	/// </summary>
 	[StyleTypeName("Button")]
 	public class Button : ButtonBase2
 	{
 		private readonly SingleItemLayout<Widget> _layout;
 		internal bool ReleaseOnTouchLeft;
 
+		/// <summary>
+		/// Gets or sets the desktop that manages this button.
+		/// </summary>
 		public override Desktop Desktop
 		{
 			get
@@ -44,6 +50,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the content widget displayed inside this button.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public override Widget Content
@@ -52,6 +61,10 @@ namespace Myra.Graphics2D.UI
 			set => _layout.Child = value;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the Button class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public Button(string styleName = Stylesheet.DefaultStyleName)
 		{
 			_layout = new SingleItemLayout<Widget>(this);
@@ -81,6 +94,10 @@ namespace Myra.Graphics2D.UI
 			SetValueByUser(true);
 		}
 
+		/// <summary>
+		/// Handles key down events, pressing the button when the Space key is pressed.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -107,6 +124,11 @@ namespace Myra.Graphics2D.UI
 			ApplyButtonStyle(stylesheet.ButtonStyles.SafelyGetStyle(name));
 		}
 
+		/// <summary>
+		/// Creates a new button with a text label as its content.
+		/// </summary>
+		/// <param name="text">The text to display on the button.</param>
+		/// <returns>A new button with the specified text.</returns>
 		public static Button CreateTextButton(string text)
 		{
 			return new Button

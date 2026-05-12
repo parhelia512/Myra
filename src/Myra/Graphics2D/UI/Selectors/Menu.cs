@@ -23,6 +23,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Abstract base class for menu controls that display a collection of menu items with optional sub-menus.
+	/// </summary>
 	public abstract class Menu : Widget
 	{
 		private readonly SingleItemLayout<Grid> _layout;
@@ -30,10 +33,16 @@ namespace Myra.Graphics2D.UI
 		private bool _dirty = true;
 		private bool _internalSetSelectedIndex = false;
 
+		/// <summary>
+		/// Gets the orientation (horizontal or vertical) of this menu.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public abstract Orientation Orientation { get; }
 
+		/// <summary>
+		/// Gets the style applied to this menu.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public MenuStyle MenuStyle { get; private set; }
@@ -42,6 +51,9 @@ namespace Myra.Graphics2D.UI
 		[XmlIgnore]
 		internal MenuItem OpenMenuItem { get; private set; }
 
+		/// <summary>
+		/// Gets a value indicating whether a sub-menu is currently open.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool IsOpen
@@ -52,10 +64,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the collection of menu items in this menu.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public ObservableCollection<IMenuItem> Items { get; } = new ObservableCollection<IMenuItem>();
 
+		/// <summary>
+		/// Gets or sets the font used for menu item labels.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase LabelFont
 		{
@@ -70,6 +88,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text color for menu item labels.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/TextColor")]
 		public Color LabelColor
@@ -85,6 +106,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the background when hovering over a menu item.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush SelectionHoverBackground
 		{
@@ -99,6 +123,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the background of a selected menu item.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush SelectionBackground
 		{
@@ -113,10 +140,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of menu item labels.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(HorizontalAlignment.Left)]
 		public HorizontalAlignment LabelHorizontalAlignment { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the hover index can be set to null (no hover).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(true)]
 		public bool HoverIndexCanBeNull
@@ -155,6 +188,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the index of the currently hovered menu item.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int? HoverIndex
@@ -183,6 +219,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the index of the currently selected menu item.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int? SelectedIndex
@@ -533,6 +572,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Closes this menu and any open sub-menus.
+		/// </summary>
 		public void Close()
 		{
 			if (Desktop != null)
@@ -666,6 +708,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles key down events for menu navigation and selection using arrow keys, Enter, Space, and underscored shortcut characters.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			if (k == Keys.Enter || k == Keys.Space)
@@ -708,6 +754,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Moves the hover index by the specified delta, wrapping around if necessary and skipping separators.
+		/// </summary>
+		/// <param name="delta">The amount to move the hover index by (typically 1 or -1).</param>
 		public void MoveHover(int delta)
 		{
 			if (Items.Count == 0)
@@ -839,6 +889,10 @@ namespace Myra.Graphics2D.UI
 			return base.InternalMeasure(availableSize);
 		}
 
+		/// <summary>
+		/// Applies the specified menu style to this menu.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyMenuStyle(MenuStyle style)
 		{
 			var clone = new MenuStyle(style);

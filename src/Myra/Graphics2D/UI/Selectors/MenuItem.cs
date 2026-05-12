@@ -16,6 +16,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Represents an item in a menu with optional text, color, image, shortcut, and sub-items.
+	/// </summary>
 	public class MenuItem : BaseObject, IMenuItem
 	{
 		private string _shortcutText;
@@ -44,6 +47,9 @@ namespace Myra.Graphics2D.UI
 
 		internal readonly Menu SubMenu = new VerticalMenu();
 
+		/// <summary>
+		/// Gets or sets the text of this menu item. Use '&' to specify a keyboard shortcut character.
+		/// </summary>
 		[DefaultValue(null)]
 		public string Text
 		{
@@ -90,6 +96,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of this menu item's text.
+		/// </summary>
 		[DefaultValue(null)]
 		public Color? Color
 		{
@@ -110,6 +119,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets an arbitrary user-defined object associated with this menu item.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public object Tag
@@ -117,6 +129,9 @@ namespace Myra.Graphics2D.UI
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed for this menu item.
+		/// </summary>
 		public IImage Image
 		{
 			get
@@ -136,6 +151,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text displayed as the keyboard shortcut hint (e.g., "Ctrl+S").
+		/// </summary>
 		[DefaultValue(null)]
 		public string ShortcutText
 		{
@@ -156,6 +174,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the shortcut text.
+		/// </summary>
 		[DefaultValue(null)]
 		public Color? ShortcutColor
 		{
@@ -176,10 +197,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the parent menu that contains this menu item.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Menu Menu { get; set; }
 
+		/// <summary>
+		/// Gets the collection of sub-items (menu items) for this menu item.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public ObservableCollection<IMenuItem> Items
@@ -187,6 +214,9 @@ namespace Myra.Graphics2D.UI
 			get { return SubMenu.Items; }
 		}
 
+		/// <summary>
+		/// Gets or sets whether this menu item is enabled and can be selected.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool Enabled
@@ -199,10 +229,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the keyboard shortcut character extracted from the text (marked with '&'). Returns null if no shortcut is specified.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public char? UnderscoreChar { get; private set; }
 
+		/// <summary>
+		/// Gets a value indicating whether this menu item has sub-items that can be opened.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool CanOpen
@@ -213,13 +249,30 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the index of this menu item within its parent menu.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int Index { get; set; }
 
+		/// <summary>
+		/// Raised when this menu item is selected by the user.
+		/// </summary>
 		public event EventHandler Selected;
+
+		/// <summary>
+		/// Raised when any property of this menu item changes.
+		/// </summary>
 		public event EventHandler Changed;
 
+		/// <summary>
+		/// Initializes a new instance of the MenuItem class with ID, text, color, and tag.
+		/// </summary>
+		/// <param name="id">The unique identifier for this menu item.</param>
+		/// <param name="text">The display text for this menu item.</param>
+		/// <param name="color">The text color, or null to use the default color.</param>
+		/// <param name="tag">An arbitrary object to associate with this menu item.</param>
 		public MenuItem(string id, string text, Color? color, object tag)
 		{
 			Id = id;
@@ -228,18 +281,36 @@ namespace Myra.Graphics2D.UI
 			Tag = tag;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the MenuItem class with ID, text, and color.
+		/// </summary>
+		/// <param name="id">The unique identifier for this menu item.</param>
+		/// <param name="text">The display text for this menu item.</param>
+		/// <param name="color">The text color, or null to use the default color.</param>
 		public MenuItem(string id, string text, Color? color) : this(id, text, color, null)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the MenuItem class with ID and text.
+		/// </summary>
+		/// <param name="id">The unique identifier for this menu item.</param>
+		/// <param name="text">The display text for this menu item.</param>
 		public MenuItem(string id, string text) : this(id, text, null)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the MenuItem class with only an ID.
+		/// </summary>
+		/// <param name="id">The unique identifier for this menu item.</param>
 		public MenuItem(string id) : this(id, string.Empty)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the MenuItem class with no parameters.
+		/// </summary>
 		public MenuItem() : this(string.Empty)
 		{
 		}
@@ -287,6 +358,11 @@ namespace Myra.Graphics2D.UI
 			_displayTextDirty = false;
 		}
 
+		/// <summary>
+		/// Searches this menu item and its sub-items for a menu item with the specified ID.
+		/// </summary>
+		/// <param name="id">The ID to search for.</param>
+		/// <returns>The menu item with the specified ID, or null if not found.</returns>
 		internal MenuItem FindMenuItemById(string id)
 		{
 			if (Id == id)
@@ -312,6 +388,9 @@ namespace Myra.Graphics2D.UI
 			return null;
 		}
 
+		/// <summary>
+		/// Raises the Selected event to notify that this menu item was selected.
+		/// </summary>
 		public void FireSelected()
 		{
 			var ev = Selected;
@@ -322,6 +401,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Invoked when the ID of this menu item changes.
+		/// </summary>
 		protected internal override void OnIdChanged()
 		{
 			base.OnIdChanged();
@@ -329,6 +411,9 @@ namespace Myra.Graphics2D.UI
 			FireChanged();
 		}
 
+		/// <summary>
+		/// Raises the Changed event to notify that a property of this menu item has changed.
+		/// </summary>
 		protected void FireChanged()
 		{
 			var ev = Changed;

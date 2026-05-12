@@ -5,28 +5,47 @@ using System.Xml.Serialization;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Specifies the position of the tab selector within a tab control.
+	/// </summary>
 	public enum TabSelectorPosition
 	{
+		/// <summary>Tab selector is positioned at the top.</summary>
 		Top,
+		/// <summary>Tab selector is positioned on the right side.</summary>
 		Right,
+		/// <summary>Tab selector is positioned at the bottom.</summary>
 		Bottom,
+		/// <summary>Tab selector is positioned on the left side.</summary>
 		Left
 	}
 
+	/// <summary>
+	/// A tab control that displays multiple tab items with selectable content areas.
+	/// </summary>
 	public class TabControl : Selector<Grid, TabItem>
 	{
 		private Grid _gridButtons;
 		private Panel _panelContent;
 		private TabSelectorPosition _selectorPosition;
 
+		/// <summary>
+		/// Gets or sets the style applied to this tab control.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public TabControlStyle TabControlStyle { get; set; }
 
+		/// <summary>
+		/// Gets or sets the selection mode for this tab control.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public override SelectionMode SelectionMode { get => base.SelectionMode; set => base.SelectionMode = value; }
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of this tab control.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Left)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -40,6 +59,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of this tab control.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Top)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -53,6 +75,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the position of the tab selector (Top, Right, Bottom, or Left).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(TabSelectorPosition.Top)]
 		public TabSelectorPosition TabSelectorPosition
@@ -73,13 +98,23 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether tabs can be closed by the user.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool CloseableTabs { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this tab control is clipped to its bounds.
+		/// </summary>
 		[DefaultValue(true)]
 		public override bool ClipToBounds { get => base.ClipToBounds; set => base.ClipToBounds = value; }
 
+		/// <summary>
+		/// Initializes a new instance of the TabControl class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public TabControl(string styleName = Stylesheet.DefaultStyleName) : base(new Grid())
 		{
 			HorizontalAlignment = HorizontalAlignment.Left;
@@ -357,6 +392,10 @@ namespace Myra.Graphics2D.UI
 			SelectedIndex = index;
 		}
 
+		/// <summary>
+		/// Applies the specified tab control style to this tab control and all its tab items.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyTabControlStyle(TabControlStyle style)
 		{
 			ApplyWidgetStyle(style);

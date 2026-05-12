@@ -21,6 +21,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A window control with a title bar, optional close button, and content area.
+	/// </summary>
 	public class Window : ContentControl
 	{
 		private readonly StackPanelLayout _layout = new StackPanelLayout(Orientation.Vertical);
@@ -28,6 +31,9 @@ namespace Myra.Graphics2D.UI
 		private Widget _content;
 		private Widget _previousKeyboardFocus;
 
+		/// <summary>
+		/// Gets or sets the title text displayed in the window's title bar.
+		/// </summary>
 		[Category("Appearance")]
 		public string Title
 		{
@@ -42,6 +48,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the title text.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("TitleStyle/TextColor")]
 		public Color TitleTextColor
@@ -56,6 +65,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the font used to render the title text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase TitleFont
 		{
@@ -69,14 +81,23 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the panel that contains the title and close button.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public HorizontalStackPanel TitlePanel { get; private set; }
 
+		/// <summary>
+		/// Gets the close button in the window's title bar.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Button CloseButton { get; private set; }
 
+		/// <summary>
+		/// Gets or sets the content widget displayed in the window's content area.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public override Widget Content
@@ -109,10 +130,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating the result of a dialog window.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool Result { get; set; }
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of this window.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Left)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -126,6 +153,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of this window.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Top)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -139,9 +169,15 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the drag direction for moving this window.
+		/// </summary>
 		[DefaultValue(DragDirection.Both)]
 		public override DragDirection DragDirection { get => base.DragDirection; set => base.DragDirection = value; }
 
+		/// <summary>
+		/// Gets or sets the key that closes this window (typically Escape).
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(Keys.Escape)]
 		public Keys? CloseKey { get; set; }

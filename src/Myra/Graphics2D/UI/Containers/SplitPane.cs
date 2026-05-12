@@ -9,6 +9,9 @@ using Myra.Attributes;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An abstract base class for containers that split their area between multiple child widgets with movable splitter handles.
+	/// </summary>
 	public abstract class SplitPane : Container
 	{
 		private readonly ObservableCollection<Widget> _widgets = new ObservableCollection<Widget>();
@@ -18,20 +21,36 @@ namespace Myra.Graphics2D.UI
 		private int? _mouseCoord;
 		private int _handlesSize;
 
+		/// <summary>
+		/// Gets the collection of child widgets that will be split.
+		/// </summary>
 		[Content]
 		[Browsable(false)]
 		public override IList<Widget> Widgets => _widgets;
 
+		/// <summary>
+		/// When overridden in a derived class, gets the orientation of this split pane.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public abstract Orientation Orientation { get; }
 
+		/// <summary>
+		/// Gets or sets the style for the splitter handles.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public SplitPanelButtonStyle HandleStyle { get; private set; }
 
+		/// <summary>
+		/// Raised when the splitter positions change.
+		/// </summary>
 		public event EventHandler ProportionsChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the SplitPane class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		protected SplitPane(string styleName)
 		{
 			ChildrenLayout = _layout;
@@ -40,6 +59,11 @@ namespace Myra.Graphics2D.UI
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Gets the proportion (relative size) of the widget at the specified index.
+		/// </summary>
+		/// <param name="widgetIndex">The index of the widget.</param>
+		/// <returns>The proportion value of the widget.</returns>
 		public float GetProportion(int widgetIndex)
 		{
 			if (widgetIndex < 0 || widgetIndex >= Widgets.Count)
@@ -54,6 +78,9 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Handles the touch moved event for moving splitter handles.
+		/// </summary>
 		public override void OnTouchMoved()
 		{
 			base.OnTouchMoved();
@@ -114,6 +141,9 @@ namespace Myra.Graphics2D.UI
 			InvalidateArrange();
 		}
 
+		/// <summary>
+		/// Raises the ProportionsChanged event.
+		/// </summary>
 		private void FireProportionsChanged()
 		{
 			var ev = ProportionsChanged;
@@ -123,6 +153,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles the pressed state change of a splitter handle.
+		/// </summary>
 		private void HandleOnPressedChanged(object sender, EventArgs args)
 		{
 			var handle = (Button)sender;
@@ -156,11 +189,17 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles changes to the widgets collection.
+		/// </summary>
 		private void WidgetsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
 			Reset();
 		}
 
+		/// <summary>
+		/// Gets the proportion values for widgets on either side of a splitter.
+		/// </summary>
 		private void GetProportions(int leftWidgetIndex,
 			out Proportion leftProportion,
 			out Proportion rightProportion,
@@ -180,6 +219,11 @@ namespace Myra.Graphics2D.UI
 			rightProportion = allProps[baseIndex + 2];
 		}
 
+		/// <summary>
+		/// Gets the position of the splitter between two widgets.
+		/// </summary>
+		/// <param name="leftWidgetIndex">The index of the widget on the left side of the splitter.</param>
+		/// <returns>The splitter position as a proportion (0 to 1).</returns>
 		public float GetSplitterPosition(int leftWidgetIndex)
 		{
 			float total;
@@ -189,6 +233,11 @@ namespace Myra.Graphics2D.UI
 			return leftProportion.Value / total;
 		}
 
+		/// <summary>
+		/// Sets the position of the splitter between two widgets.
+		/// </summary>
+		/// <param name="leftWidgetIndex">The index of the widget on the left side of the splitter.</param>
+		/// <param name="proportion">The new splitter position as a proportion (0 to 1).</param>
 		public void SetSplitterPosition(int leftWidgetIndex, float proportion)
 		{
 			float total;
@@ -201,6 +250,9 @@ namespace Myra.Graphics2D.UI
 			rightProportion.Value = fp2;
 		}
 
+		/// <summary>
+		/// Recreates the splitter layout based on the current widgets collection.
+		/// </summary>
 		public void Reset()
 		{
 			// Clear
@@ -313,6 +365,10 @@ namespace Myra.Graphics2D.UI
 			FireProportionsChanged();
 		}
 
+		/// <summary>
+		/// Applies a split pane style to this split pane.
+		/// </summary>
+		/// <param name="style">The split pane style to apply.</param>
 		public void ApplySplitPaneStyle(SplitPaneStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -321,6 +377,9 @@ namespace Myra.Graphics2D.UI
 			Reset();
 		}
 
+		/// <summary>
+		/// Copies the style properties from another split pane.
+		/// </summary>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);

@@ -15,6 +15,9 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A content control that displays scrollbars for scrolling through content that is larger than the visible area.
+	/// </summary>
 	public class ScrollViewer : ContentControl
 	{
 		private readonly SingleItemLayout<Widget> _layout;
@@ -34,6 +37,9 @@ namespace Myra.Graphics2D.UI
 		[XmlIgnore]
 		internal int HorizontalThumbHeight => (_horizontalScrollingOn && ShowHorizontalScrollBar) ? _horizontalScrollbarThumb.Height : 0;
 
+		/// <summary>
+		/// Gets the maximum scroll position (the range of scrollable content).
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Point ScrollMaximum
@@ -64,6 +70,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the current scroll position of the content.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Point ScrollPosition

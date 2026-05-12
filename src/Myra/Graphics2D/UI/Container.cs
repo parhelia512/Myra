@@ -16,17 +16,32 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Provides an interface for containers that hold multiple widgets.
+	/// </summary>
 	public interface IContainer
 	{
+		/// <summary>
+		/// Gets the collection of child widgets in this container.
+		/// </summary>
 		IList<Widget> Widgets { get; }
 	}
 
+	/// <summary>
+	/// Base abstract class for containers that hold multiple child widgets.
+	/// </summary>
 	public abstract class Container : Widget, IContainer
 	{
+		/// <summary>
+		/// Gets the collection of child widgets in this container.
+		/// </summary>
 		[Content]
 		[Browsable(false)]
 		public virtual IList<Widget> Widgets => Children;
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of this container.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Stretch)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -34,6 +49,9 @@ namespace Myra.Graphics2D.UI
 			set { base.HorizontalAlignment = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of this container.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Stretch)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -41,18 +59,29 @@ namespace Myra.Graphics2D.UI
 			set { base.VerticalAlignment = value; }
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Container"/> class.
+		/// </summary>
 		public Container()
 		{
 			HorizontalAlignment = HorizontalAlignment.Stretch;
 			VerticalAlignment = VerticalAlignment.Stretch;
 		}
 
+		/// <summary>
+		/// Adds a child widget to this container. This method is obsolete; use <see cref="Widgets"/>.Add instead.
+		/// </summary>
+		/// <param name="child">The child widget to add.</param>
 		[Obsolete("Use Widgets.Add")]
 		public void AddChild(Widget child)
 		{
 			Widgets.Add(child);
 		}
 
+		/// <summary>
+		/// Removes a child widget from this container. This method is obsolete; use <see cref="Widgets"/>.Remove instead.
+		/// </summary>
+		/// <param name="child">The child widget to remove.</param>
 		[Obsolete("Use Widgets.Remove")]
 		public void RemoveChild(Widget child)
 		{

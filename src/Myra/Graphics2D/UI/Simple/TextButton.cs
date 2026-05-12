@@ -14,10 +14,17 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A text button control with customizable font and colors.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use Button with a Label as content instead.</remarks>
 	[Obsolete("Switch to Button")]
 	[StyleTypeName("Button")]
 	public class TextButton : ButtonBase<Label>
 	{
+		/// <summary>
+		/// Gets or sets the text content of this button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -32,6 +39,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text color of this button.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/TextColor")]
 		public Color TextColor
@@ -46,6 +56,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text color when the mouse is over this button.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/OverTextColor")]
 		public Color? OverTextColor
@@ -60,6 +73,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text color when this button is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/PressedTextColor")]
 		public Color? PressedTextColor
@@ -74,6 +90,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the font used to render the button text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase Font
 		{
@@ -87,6 +106,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the TextButton class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		public TextButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			InternalChild = new Label(null)

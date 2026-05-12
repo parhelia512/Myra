@@ -14,6 +14,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.TextureAtlases
 {
+	/// <summary>
+	/// Represents a nine-patch texture region that can be scaled while maintaining border integrity.
+	/// </summary>
 	public class NinePatchRegion : TextureRegion
 	{
 		private readonly Thickness _info;
@@ -28,11 +31,20 @@ namespace Myra.Graphics2D.TextureAtlases
 			_bottomCenter,
 			_bottomRight;
 
+		/// <summary>
+		/// Gets the nine-patch information specifying the border thicknesses.
+		/// </summary>
 		public Thickness Info
 		{
 			get { return _info; }
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NinePatchRegion"/> class.
+		/// </summary>
+		/// <param name="texture">The texture for this region.</param>
+		/// <param name="bounds">The bounds within the texture.</param>
+		/// <param name="info">The nine-patch border thickness information.</param>
 		public NinePatchRegion(Texture2D texture, Rectangle bounds, Thickness info) : base(texture, bounds)
 		{
 			_info = info;
@@ -134,6 +146,12 @@ namespace Myra.Graphics2D.TextureAtlases
 			}
 		}
 
+		/// <summary>
+		/// Draws this nine-patch region to the render context, scaling the center while keeping borders fixed.
+		/// </summary>
+		/// <param name="context">The render context to draw to.</param>
+		/// <param name="dest">The destination rectangle for drawing.</param>
+		/// <param name="color">The color to apply during drawing.</param>
 		public override void Draw(RenderContext context, Rectangle dest, Color color)
 		{
 			var y = dest.Y;

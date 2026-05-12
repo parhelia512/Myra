@@ -2,7 +2,10 @@
 
 namespace Myra.Attributes
 {
-	public class ContentAttribute: Attribute
+	/// <summary>
+	/// Marks a property as content in the UI framework.
+	/// </summary>
+	public class ContentAttribute : Attribute
 	{
 	}
 }
