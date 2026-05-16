@@ -43,7 +43,7 @@ This is how stylesheet references and resolves fonts:
     <Font Id="default-font" File="Inter-Regular.ttf" Size="20"/>
   </Fonts>
 ```
-`UsedSpace` declares rectangle in the texture atlas that stores all of the UI images. Now the font system will use the texture atlas to store the font glyphs, omitting the that rectangle.
+`UsedSpace` declares rectangle in the texture atlas that stores all of the UI images. Now the font system will use the texture atlas to store the font glyphs, omitting that rectangle.
 
 It's important to note that `UsedSpace` property is optional. If it is not declared, then the font system will create separate texture to store the font glyphs. Which would result in texture swaps(the renderer would have to switch between the texture containing UI images and the texture containing font glyphs). Hence it is recommended to use `UsedSpace`. See FontStashSharp's [How To Use Existing Texture As Font Glyphs Atlas](https://github.com/rds1983/FontStashSharp/wiki/How-To-Use-Existing-Texture-As-Font-Glyphs-Atlas) for more details.
 
@@ -54,11 +54,11 @@ The loading code is located here: https://github.com/rds1983/Myra/blob/master/sr
 
 Since the default stylesheet files are stored as resources the AssetManager creation code is:
 ```c#
-  private static readonly AssetManager _assetManager = new AssetManager(MyraEnvironment.GraphicsDevice, new ResourceAssetResolver(typeof(DefaultAssets).Assembly, "Resources."));
+  private static readonly AssetManager _assetManager = AssetManager.CreateResourceAssetManager(typeof(DefaultAssets).Assembly, "Resources.");
 ```
 And the actual stylesheet loading code:
 ```c#
-  _uiStylesheet = _assetManager.Load<Stylesheet>("default_ui_skin.xml");
+  _uiStylesheet = _assetManager.LoadStylesheet("default_ui_skin.xmms");
 ```
 
 ## Myra.Samples.CustomUIStylesheet
@@ -72,7 +72,7 @@ The major difference with the default stylesheet is that custom stylesheet uses 
   </Fonts>
 ```
 
-It's important to notice that it uses single [underlying image](https://github.com/rds1983/Myra/blob/master/samples/Myra.Samples.CustomUIStylesheet/Resources/ui_stylesheet_atlas.png) to store both texture atlas images and font glyphs. It's good solution performance-wise as the renderer doesnt need to switch between textures.
+It's important to notice that it uses single [underlying image](https://github.com/rds1983/Myra/blob/master/samples/Myra.Samples.CustomUIStylesheet/Resources/ui_stylesheet_atlas.png) to store both texture atlas images and font glyphs. It's good solution performance-wise as the renderer doesn't need to switch between textures.
 
 Now if you view [commodore-64.fnt](https://github.com/rds1983/Myra/blob/master/samples/Myra.Samples.CustomUIStylesheet/Resources/commodore-64.fnt), you would see how .fnt references the texture region in default_ui_skin.xmat with id 'default' as the image with character glyphs: 
 ```
@@ -88,10 +88,10 @@ And the loading code is:
       MyraEnvironment.Game = this;
 
       // Create asset manager
-      var assetManager = new AssetManager(GraphicsDevice, new ResourceAssetResolver(typeof(CustomUIStylesheetGame).Assembly, "Resources"));
+      var assetManager = AssetManager.CreateResourceAssetManager(typeof(CustomUIStylesheetGame).Assembly, "Resources");
 
       // Load stylesheet
-      Stylesheet.Current = assetManager.Load<Stylesheet>("ui_stylesheet.xml");
+      Stylesheet.Current = assetManager.LoadStylesheet("ui_stylesheet.xmms");
       ...
     }
 ```

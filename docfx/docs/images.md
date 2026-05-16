@@ -65,10 +65,10 @@ Also following:
 // If 2nd parameter is omitted, then TextureRegion covers the whole texture
 image.Renderable = new TextureRegion(texture);
 ```
-  _**Note**. It's also possible to use TextureRegion as IBrush. However usually it wont make much sense, since it would result in the TextureRegion streched over the rectangle IBrush is drawn at._
+  _**Note**. It's also possible to use TextureRegion as IBrush. However usually it won't make much sense, since it would result in the TextureRegion stretched over the rectangle IBrush is drawn at._
 
 ### NinePatchRegion
-[NinePatchRegion](https://github.com/rds1983/Myra/blob/master/src/Myra/Graphics2D/TextureAtlases/NinePatchRegion.cs) represents region with unstrechable border and strechable center. 
+[NinePatchRegion](https://github.com/rds1983/Myra/blob/master/src/Myra/Graphics2D/TextureAtlases/NinePatchRegion.cs) represents region with unstretchable border and stretchable center. 
 
 It could be used following way:
 ```c#

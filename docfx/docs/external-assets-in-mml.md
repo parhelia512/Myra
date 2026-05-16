@@ -5,15 +5,14 @@ It is possible to reference external assets (images, fonts, etc) in the MML proj
 Following video demonstrates how external assets could be referenced when editing a project in the MyraPad:
 https://youtu.be/6rKZMoExN_Q
 
-  **Note**. It is recommended to save the file before referencing external assets. Then assets would be referenced relative to the MML file path. Otherwise assets would have absolute paths.
+  **Note:** It is recommended to save the file before referencing external assets. Then assets would be referenced relative to the MML file path. Otherwise assets would have absolute paths.
 
 # Loading MML with external assets in runtime
 If MML project with external assets is loaded through `Project.LoadFromXml`, then the loading code would need to include AssetManager as parameter.
 
 I.e.
 ```c#
-FileAssetResolver assetResolver = new FileAssetResolver(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
-AssetManager assetManager = new AssetManager(GraphicsDevice, assetResolver);
+AssetManager assetManager = AssetManager.CreateFileAssetManager(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
 string data = File.ReadAllText(filePath);
 Project project = Project.LoadFromXml(data, assetManager);
 ```
@@ -107,9 +106,9 @@ namespace Myra.Samples.AssetManagement
 }
 ```
 
-It uses static variable `MyraEnvironment.DefaultAssetManager` as AssetManager. That AssetManager could be configured like this:
+It uses static variable `MyraEnvironment.DefaultAssetManager` as AssetManager. That AssetManager can be configured when needed by setting it to a custom AssetManager:
 ```c#
-MyraEnvironment.DefaultAssetManager.AssetResolver = new FileAssetResolver(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
+MyraEnvironment.DefaultAssetManager = AssetManager.CreateFileAssetManager(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
 ```
 
 Full sample is here: https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.AssetManagement

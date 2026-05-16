@@ -26,9 +26,9 @@ It creates UI with the following [MML](MML.md):
 MyraPad can export projects to C#:
 https://youtu.be/94bPYKw4cAI
 
-  **Note**. Notice that export setting had been saved in the project in the newly appeared tag &lt;ExportOptions&gt;. Thus it wouldn't be required to enter it again.
+  **Note:** Notice that export settings have been saved in the project in the newly appeared tag &lt;ExportOptions&gt;. Thus they wouldn't be required to be entered again.
 
-That procedure created two files: MainMenu.cs and MenuMenu.Generated.cs. Now if export would be rerun, only MainMenu.Generated.cs would be rewritten. So it is safe to add any user code to MainMenu.cs
+That procedure created two files: MainMenu.cs and MainMenu.Generated.cs. Now if export were to be rerun, only MainMenu.Generated.cs would be rewritten. So it is safe to add any user code to MainMenu.cs
 
 Let's take a look at contents of produced files.
 

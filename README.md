@@ -6,9 +6,9 @@
 Myra is UI Library for [MonoGame](http://www.monogame.net/), [FNA](https://github.com/FNA-XNA/FNA) and [Stride](https://github.com/stride3d/stride).  
 
 ## Features
-* **Rich Set of Widgets.** Myra has following widgets: Button, CheckBox, ComboBox, ListBox, TabControl, Grid, Image, Menu, ProgressBar, ScrollPane, SplitPane(with arbitrary number of splitters), Slider, TextBlock, TextField, SpinButton, Tree, Window, Dialog, FileDialog, ColorPickerDialog and PropertyGrid.
+* **Rich Set of Widgets.** Myra has the following widgets: Button, CheckBox, ComboBox, ListBox, TabControl, Grid, Image, Menu, ProgressBar, ScrollPane, SplitPane (with arbitrary number of splitters), Slider, TextBlock, TextField, SpinButton, Tree, Window, Dialog, FileDialog, ColorPickerDialog and PropertyGrid.
 * **MML(Myra Markup Language).** XML based declarative language to describe UI ([example](/samples/Myra.Samples.AllWidgets/allControls.xmmp)).
-* **Skinning.**  The default skin(it had been borrowed from [VisUI](https://github.com/kotcrab/vis-ui)) could be replaced with a custom skin loaded from the XML ([example](/samples/Myra.Samples.CustomUIStylesheet/Resources/ui_stylesheet.xmms)).
+* **Skinning.** The default skin (borrowed from [VisUI](https://github.com/kotcrab/vis-ui)) can be replaced with a custom skin loaded from XML ([example](/samples/Myra.Samples.CustomUIStylesheet/Resources/ui_stylesheet.xmms)).
 * **MyraPad.** Standalone WYSIWYG MML based UI designer.
 * **Myra.PlatformAgnostic.** Version of the library that could be used in any C# game engine.
 
@@ -19,7 +19,7 @@ If you would like to see Myra in action, download the binary release(Myra.v.v.v.
 [https://rds1983.github.io/Myra](https://rds1983.github.io/Myra)
 
 ## Support
-Use following resources if you need help with Myra or have other questions:
+Use the following resources if you need help with Myra or have other questions:
 * [Myra Discord](https://discord.gg/ZeHxhCY)
 * [Myra Topic at MonoGame Community Forum](http://community.monogame.net/t/myra-ui-library-for-the-monogame)
 * [Myra Topic at gamedev.ru (Russian)](https://gamedev.ru/code/forum/?id=241617)

@@ -76,5 +76,5 @@ Name|Description
 ----|-----------
 ValueChanging|Fired when the value is about to be changed. Set Cancel to true if you want to cancel the change
 TextChanged|Fired every time when the text had been changed
-TextChangedByUser|Fired every time when the text had been changed by user(isnt fired if the Text had been changed through the code)
+TextChangedByUser|Fired every time when the text had been changed by user (isn't fired if the Text had been changed through the code)
 CursorPositionChanged|Fired when the cursor changes its position

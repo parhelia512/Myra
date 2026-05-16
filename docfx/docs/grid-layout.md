@@ -1,9 +1,9 @@
 # Basics
-Grid is a container. It partitions the available space into cells and places the child widgets there. The partitioning configuration should be explicity set by creating Proportion objects, setting their properties and adding to either RowsProportions or ColumnsProportions property.
+Grid is a container. It partitions the available space into cells and places the child widgets there. The partitioning configuration should be explicitly set by creating Proportion objects, setting their properties and adding to either RowsProportions or ColumnsProportions property.
 
-Every child Widget should also explicity specify which cell(s) it would occupy by setting attached properties GridColumn, GridRow, GridColumnSpan and GridRowSpan.
+Every child Widget should also explicitly specify which cell(s) it would occupy by setting attached properties GridColumn, GridRow, GridColumnSpan and GridRowSpan.
 
-I.e. following code describes simple 2x2 grid with 8 pixels spacing beetween rows and columns, and 3 child widgets:
+I.e. following code describes simple 2x2 grid with 8 pixels spacing between rows and columns, and 3 child widgets:
 ```c#
 // Create grid
 var grid = new Grid
@@ -216,7 +216,7 @@ It would result in following:
 
 ![alt text](~/images/grid-layout2.png)
 
-*Note*. We have set Left/Top/HorizontalAlignment/VerticalAlignment in the child widgets, hovewer their behavior is different than in the [Panel](basic-layout-and-panel.md) container. In Panel those properties applied relative to the whole container, while in the grid it is applied to the widget's cell.
+*Note*. We have set Left/Top/HorizontalAlignment/VerticalAlignment in the child widgets, however their behavior is different than in the [Panel](basic-layout-and-panel.md) container. In Panel those properties applied relative to the whole container, while in the grid it is applied to the widget's cell.
 
 # Default Proportions
 

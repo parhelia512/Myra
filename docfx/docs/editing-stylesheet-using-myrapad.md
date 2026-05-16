@@ -1,7 +1,7 @@
 ### Overview
 This tutorial demonstrates how a stylesheet could be edited using the MyraPad.
 
-### Tutorial.
+### Tutorial
 1. Download and unpack file: [stylesheetEdit.zip](~/files/stylesheetEdit.zip). 
 
    It consists from UI in MML(allControls.xmmp) and linked stylesheet(which is copy of Myra default stylesheet).
