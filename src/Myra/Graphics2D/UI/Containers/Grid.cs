@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using Myra.MML;
-using Myra.Attributes;
+using Myra.Events;
 
 
 #if MONOGAME || FNA
@@ -180,7 +180,7 @@ namespace Myra.Graphics2D.UI
 				var ev = HoverIndexChanged;
 				if (ev != null)
 				{
-					ev(this, EventArgs.Empty);
+					ev(this, new MyraEventArgs(InputEventType.HoverIndexChanged));
 				}
 			}
 		}
@@ -206,7 +206,7 @@ namespace Myra.Graphics2D.UI
 				var ev = HoverIndexChanged;
 				if (ev != null)
 				{
-					ev(this, EventArgs.Empty);
+					ev(this, new MyraEventArgs(InputEventType.HoverIndexChanged));
 				}
 			}
 		}
@@ -229,7 +229,7 @@ namespace Myra.Graphics2D.UI
 				var ev = SelectedIndexChanged;
 				if (ev != null)
 				{
-					ev(this, EventArgs.Empty);
+					ev(this, new MyraEventArgs(InputEventType.SelectedIndexChanged));
 				}
 			}
 		}
@@ -252,13 +252,13 @@ namespace Myra.Graphics2D.UI
 				var ev = SelectedIndexChanged;
 				if (ev != null)
 				{
-					ev(this, EventArgs.Empty);
+					ev(this, new MyraEventArgs(InputEventType.SelectedIndexChanged));
 				}
 			}
 		}
 
-		public event EventHandler SelectedIndexChanged = null;
-		public event EventHandler HoverIndexChanged = null;
+		public event MyraEventHandler SelectedIndexChanged = null;
+		public event MyraEventHandler HoverIndexChanged = null;
 
 		public Grid()
 		{
@@ -305,7 +305,7 @@ namespace Myra.Graphics2D.UI
 			InvalidateMeasure();
 		}
 
-		private void OnProportionsChanged(object sender, EventArgs args)
+		private void OnProportionsChanged(object sender, MyraEventArgs args)
 		{
 			InvalidateMeasure();
 		}
