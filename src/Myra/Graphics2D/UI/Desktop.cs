@@ -5,6 +5,8 @@ using System.Collections.Specialized;
 using Myra.Graphics2D.UI.Styles;
 using Myra.Utility;
 using Myra.Events;
+using MonoGame.Utilities;
+
 
 #if MONOGAME || FNA
 using Microsoft.Xna.Framework;
@@ -23,13 +25,13 @@ namespace Myra.Graphics2D.UI
 {
 	public partial class Desktop : ITransformable, IDisposable
 	{
-		private Rectangle _bounds;
+		private Rectangle _lastBounds;
 		private Vector2 _scale = Vector2.One;
-		private Vector2 _transformOrigin = Vector2.Zero;
+		private Vector2 _transformOrigin = new Vector2(0.5f, 0.5f);
 		private float _rotation = 0.0f;
-		private Transform? _transform;
-		private Matrix _inverseMatrix;
-		private bool _inverseMatrixDirty = true;
+
+		private bool _transformDirty = true;
+		private Transform _transform;
 
 		private readonly InputContext _inputContext = new InputContext();
 		private readonly RenderContext _renderContext = new RenderContext();
@@ -44,6 +46,8 @@ namespace Myra.Graphics2D.UI
 #endif
 
 		private bool _isDisposed = false;
+
+		public Func<Rectangle> BoundsFetcher { get; set; } = DefaultBoundsFetcher;
 
 		/// <summary>
 		/// Root Widget
@@ -91,27 +95,31 @@ namespace Myra.Graphics2D.UI
 
 		public ObservableCollection<Widget> Widgets { get; } = new ObservableCollection<Widget>();
 
-		public Func<Rectangle> BoundsFetcher = DefaultBoundsFetcher;
-
 		internal Rectangle InternalBounds
 		{
-			get => _bounds;
+			get => _lastBounds;
 
 			set
 			{
-				if (_bounds == value)
+				if (_lastBounds == value)
 				{
 					return;
 				}
 
-				_bounds = value;
+				_lastBounds = value;
 
-
+				InvalidateLayout();
 				InvalidateTransform();
 			}
 		}
 
-		internal Rectangle LayoutBounds => new Rectangle(0, 0, InternalBounds.Width, InternalBounds.Height);
+		internal Rectangle LayoutBounds
+		{
+			get
+			{
+				return new Rectangle(0, 0, _lastBounds.Width, _lastBounds.Height);
+			}
+		}
 
 		public Widget ContextMenu { get; private set; }
 		public Widget Tooltip { get; private set; }
@@ -165,7 +173,7 @@ namespace Myra.Graphics2D.UI
 			get => _scale;
 			set
 			{
-				if (value == _scale)
+				if (value.EpsilonEquals(_scale))
 				{
 					return;
 				}
@@ -181,7 +189,7 @@ namespace Myra.Graphics2D.UI
 			get => _transformOrigin;
 			set
 			{
-				if (value == _transformOrigin)
+				if (value.EpsilonEquals(_transformOrigin))
 				{
 					return;
 				}
@@ -197,7 +205,7 @@ namespace Myra.Graphics2D.UI
 
 			set
 			{
-				if (value == _rotation)
+				if (value.EpsilonEquals(_rotation))
 				{
 					return;
 				}
@@ -211,15 +219,9 @@ namespace Myra.Graphics2D.UI
 		{
 			get
 			{
-				if (_transform == null)
-				{
-					_transform = new Transform(_bounds.Location.ToVector2(),
-						TransformOrigin * _bounds.Size().ToVector2(),
-						Scale,
-						Rotation * (float)Math.PI / 180);
-				}
+				UpdateTransform();
 
-				return _transform.Value;
+				return _transform;
 			}
 		}
 
@@ -314,6 +316,7 @@ namespace Myra.Graphics2D.UI
 			KeyDownHandler = OnKeyDown;
 
 #if FNA
+			TextInputEXT.StartTextInput();
 			TextInputEXT.TextInput += OnChar;
 #endif
 
@@ -395,6 +398,11 @@ namespace Myra.Graphics2D.UI
 			widget.Top = position.Y;
 		}
 
+		/// <summary>
+		/// Shows the context menu
+		/// </summary>
+		/// <param name="menu">Widget to show</param>
+		/// <param name="position">Show position in the global coordinates</param>
 		public void ShowContextMenu(Widget menu, Point position)
 		{
 			HideContextMenu();
@@ -405,7 +413,7 @@ namespace Myra.Graphics2D.UI
 				return;
 			}
 
-
+			position = ToLocal(position);
 			FixOverWidgetPosition(menu, position);
 
 			ContextMenu.Visible = true;
@@ -484,11 +492,14 @@ namespace Myra.Graphics2D.UI
 
 			_renderContext.Begin();
 
-			// Disable transform during setting the scissor rectangle for the Desktop
 			_renderContext.Transform = Transform;
 
-			var bounds = _renderContext.Transform.Apply(LayoutBounds);
-			_renderContext.Scissor = bounds;
+			if (Rotation.IsZero())
+			{
+				var bounds = Transform.Apply(LayoutBounds);
+				_renderContext.Scissor = bounds;
+			}
+
 			_renderContext.Opacity = Opacity;
 
 			if (Background != null)
@@ -503,7 +514,7 @@ namespace Myra.Graphics2D.UI
 
 					if (MyraEnvironment.EnableModalDarkening && widget.IsModal)
 					{
-						_renderContext.FillRectangle(bounds, MyraEnvironment.DarkeningColor);
+						_renderContext.FillRectangle(LayoutBounds, MyraEnvironment.DarkeningColor);
 					}
 
 					widget.Render(_renderContext);
@@ -551,8 +562,7 @@ namespace Myra.Graphics2D.UI
 
 		private void InvalidateTransform()
 		{
-			_transform = null;
-			_inverseMatrixDirty = true;
+			_transformDirty = true;
 
 			foreach (var child in ChildrenCopy)
 			{
@@ -560,25 +570,25 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
-		public Vector2 ToGlobal(Vector2 pos) => Transform.Apply(pos);
-
-		public Point ToGlobal(Point pos) => Transform.Apply(pos);
-
-		public Vector2 ToLocal(Vector2 source)
+		public Vector2 ToGlobal(Vector2 pos)
 		{
-			if (_inverseMatrixDirty)
-			{
-#if MONOGAME || FNA || STRIDE
-				_inverseMatrix = Matrix.Invert(Transform.Matrix);
-#else
-				Matrix inverse = Matrix.Identity;
-				Matrix.Invert(Transform.Matrix, out inverse);
-				_inverseMatrix = inverse;
-#endif
-				_inverseMatrixDirty = false;
-			}
+			UpdateTransform();
 
-			return source.Transform(ref _inverseMatrix);
+			return Transform.Apply(pos);
+		}
+
+		public Point ToGlobal(Point pos)
+		{
+			UpdateTransform();
+
+			return Transform.Apply(pos);
+		}
+
+		public Vector2 ToLocal(Vector2 pos)
+		{
+			UpdateTransform();
+
+			return Transform.InverseApply(pos);
 		}
 
 		public Point ToLocal(Point pos) => ToLocal(new Vector2(pos.X, pos.Y)).ToPoint();
@@ -590,15 +600,9 @@ namespace Myra.Graphics2D.UI
 
 		public void UpdateLayout()
 		{
-			var newBounds = BoundsFetcher();
-			if (InternalBounds != newBounds)
-			{
-				InvalidateLayout();
-			}
-
-			InternalBounds = newBounds;
-
-			if (InternalBounds.IsEmpty)
+			var bounds = BoundsFetcher();
+			InternalBounds = bounds;
+			if (bounds.IsEmpty)
 			{
 				return;
 			}
@@ -867,10 +871,20 @@ namespace Myra.Graphics2D.UI
 			return false;
 		}
 
-		public static Rectangle DefaultBoundsFetcher()
+		private void UpdateTransform()
 		{
-			var size = CrossEngineStuff.ViewSize;
-			return new Rectangle(0, 0, size.X, size.Y);
+			if (!_transformDirty)
+			{
+				return;
+			}
+
+			var bounds = InternalBounds;
+			_transform = new Transform(bounds.Location.ToVector2(),
+				TransformOrigin * bounds.Size().ToVector2(),
+				Scale,
+				Rotation * (float)Math.PI / 180);
+
+			_transformDirty = false;
 		}
 
 		private void ReleaseUnmanagedResources()
@@ -894,6 +908,13 @@ namespace Myra.Graphics2D.UI
 		~Desktop()
 		{
 			ReleaseUnmanagedResources();
+		}
+
+		public static Rectangle DefaultBoundsFetcher()
+		{
+			var size = CrossEngineStuff.ViewSize;
+
+			return new Rectangle(0, 0, size.X, size.Y);
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace Myra.Graphics2D.UI
 
 		[Content]
 		[Browsable(false)]
-		public override ObservableCollection<Widget> Widgets => _widgets;
+		public override IList<Widget> Widgets => _widgets;
 
 		[XmlIgnore]
 		[Browsable(false)]

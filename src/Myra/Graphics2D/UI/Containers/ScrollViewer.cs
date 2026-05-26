@@ -138,12 +138,10 @@ namespace Myra.Graphics2D.UI
 		}
 
 		[Category("Appearance")]
-		public int ScrollMultiplier
-		{
-			get; set;
-		} = 10;
+		[DefaultValue(10)]
+		public int ScrollMultiplier { get; set; } = 10;
 
-        [Browsable(false)]
+		[Browsable(false)]
 		[Content]
 		public override Widget Content
 		{
@@ -580,7 +578,7 @@ namespace Myra.Graphics2D.UI
 					_thumbMaximumY = 1;
 				}
 
-				if (_horizontalScrollingOn)
+				if (_horizontalScrollingOn && ShowHorizontalScrollBar)
 				{
 					bounds.Width = measureSize.X;
 				}
@@ -589,7 +587,7 @@ namespace Myra.Graphics2D.UI
 					bounds.Width = availableSize.X;
 				}
 
-				if (_verticalScrollingOn)
+				if (_verticalScrollingOn && ShowVerticalScrollBar)
 				{
 					bounds.Height = measureSize.Y;
 				}

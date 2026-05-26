@@ -1,28 +1,30 @@
 using AssetManagementBase;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using Myra.Events;
-using Myra.Graphics2D.UI.File;
-using Myra.Graphics2D.UI.Properties;
-using Myra.Graphics2D.UI;
-using Myra.Graphics2D;
-using Myra;
-using Myra.Utility;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System;
 using FontStashSharp;
 using FontStashSharp.RichText;
-using Myra.MML;
-using System.Reflection;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Myra;
 using Myra.Attributes;
+using Myra.Events;
+using Myra.Graphics2D;
+using Myra.Graphics2D.UI;
+using Myra.Graphics2D.UI.File;
+using Myra.Graphics2D.UI.Properties;
+using Myra.Graphics2D.UI.Styles;
+using Myra.MML;
+using Myra.Utility;
+using System;
 using System.Collections;
-using System.Xml.Linq;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace MyraPad.UI
 {
@@ -34,45 +36,44 @@ namespace MyraPad.UI
 		private const string MenuItemName = "MenuItem";
 		private const string ListItemName = "ListItem";
 
-		private static readonly string[] SimpleWidgets = new[]
+		private static readonly Type[] SimpleWidgets = new[]
 		{
-			"ImageTextButton",
-			"SpinButton",
-			"HorizontalProgressBar",
-			"VerticalProgressBar",
-			"HorizontalSeparator",
-			"VerticalSeparator",
-			"HorizontalSlider",
-			"VerticalSlider",
-			"Image",
-			"Label",
-			"TextBox",
-			"PropertyGrid",
+			typeof(ImageTextButton),
+			typeof(SpinButton),
+			typeof(HorizontalProgressBar),
+			typeof(VerticalProgressBar),
+			typeof(HorizontalSeparator),
+			typeof(VerticalSeparator),
+			typeof(HorizontalSlider),
+			typeof(VerticalSlider),
+			typeof(Image),
+			typeof(Label),
+			typeof(TextBox),
+			typeof(PropertyGrid),
 		};
 
-		private static readonly string[] Containers = new[]
+		private static readonly Type[] Containers = new[]
 		{
-			"Button",
-			"ToggleButton",
-			"CheckButton",
-			"RadioButton",
-			"Window",
-			"Grid",
-			"Panel",
-			"ScrollViewer",
-			"VerticalSplitPane",
-			"HorizontalSplitPane",
-			"VerticalStackPanel",
-			"HorizontalStackPanel",
-			"ListView",
-			"ComboView"
+			typeof(Button),
+			typeof(ToggleButton),
+			typeof(CheckButton),
+			typeof(RadioButton),
+			typeof(Grid),
+			typeof(Panel),
+			typeof(ScrollViewer),
+			typeof(VerticalSplitPane),
+			typeof(HorizontalSplitPane),
+			typeof(VerticalStackPanel),
+			typeof(HorizontalStackPanel),
+			typeof(ListView),
+			typeof(ComboView)
 		};
 
-		private static readonly string[] SpecialContainers = new[]
+		private static readonly Type[] SpecialContainers = new[]
 {
-			"HorizontalMenu",
-			"VerticalMenu",
-			"TabControl",
+			typeof(HorizontalMenu),
+			typeof(VerticalMenu),
+			typeof(TabControl),
 		};
 
 		private static readonly Regex TagResolver = new Regex("<([A-Za-z0-9\\.]+)");
@@ -94,8 +95,8 @@ namespace MyraPad.UI
 		private readonly Dictionary<string, FontSystem> _fontCache = new Dictionary<string, FontSystem>();
 		private readonly Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
 		private readonly TreeView _treeViewExplorer;
-
 		private VerticalMenu _autoCompleteMenu = null;
+		private bool _rightClick;
 
 		public string FilePath
 		{
@@ -248,6 +249,8 @@ namespace MyraPad.UI
 		public object NewObject { get; set; }
 		public Project NewProject { get; set; }
 
+		public int? NewProjectSelectedNodeIndex { get; set; }
+
 		public string LastFolder { get; set; }
 		public Options Options { get; }
 
@@ -261,6 +264,7 @@ namespace MyraPad.UI
 			_menuFileSave.Selected += SaveItemOnClicked;
 			_menuFileSaveAs.Selected += SaveAsItemOnClicked;
 			_menuFileExportToCS.Selected += ExportCsItemOnSelected;
+			_menuFileExportToCSLight.Selected += ExportCsLightItemOnSelected;
 			_menuFileLoadStylesheet.Selected += OnMenuFileLoadStylesheet;
 			_menuFileResetStylesheet.Selected += OnMenuFileResetStylesheetSelected;
 			_menuFileDebugOptions.Selected += DebugOptionsItemOnSelected;
@@ -299,6 +303,8 @@ namespace MyraPad.UI
 			};
 
 			_treeViewExplorer.SelectionChanged += _treeViewExplorer_SelectionChanged;
+			_treeViewExplorer.TouchDown += _treeViewExplorer_TouchDown;
+			_treeViewExplorer.TouchUp += _treeViewExplorer_TouchUp;
 
 			_panelExplorer.Content = _treeViewExplorer;
 
@@ -354,6 +360,220 @@ namespace MyraPad.UI
 			}
 		}
 
+		private void DefaultCreate(object parent, Type t)
+		{
+			try
+			{
+				IItemWithId child;
+
+				var constructor = t.GetConstructor(Type.EmptyTypes);
+				if (constructor != null)
+				{
+					child = (IItemWithId)Activator.CreateInstance(t);
+				}
+				else
+				{
+					// Try with stylename constructor
+					child = (IItemWithId)Activator.CreateInstance(t, Stylesheet.DefaultStyleName);
+				}
+
+				do
+				{
+					var asContentControl = parent as IContent;
+					if (asContentControl != null)
+					{
+						asContentControl.Content = (Widget)child;
+						break;
+					}
+
+					var asContainer = parent as IContainer;
+					if (asContainer != null)
+					{
+						asContainer.Widgets.Add((Widget)child);
+						break;
+					}
+
+					var asMenu = parent as Menu;
+					if (asMenu != null)
+					{
+						asMenu.Items.Add((IMenuItem)child);
+						break;
+					}
+
+					var asTabControl = parent as TabControl;
+					if (asTabControl != null)
+					{
+						asTabControl.Items.Add((TabItem)child);
+						break;
+					}
+				}
+				while (false);
+
+				// This will make the new item to appear in the explorer
+				RefreshExplorer();
+
+				// Schedule selection of the new item in the explorer after project refresh
+				for (var i = 0; i < _treeViewExplorer.TotalNodesCount; ++i)
+				{
+					var node = _treeViewExplorer.GetNodeByAbsoluteIndex(i);
+					if (node.Tag == child)
+					{
+						NewProjectSelectedNodeIndex = i;
+						break;
+					}
+				}
+
+				// Update the mml and schedule the project refresh
+				_textSource.Text = _project.Save();
+			}
+			catch (Exception ex)
+			{
+				var msg = Dialog.CreateMessageBox("Error", ex.Message);
+				msg.ShowModal(Desktop);
+			}
+		}
+
+		private ChildCreator CreateNewItemAction(Widget parent, Type childType) => new ChildCreator(childType.Name, () => DefaultCreate(parent, childType));
+
+		private ChildCreator[] CreateNewItemActions(Widget parent, IEnumerable<Type> childTypes)
+		{
+			var result = new List<ChildCreator>();
+
+			foreach (var childType in childTypes)
+			{
+				result.Add(CreateNewItemAction(parent, childType));
+			}
+
+			return result.ToArray();
+		}
+
+		private List<ChildCreator> BuildAddActions(Widget parent)
+		{
+			var result = new List<ChildCreator>();
+			if (parent == null)
+			{
+				return result;
+			}
+
+			var widgetTypeName = parent.GetType().Name;
+			if (Containers.Contains(widgetTypeName) || widgetTypeName == "Window" || widgetTypeName == "Dialog")
+			{
+				result.AddRange(CreateNewItemActions(parent, SimpleWidgets));
+				result.AddRange(CreateNewItemActions(parent, Containers));
+				result.AddRange(CreateNewItemActions(parent, SpecialContainers));
+			}
+			else if (widgetTypeName.EndsWith("Menu"))
+			{
+				result.Add(CreateNewItemAction(parent, typeof(MenuItem)));
+				result.Add(CreateNewItemAction(parent, typeof(MenuSeparator)));
+			}
+			else if (widgetTypeName == "TabControl")
+			{
+				result.Add(CreateNewItemAction(parent, typeof(TabItem)));
+			}
+
+			result = result.OrderBy(s => s.Name).ToList();
+
+			return result;
+		}
+
+		private void _treeViewExplorer_TouchDown(object sender, EventArgs e)
+		{
+			var state = Mouse.GetState();
+
+			_rightClick = state.RightButton == ButtonState.Pressed;
+		}
+
+		private void _treeViewExplorer_TouchUp(object sender, EventArgs e)
+		{
+			if (!_rightClick || Desktop.ContextMenu != null)
+			{
+				// Dont show if it's already shown
+				return;
+			}
+
+			try
+			{
+				var selectedWidget = (Widget)_treeViewExplorer.SelectedNode.Tag;
+
+				var addActions = BuildAddActions(selectedWidget);
+				if (addActions.Count == 0)
+				{
+					return;
+				}
+
+				var asContent = selectedWidget as IContent;
+
+				var verticalMenu = new VerticalMenu();
+				if (addActions.Count < 5)
+				{
+					var prefix = "Add ";
+					if (asContent != null && asContent.Content != null)
+					{
+						prefix = "Replace Content With ";
+					}
+
+					// Simply show all actions in the context menu
+					foreach (var addAction in addActions)
+					{
+						var menuItem = new MenuItem
+						{
+							Text = prefix + addAction.Name
+						};
+
+						menuItem.Selected += (s, a) => addAction.Creator();
+						verticalMenu.Items.Add(menuItem);
+					}
+				}
+				else
+				{
+					var prefix = "Add New Widget";
+
+					if (asContent != null && asContent.Content != null)
+					{
+						prefix = "Replace Content With New Widget";
+					}
+					var menuItem = new MenuItem
+					{
+						Text = prefix + "..."
+					};
+
+					menuItem.Selected += (sender, args) =>
+					{
+						// Use special dialog
+						var addNewWidgetDialog = new AddNewWidgetDialog();
+						addNewWidgetDialog.Title = prefix;
+
+						addNewWidgetDialog.SetNames((from a in addActions select a.Name).ToArray());
+
+						addNewWidgetDialog.Closed += (s, a) =>
+						{
+							if (!addNewWidgetDialog.Result)
+							{
+								// Dialog was either closed or "Cancel" clicked
+								return;
+							}
+
+							// "Ok" was clicked or Enter key pressed
+							var addAction = addActions[addNewWidgetDialog.SelectedIndex];
+							addAction.Creator();
+						};
+
+						addNewWidgetDialog.ShowModal(Desktop);
+					};
+
+					verticalMenu.Items.Add(menuItem);
+				}
+
+				Desktop.ShowContextMenu(verticalMenu, Desktop.MousePosition);
+			}
+			catch (Exception ex)
+			{
+				var msg = Dialog.CreateMessageBox("Error", ex.Message);
+				msg.ShowModal(Desktop);
+			}
+		}
+
 		protected override void OnPlacedChanged()
 		{
 			base.OnPlacedChanged();
@@ -405,6 +625,10 @@ namespace MyraPad.UI
 					else if (Desktop.IsKeyDown(Keys.E))
 					{
 						ExportCsItemOnSelected(this, MyraEventArgs.Empty);
+					}
+					else if (Desktop.IsKeyDown(Keys.W))
+					{
+						ExportCsLightItemOnSelected(this, EventArgs.Empty);
 					}
 					else if (Desktop.IsKeyDown(Keys.Q))
 					{
@@ -504,7 +728,7 @@ namespace MyraPad.UI
 			var values = new List<CustomValue>();
 			int? selectedIndex = null;
 			var val = (string)record.GetValue(obj);
-			for(var i = 0; i < styleNames.Length; ++i)
+			for (var i = 0; i < styleNames.Length; ++i)
 			{
 				var styleName = styleNames[i];
 
@@ -1004,6 +1228,7 @@ namespace MyraPad.UI
 				{
 					var lastStartPos = _currentTagStart.Value;
 					var lastEndPos = cursorPos;
+
 					// Build context menu
 					_autoCompleteMenu = new VerticalMenu();
 					foreach (var a in all)
@@ -1089,14 +1314,15 @@ namespace MyraPad.UI
 
 			if (_parentTag == "Project")
 			{
-				result.AddRange(Containers);
+				result.AddRange(Containers.ToStringList());
+				result.Add("Window");
 				result.Add("Dialog");
 			}
-			else if (Containers.Contains(_parentTag) || _parentTag == "Dialog")
+			else if (Containers.Contains(_parentTag) || _parentTag == "Window" || _parentTag == "Dialog")
 			{
-				result.AddRange(SimpleWidgets);
-				result.AddRange(Containers);
-				result.AddRange(SpecialContainers);
+				result.AddRange(SimpleWidgets.ToStringList());
+				result.AddRange(Containers.ToStringList());
+				result.AddRange(SpecialContainers.ToStringList());
 			}
 			else if (_parentTag.EndsWith(RowsProportionsName) || _parentTag.EndsWith(ColumnsProportionsName) || _parentTag.EndsWith(ProportionsName))
 			{
@@ -1105,6 +1331,7 @@ namespace MyraPad.UI
 			else if (_parentTag.EndsWith("Menu"))
 			{
 				result.Add("MenuItem");
+				result.Add("MenuSeparator");
 			}
 			else if (_parentTag == "ListBox" || _parentTag == "ComboBox")
 			{
@@ -1126,7 +1353,6 @@ namespace MyraPad.UI
 			if (_parentTag == "VerticalStackPanel" || _parentTag == "HorizontalStackPanel")
 			{
 				result.Add(_parentTag + "." + Project.DefaultProportionName);
-				result.Add(_parentTag + "." + ProportionsName);
 			}
 
 			result = result.OrderBy(s => !s.Contains('.')).ThenBy(s => s).ToList();
@@ -1277,6 +1503,30 @@ namespace MyraPad.UI
 			};
 		}
 
+		private void ExportCsLightItemOnSelected(object sender1, EventArgs eventArgs)
+		{
+			try
+			{
+				string code;
+				using (var export = new ExporterCS(Project))
+				{
+					code = export.ExportDesignerCode(MyraPad.Resources.ExportCSLight, true);
+				}
+
+				var dlg = new ExportLightWindow
+				{
+					Code = code
+				};
+
+				dlg.ShowModal(Desktop);
+			}
+			catch (Exception ex)
+			{
+				var msg = Dialog.CreateMessageBox("Error", ex.Message);
+				msg.ShowModal(Desktop);
+			}
+		}
+
 		private void PropertyGridOnPropertyChanged(object sender, GenericEventArgs<string> eventArgs)
 		{
 			IsDirty = true;
@@ -1355,38 +1605,31 @@ namespace MyraPad.UI
 				{
 					rootType = "HorizontalStackPanel";
 				}
-				else
-				if (dlg._radioButtonVerticalStackPanel.IsPressed)
+				else if (dlg._radioButtonVerticalStackPanel.IsPressed)
 				{
 					rootType = "VerticalStackPanel";
 				}
-				else
-				if (dlg._radioButtonPanel.IsPressed)
+				else if (dlg._radioButtonPanel.IsPressed)
 				{
 					rootType = "Panel";
 				}
-				else
-				if (dlg._radioButtonScrollViewer.IsPressed)
+				else if (dlg._radioButtonScrollViewer.IsPressed)
 				{
 					rootType = "ScrollViewer";
 				}
-				else
-				if (dlg._radioButtonHorizontalSplitPane.IsPressed)
+				else if (dlg._radioButtonHorizontalSplitPane.IsPressed)
 				{
 					rootType = "HorizontalSplitPane";
 				}
-				else
-				if (dlg._radioButtonVerticalSplitPane.IsPressed)
+				else if (dlg._radioButtonVerticalSplitPane.IsPressed)
 				{
 					rootType = "VerticalSplitPane";
 				}
-				else
-				if (dlg._radioButtonWindow.IsPressed)
+				else if (dlg._radioButtonWindow.IsPressed)
 				{
 					rootType = "Window";
 				}
-				else
-				if (dlg._radioButtonDialog.IsPressed)
+				else if (dlg._radioButtonDialog.IsPressed)
 				{
 					rootType = "Dialog";
 				}
@@ -1499,6 +1742,15 @@ namespace MyraPad.UI
 					{
 						_projectHolder.Background = null;
 					}
+
+					if (NewProjectSelectedNodeIndex != null)
+					{
+						Debug.WriteLine(NewProjectSelectedNodeIndex);
+						_treeViewExplorer.SelectedNode = _treeViewExplorer.GetNodeByAbsoluteIndex(NewProjectSelectedNodeIndex.Value);
+					}
+
+					NewProject = null;
+					NewProjectSelectedNodeIndex = null;
 				}
 			}
 			catch (Exception ex)

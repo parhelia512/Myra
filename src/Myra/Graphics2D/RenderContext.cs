@@ -20,34 +20,57 @@ using Texture2D = System.Object;
 using Color = FontStashSharp.FSColor;
 #endif
 
+#if PLATFORM_AGNOSTIC
+using Matrix = System.Numerics.Matrix3x2;
+#endif
+
 namespace Myra.Graphics2D
 {
 	public enum TextureFiltering
 	{
 		Nearest,
 		Linear,
-        Anisotropic
-    }
+		Anisotropic
+	}
 
 	public partial class RenderContext : IDisposable
 	{
+#if MONOGAME
+		private static SamplerState _textureFilteringAnisotropic = new SamplerState
+		{
+			Filter = TextureFilter.Anisotropic,
+			AddressU = TextureAddressMode.Clamp,
+			AddressV = TextureAddressMode.Clamp,
+			AddressW = TextureAddressMode.Clamp,
+			BorderColor = Color.Transparent,
+			MaxAnisotropy = 16,
+			MaxMipLevel = 16,
+			MipMapLevelOfDetailBias = 0f,
+			ComparisonFunction = CompareFunction.Never,
+			FilterMode = TextureFilterMode.Default
+		};
+
+		public void SetAnisotropicFilteringMode(bool isAnisotropicFiltering)
+		{
+			_isAnisotropicFilteringOn = isAnisotropicFiltering;
+		}
+#elif FNA
+#elif STRIDE
+		private static readonly RasterizerStateDescription _uiRasterizerState;
+
+		static RenderContext()
+		{
+			var rs = new RasterizerStateDescription();
+			rs.SetDefault();
+			rs.ScissorTestEnable = true;
+			_uiRasterizerState = rs;
+		}
+#endif
+
 #if MONOGAME || FNA
 		private static RasterizerState _uiRasterizerState;
-		private static SamplerState _textureFilteringAnisotropic = new SamplerState
-        {
-            Filter = TextureFilter.Anisotropic,
-            AddressU = TextureAddressMode.Clamp,
-            AddressV = TextureAddressMode.Clamp,
-            AddressW = TextureAddressMode.Clamp,
-            BorderColor = Color.Transparent,
-            MaxAnisotropy = 16,
-            MaxMipLevel = 16,
-            MipMapLevelOfDetailBias = 0f,
-            ComparisonFunction = CompareFunction.Never,
-            FilterMode = TextureFilterMode.Default
-        };
 
-        private static RasterizerState UIRasterizerState
+		private static RasterizerState UIRasterizerState
 		{
 			get
 			{
@@ -62,16 +85,6 @@ namespace Myra.Graphics2D
 				};
 				return _uiRasterizerState;
 			}
-		}
-#elif STRIDE
-		private static readonly RasterizerStateDescription _uiRasterizerState;
-
-		static RenderContext()
-		{
-			var rs = new RasterizerStateDescription();
-			rs.SetDefault();
-			rs.ScissorTestEnable = true;
-			_uiRasterizerState = rs;
 		}
 #endif
 
@@ -89,7 +102,12 @@ namespace Myra.Graphics2D
 		private bool _beginCalled;
 		private Rectangle _scissor;
 		private TextureFiltering _textureFiltering = TextureFiltering.Nearest;
-		public Transform Transform;
+
+		internal Transform Transform;
+
+#if MONOGAME
+		private bool _isAnisotropicFilteringOn;
+#endif
 
 		internal Rectangle DeviceScissor
 		{
@@ -118,8 +136,6 @@ namespace Myra.Graphics2D
 #endif
 			}
 		}
-
-        private bool _isAnisotropicFilteringOn;
 
 		public Rectangle Scissor
 		{
@@ -270,7 +286,11 @@ namespace Myra.Graphics2D
 		/// <param name="depth"></param>
 		public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 scale, float depth = 0.0f)
 		{
+#if MONOGAME
 			SetTextureFiltering(_isAnisotropicFilteringOn ? TextureFiltering.Anisotropic : TextureFiltering.Nearest);
+#else
+			SetTextureFiltering(TextureFiltering.Nearest);
+#endif
 			color = CrossEngineStuff.MultiplyColor(color, Opacity);
 			scale *= Transform.Scale;
 			rotation += Transform.Rotation;
@@ -444,8 +464,17 @@ namespace Myra.Graphics2D
 
 		public void Begin()
 		{
-#if MONOGAME || FNA
-            var samplerState = SelectedSamplerState();
+#if MONOGAME
+			var samplerState = SelectedSamplerState();
+
+			_renderer.Begin(SpriteSortMode.Deferred,
+				BlendState.AlphaBlend,
+				samplerState,
+				null,
+				UIRasterizerState,
+				null);
+#elif FNA
+			var samplerState = SelectedSamplerState();
 
 			_renderer.Begin(SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
@@ -470,38 +499,40 @@ namespace Myra.Graphics2D
 		}
 
 #if MONOGAME || FNA
-        private SamplerState SelectedSamplerState()
-        {
-            switch (_textureFiltering)
-            {
-                case TextureFiltering.Nearest:
-                    return SamplerState.PointClamp;
-                case TextureFiltering.Linear:
-                    return SamplerState.LinearClamp;
-                case TextureFiltering.Anisotropic:
-                    return _textureFilteringAnisotropic;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+		private SamplerState SelectedSamplerState()
+		{
+			switch (_textureFiltering)
+			{
+				case TextureFiltering.Nearest:
+					return SamplerState.PointClamp;
+				case TextureFiltering.Linear:
+					return SamplerState.LinearClamp;
+#if MONOGAME
+				case TextureFiltering.Anisotropic:
+					return _textureFilteringAnisotropic;
+#endif
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
 #elif STRIDE
-        private SamplerState SelectedSamplerState()
-        {
-            switch (_textureFiltering)
-            {
-                case TextureFiltering.Nearest:
-                    return MyraEnvironment.Game.GraphicsDevice.SamplerStates.PointClamp;
-                case TextureFiltering.Linear:
-                    return MyraEnvironment.Game.GraphicsDevice.SamplerStates.LinearClamp;
-                case TextureFiltering.Anisotropic:
-                    return MyraEnvironment.Game.GraphicsDevice.SamplerStates.AnisotropicClamp;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+		private SamplerState SelectedSamplerState()
+		{
+			switch (_textureFiltering)
+			{
+				case TextureFiltering.Nearest:
+					return MyraEnvironment.GraphicsDevice.SamplerStates.PointClamp;
+				case TextureFiltering.Linear:
+					return MyraEnvironment.GraphicsDevice.SamplerStates.LinearClamp;
+				case TextureFiltering.Anisotropic:
+					return MyraEnvironment.GraphicsDevice.SamplerStates.AnisotropicClamp;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
 #endif
 
-        public void End()
+		public void End()
 		{
 			_renderer.End();
 			_beginCalled = false;
@@ -535,10 +566,5 @@ namespace Myra.Graphics2D
 		{
 			ReleaseUnmanagedResources();
 		}
-
-        public void SetAnisotropicFilteringMode(bool isAnisotropicFiltering)
-        {
-            _isAnisotropicFilteringOn = isAnisotropicFiltering;
-        }
-    }
+	}
 }

@@ -18,7 +18,7 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
-	partial class Widget: IInputEventsProcessor
+	partial class Widget : IInputEventsProcessor
 	{
 		private DateTime? _lastTouchDown;
 		private DateTime? _lastMouseMovement;

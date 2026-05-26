@@ -64,9 +64,8 @@ namespace Myra.Graphics2D.UI
 		private Vector2 _scale = Vector2.One;
 		private Vector2 _transformOrigin = new Vector2(0.5f, 0.5f);
 		private float _rotation = 0.0f;
-		private Transform? _transform;
-		private Matrix _inverseMatrix;
-		private bool _inverseMatrixDirty = true;
+		private bool _transformDirty = true;
+		private Transform _transform;
 
 		/// <summary>
 		/// Internal use only. (MyraPad)
@@ -477,7 +476,6 @@ namespace Myra.Graphics2D.UI
 				_scale = value;
 				InvalidateTransform();
 			}
-
 		}
 
 		[Category("Transform")]
@@ -585,6 +583,7 @@ namespace Myra.Graphics2D.UI
 
 		[Category("Appearance")]
 		[DefaultValue(1.0f)]
+		[Range(0.0f, 1.0f)]
 		public float Opacity
 		{
 			get
@@ -722,34 +721,9 @@ namespace Myra.Graphics2D.UI
 		{
 			get
 			{
-				if (_transform == null)
-				{
-					var p = new Point(_layoutBounds.X + Left, _layoutBounds.Y + Top);
+				UpdateTransform();
 
-					var localTransform = new Transform(p.ToVector2(),
-						TransformOrigin * _layoutBounds.Size().ToVector2(),
-						Scale,
-						Rotation * (float)Math.PI / 180);
-
-					if (Parent != null)
-					{
-						var transform = Parent.Transform;
-						transform.AddTransform(ref localTransform);
-						_transform = transform;
-					}
-					else if (Desktop != null)
-					{
-						var transform = Desktop.Transform;
-						transform.AddTransform(ref localTransform);
-						_transform = transform;
-					}
-					else
-					{
-						_transform = localTransform;
-					}
-				}
-
-				return _transform.Value;
+				return _transform;
 			}
 		}
 
@@ -856,19 +830,24 @@ namespace Myra.Graphics2D.UI
 			context.Transform = Transform;
 
 			Rectangle? oldScissorRectangle = null;
-			if (ClipToBounds && context.Transform.Rotation == 0)
+			if (context.Transform.Rotation.IsZero())
 			{
-				oldScissorRectangle = context.Scissor;
-				var absoluteBounds = context.Transform.Apply(Bounds);
-				var newScissorRectangle = Rectangle.Intersect(context.Scissor, absoluteBounds);
+				var absoluteBounds = Transform.Apply(Bounds);
+				var scissorBounds = Rectangle.Intersect(context.Scissor, absoluteBounds);
 
-				if (newScissorRectangle.Width == 0 || newScissorRectangle.Height == 0)
+				if (scissorBounds.Width == 0 || scissorBounds.Height == 0)
 				{
+					// Culled by scissor
 					context.Transform = oldTransform;
 					return;
 				}
 
-				context.Scissor = newScissorRectangle;
+				if (ClipToBounds)
+				{
+					oldScissorRectangle = context.Scissor;
+
+					context.Scissor = scissorBounds;
+				}
 			}
 
 			var oldOpacity = context.Opacity;
@@ -1139,8 +1118,7 @@ namespace Myra.Graphics2D.UI
 
 		internal virtual void InvalidateTransform()
 		{
-			_transform = null;
-			_inverseMatrixDirty = true;
+			_transformDirty = true;
 
 			foreach (var child in ChildrenCopy)
 			{
@@ -1354,25 +1332,25 @@ namespace Myra.Graphics2D.UI
 			Top = newTop;
 		}
 
-		public Vector2 ToGlobal(Vector2 pos) => Transform.Apply(pos);
-
-		public Point ToGlobal(Point pos) => Transform.Apply(pos);
-
-		public Vector2 ToLocal(Vector2 source)
+		public Vector2 ToGlobal(Vector2 pos)
 		{
-			if (_inverseMatrixDirty)
-			{
-#if MONOGAME || FNA || STRIDE
-				_inverseMatrix = Matrix.Invert(Transform.Matrix);
-#else
-				Matrix inverse = Matrix.Identity;
-				Matrix.Invert(Transform.Matrix, out inverse);
-				_inverseMatrix = inverse;
-#endif
-				_inverseMatrixDirty = false;
-			}
+			UpdateTransform();
 
-			return source.Transform(ref _inverseMatrix);
+			return Transform.Apply(pos);
+		}
+
+		public Point ToGlobal(Point pos)
+		{
+			UpdateTransform();
+
+			return Transform.Apply(pos);
+		}
+
+		public Vector2 ToLocal(Vector2 pos)
+		{
+			UpdateTransform();
+
+			return Transform.InverseApply(pos);
 		}
 
 		public Point ToLocal(Point pos) => ToLocal(new Vector2(pos.X, pos.Y)).ToPoint();
@@ -1437,7 +1415,7 @@ namespace Myra.Graphics2D.UI
 			result.CopyFrom(this);
 
 			// Copy attached properties
-			foreach(var pair in AttachedPropertiesValues)
+			foreach (var pair in AttachedPropertiesValues)
 			{
 				result.AttachedPropertiesValues[pair.Key] = pair.Value;
 			}

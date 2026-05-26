@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
+using Myra.Attributes;
 
 #if MONOGAME || FNA
 using Microsoft.Xna.Framework;
@@ -17,22 +18,17 @@ namespace Myra.Graphics2D
 	{
 		public static readonly Thickness Zero = new Thickness();
 
-		public int Left
-		{
-			get; set;
-		}
-		public int Right
-		{
-			get; set;
-		}
-		public int Top
-		{
-			get; set;
-		}
-		public int Bottom
-		{
-			get; set;
-		}
+		[Range(0)]
+		public int Left { get; set; }
+
+		[Range(0)]
+		public int Right { get; set; }
+
+		[Range(0)]
+		public int Top { get; set; }
+
+		[Range(0)]
+		public int Bottom { get; set; }
 
 		[Browsable(false)]
 		[XmlIgnore]

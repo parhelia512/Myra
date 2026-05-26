@@ -19,9 +19,12 @@ namespace Myra.Graphics2D.UI
 	public abstract class StackPanel : Container
 	{
 		public static readonly AttachedPropertyInfo<ProportionType> ProportionTypeProperty =
-			AttachedPropertiesRegistry.Create(typeof(StackPanel), "ProportionType", ProportionType.Auto, AttachedPropertyOption.AffectsMeasure);
+			AttachedPropertiesRegistry.Create(typeof(StackPanel), "ProportionType",
+				ProportionType.Auto, AttachedPropertyOption.AffectsMeasure);
 		public static readonly AttachedPropertyInfo<float> ProportionValueProperty =
-			AttachedPropertiesRegistry.Create(typeof(StackPanel), "ProportionValue", 1.0f, AttachedPropertyOption.AffectsMeasure);
+			AttachedPropertiesRegistry.Create(typeof(StackPanel), "ProportionValue",
+				1.0f, AttachedPropertyOption.AffectsMeasure,
+				new Attribute[] { new RangeAttribute(0.0f) });
 
 		private readonly StackPanelLayout _layout;
 		private readonly ObservableCollection<Proportion> _proportions = new ObservableCollection<Proportion>();
@@ -53,7 +56,6 @@ namespace Myra.Graphics2D.UI
 			get => _layout.DefaultProportion;
 			set => _layout.DefaultProportion = value;
 		}
-
 
 		[Browsable(false)]
 		[Obsolete("Use StackPanel.GetProportion/StackPanel.SetProportion")]
