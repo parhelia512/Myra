@@ -3,7 +3,7 @@ using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using System.ComponentModel;
 
-namespace Myra.Samples.AllWidgets
+namespace Myra.Samples.CustomWidgets
 {
 	public enum ArrowDirection
 	{

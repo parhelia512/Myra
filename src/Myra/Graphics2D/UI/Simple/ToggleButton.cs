@@ -115,5 +115,22 @@ namespace Myra.Graphics2D.UI
 		{
 			ApplyButtonStyle(stylesheet.ButtonStyles.SafelyGetStyle(name));
 		}
+
+		/// <summary>
+		/// Creates a toggle button with a text label as its content.
+		/// </summary>
+		/// <param name="text">The text to display on the button.</param>
+		/// <returns>A new ToggleButton with a text label.</returns>
+		public static ToggleButton CreateTextButton(string text)
+		{
+			return new ToggleButton
+			{
+				Content = new Label
+				{
+					Text = text
+				}
+			};
+		}
+
 	}
 }

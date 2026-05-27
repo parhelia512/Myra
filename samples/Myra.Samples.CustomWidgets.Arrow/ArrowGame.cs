@@ -2,16 +2,16 @@
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D.UI.Properties;
 
-namespace Myra.Samples.AllWidgets
+namespace Myra.Samples.CustomWidgets
 {
-	public class CustomWidgetsGame : Game
+	public class ArrowGame : Game
 	{
 		private readonly GraphicsDeviceManager _graphics;
 
 		private PropertyGrid _propertyGrid;
 		private Desktop _desktop;
 
-		public CustomWidgetsGame()
+		public ArrowGame()
 		{
 			_graphics = new GraphicsDeviceManager(this)
 			{
