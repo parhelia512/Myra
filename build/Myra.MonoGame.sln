@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.CustomWidgets.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.CustomWidgets.LogView", "..\samples\Myra.Samples.CustomWidgets.LogView\Myra.Samples.CustomWidgets.LogView.csproj", "{D368AB94-DCCF-497F-769D-81B69F07D8A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.CustomWidgets.Scene3D", "..\samples\Myra.Samples.CustomWidgets.Scene3D\Myra.Samples.CustomWidgets.Scene3D.csproj", "{27B545C3-942F-0E69-1438-C30B4859EFA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{D368AB94-DCCF-497F-769D-81B69F07D8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D368AB94-DCCF-497F-769D-81B69F07D8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D368AB94-DCCF-497F-769D-81B69F07D8A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27B545C3-942F-0E69-1438-C30B4859EFA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B545C3-942F-0E69-1438-C30B4859EFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27B545C3-942F-0E69-1438-C30B4859EFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27B545C3-942F-0E69-1438-C30B4859EFA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +138,7 @@ Global
 		{70C94A72-D44D-33FC-2591-B001C8C82634} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 		{5133A2E3-9CB8-6515-1245-C14370736FD6} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 		{D368AB94-DCCF-497F-769D-81B69F07D8A5} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
+		{27B545C3-942F-0E69-1438-C30B4859EFA4} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35ACDF4E-2CE2-46B1-A19F-35DC131069A1}
