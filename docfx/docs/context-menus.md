@@ -12,7 +12,7 @@ private void ShowContextMenu()
 {
     if (Desktop.ContextMenu != null)
     {
-        // Dont show if it's already shown
+        // Don't show if it's already shown
         return;
     }
 

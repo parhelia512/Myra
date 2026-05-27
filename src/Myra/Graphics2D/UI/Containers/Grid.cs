@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using Myra.MML;
 using Myra.Events;
-
+using Myra.Attributes;
 
 #if MONOGAME || FNA
 using Microsoft.Xna.Framework;

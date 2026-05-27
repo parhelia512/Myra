@@ -477,14 +477,14 @@ namespace MyraPad.UI
 			return result;
 		}
 
-		private void _treeViewExplorer_TouchDown(object sender, EventArgs e)
+		private void _treeViewExplorer_TouchDown(object sender, MyraEventArgs e)
 		{
 			var state = Mouse.GetState();
 
 			_rightClick = state.RightButton == ButtonState.Pressed;
 		}
 
-		private void _treeViewExplorer_TouchUp(object sender, EventArgs e)
+		private void _treeViewExplorer_TouchUp(object sender, MyraEventArgs e)
 		{
 			if (!_rightClick || Desktop.ContextMenu != null)
 			{
@@ -628,7 +628,7 @@ namespace MyraPad.UI
 					}
 					else if (Desktop.IsKeyDown(Keys.W))
 					{
-						ExportCsLightItemOnSelected(this, EventArgs.Empty);
+						ExportCsLightItemOnSelected(this, MyraEventArgs.Empty);
 					}
 					else if (Desktop.IsKeyDown(Keys.Q))
 					{
@@ -1503,7 +1503,7 @@ namespace MyraPad.UI
 			};
 		}
 
-		private void ExportCsLightItemOnSelected(object sender1, EventArgs eventArgs)
+		private void ExportCsLightItemOnSelected(object sender1, MyraEventArgs eventArgs)
 		{
 			try
 			{

@@ -167,6 +167,6 @@ As you may have noticed, Player.Collection is also present on the PropertyGrid. 
 
 ![alt text](~/images/property-grid2.png)
 
-It's important to note that in order for the CollectionEditor to work, the property must implemented System.Collections.Generic.ICollection<T> interface.
+It's important to note that in order for the CollectionEditor to work, the property must implement the System.Collections.Generic.ICollection<T> interface.
 
 Full sample is available here: https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.ObjectEditor

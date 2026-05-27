@@ -20,7 +20,7 @@ namespace MyraPad.UI
 			_buttonCopyToClipboard.Click += _buttonCopyToClipboard_Click;
 		}
 
-		private void _buttonCopyToClipboard_Click(object sender, System.EventArgs e)
+		private void _buttonCopyToClipboard_Click(object sender, MyraEventArgs e)
 		{
 			try
 			{

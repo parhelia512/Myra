@@ -5,15 +5,14 @@ It is possible to reference external assets (images, fonts, etc) in the MML proj
 Following video demonstrates how external assets could be referenced when editing a project in the MyraPad:
 https://youtu.be/6rKZMoExN_Q
 
-  **Note**. It is recommended to save the file before referencing external assets. Then assets would be referenced relative to the MML file path. Otherwise assets would have absolute paths.
+  **Note:** It is recommended to save the file before referencing external assets. Then assets would be referenced relative to the MML file path. Otherwise assets would have absolute paths.
 
 # Loading MML with external assets in runtime
 If MML project with external assets is loaded through `Project.LoadFromXml`, then the loading code would need to include AssetManager as parameter.
 
 I.e.
 ```c#
-FileAssetResolver assetResolver = new FileAssetResolver(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
-AssetManager assetManager = new AssetManager(GraphicsDevice, assetResolver);
+AssetManager assetManager = AssetManager.CreateFileAssetManager(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
 string data = File.ReadAllText(filePath);
 Project project = Project.LoadFromXml(data, assetManager);
 ```
@@ -44,7 +43,7 @@ namespace Myra.Samples.AssetManagement
 		{
 			var label1 = new Label();
 			label1.Text = "My Game";
-			label1.Font = MyraEnvironment.DefaultAssetManager.Load<SpriteFontBase>("fonts/arial64.fnt");
+			label1.Font = MyraEnvironment.DefaultAssetManager.LoadFont("fonts/arial64.fnt");
 			label1.TextColor = Color.LightBlue;
 			label1.HorizontalAlignment = Myra.Graphics2D.UI.HorizontalAlignment.Center;
 
@@ -63,7 +62,7 @@ namespace Myra.Samples.AssetManagement
 			_mainMenu = new VerticalMenu();
 			_mainMenu.HorizontalAlignment = Myra.Graphics2D.UI.HorizontalAlignment.Center;
 			_mainMenu.VerticalAlignment = Myra.Graphics2D.UI.VerticalAlignment.Center;
-			_mainMenu.LabelFont = MyraEnvironment.DefaultAssetManager.Load<SpriteFontBase>("fonts/comicSans48.fnt");
+			_mainMenu.LabelFont = MyraEnvironment.DefaultAssetManager.LoadFont("fonts/comicSans48.fnt");
 			_mainMenu.LabelColor = Color.Indigo;
 			_mainMenu.SelectionHoverBackground = new SolidBrush("#808000FF");
 			_mainMenu.SelectionBackground = new SolidBrush("#FFA500FF");
@@ -77,14 +76,14 @@ namespace Myra.Samples.AssetManagement
 			_mainMenu.Items.Add(_menuItemQuit);
 
 			var image1 = new Image();
-			image1.Renderable = MyraEnvironment.DefaultAssetManager.Load<TextureRegion>("images/LogoOnly_64px.png");
+			image1.Renderable = MyraEnvironment.DefaultAssetManager.LoadTextureRegion("images/LogoOnly_64px.png");
 			image1.Left = 10;
 			image1.Top = -10;
 			image1.VerticalAlignment = Myra.Graphics2D.UI.VerticalAlignment.Bottom;
 
 			var label2 = new Label();
 			label2.Text = "Version 0.6";
-			label2.Font = MyraEnvironment.DefaultAssetManager.Load<SpriteFontBase>("fonts/calibri32.fnt");
+			label2.Font = MyraEnvironment.DefaultAssetManager.LoadFont("fonts/calibri32.fnt");
 			label2.Left = -10;
 			label2.Top = -10;
 			label2.HorizontalAlignment = Myra.Graphics2D.UI.HorizontalAlignment.Right;
@@ -107,9 +106,9 @@ namespace Myra.Samples.AssetManagement
 }
 ```
 
-It uses static variable `MyraEnvironment.DefaultAssetManager` as AssetManager. That AssetManager could be configured like this:
+It uses static variable `MyraEnvironment.DefaultAssetManager` as AssetManager. That AssetManager can be configured when needed by setting it to a custom AssetManager:
 ```c#
-MyraEnvironment.DefaultAssetManager.AssetResolver = new FileAssetResolver(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
+MyraEnvironment.DefaultAssetManager = AssetManager.CreateFileAssetManager(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
 ```
 
 Full sample is here: https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.AssetManagement

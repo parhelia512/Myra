@@ -1361,6 +1361,40 @@ namespace Myra.Graphics2D.UI
 			return BorderBounds.Contains(localPos);
 		}
 
+		private void UpdateTransform()
+		{
+			if (!_transformDirty)
+			{
+				return;
+			}
+
+			var p = new Point(_layoutBounds.X + Left, _layoutBounds.Y + Top);
+
+			var localTransform = new Transform(p.ToVector2(),
+				TransformOrigin * _layoutBounds.Size().ToVector2(),
+				Scale,
+				Rotation * (float)Math.PI / 180);
+
+			if (Parent != null)
+			{
+				var transform = Parent.Transform;
+				transform.AddTransform(ref localTransform);
+				_transform = transform;
+			}
+			else if (Desktop != null)
+			{
+				var transform = Desktop.Transform;
+				transform.AddTransform(ref localTransform);
+				_transform = transform;
+			}
+			else
+			{
+				_transform = localTransform;
+			}
+
+			_transformDirty = false;
+		}
+
 		private void DesktopTouchUp(object sender, MyraEventArgs args)
 		{
 			_startPos = null;
