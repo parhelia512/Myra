@@ -31,6 +31,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI.Properties
 {
+	/// <summary>
+	/// A widget that displays and allows editing of object properties in a grid layout.
+	/// </summary>
 	public class PropertyGrid : Widget
 	{
 		private const string DefaultCategoryName = "Miscellaneous";
@@ -187,10 +190,16 @@ namespace Myra.Graphics2D.UI.Properties
 		private string _filter;
 		private Type _parentType;
 
+		/// <summary>
+		/// Gets the tree style used for styling the property grid.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public TreeStyle PropertyGridStyle { get; private set; }
 
+		/// <summary>
+		/// Gets or sets the object being displayed and edited in this property grid.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public object Object
@@ -234,10 +243,16 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Gets the category name of this property grid.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public string Category { get; private set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether collection properties should be ignored when building the property grid.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool IgnoreCollections
@@ -258,6 +273,9 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the property grid has no child properties.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool IsEmpty
@@ -268,6 +286,9 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Gets the settings that control the behavior and appearance of the property grid.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public PropertyGridSettings Settings
@@ -283,6 +304,9 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the width of the first column in the property grid layout.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int FirstColumnWidth
@@ -298,6 +322,9 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the property grid.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Stretch)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -305,6 +332,9 @@ namespace Myra.Graphics2D.UI.Properties
 			set { base.HorizontalAlignment = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the property grid.
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Stretch)]
 		public override VerticalAlignment VerticalAlignment
 		{
@@ -312,6 +342,9 @@ namespace Myra.Graphics2D.UI.Properties
 			set { base.VerticalAlignment = value; }
 		}
 
+		/// <summary>
+		/// Gets or sets the filter string used to filter properties displayed in the grid.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public string Filter
@@ -329,19 +362,35 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a custom provider for determining the valid values for a property.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Func<object, Record, CustomValues> CustomValuesProvider;
 
+		/// <summary>
+		/// Gets or sets a custom setter for applying property values.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Func<Record, object, object, bool> CustomSetter;
 
+		/// <summary>
+		/// Gets or sets a custom provider for creating widgets to edit property values.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Func<Record, object, Widget> CustomWidgetProvider;
 
+		/// <summary>
+		/// Occurs when a property value is changed in the grid.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<string>> PropertyChanged;
+
+		/// <summary>
+		/// Occurs when the edited object is changed.
+		/// </summary>
 		public event MyraEventHandler ObjectChanged;
 
 		private PropertyGrid(TreeStyle style, string category, Record parentProperty, PropertyGrid parentGrid = null)
@@ -372,14 +421,26 @@ namespace Myra.Graphics2D.UI.Properties
 			this.CustomValuesProvider = parentGrid?.CustomValuesProvider;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the PropertyGrid class with the specified style and category.
+		/// </summary>
+		/// <param name="style">The tree style to apply to the property grid.</param>
+		/// <param name="category">The category name for the property grid.</param>
 		public PropertyGrid(TreeStyle style, string category) : this(style, category, null)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the PropertyGrid class with the specified category using the current stylesheet.
+		/// </summary>
+		/// <param name="category">The category name for the property grid.</param>
 		public PropertyGrid(string category) : this(Stylesheet.Current.TreeStyle, category)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the PropertyGrid class with the default category name.
+		/// </summary>
 		public PropertyGrid() : this(DefaultCategoryName)
 		{
 		}
@@ -1316,6 +1377,11 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Determines whether the specified property name passes the current filter.
+		/// </summary>
+		/// <param name="name">The property name to check.</param>
+		/// <returns>true if the name passes the filter; otherwise, false.</returns>
 		public bool PassesFilter(string name)
 		{
 			if (string.IsNullOrEmpty(Filter) || string.IsNullOrEmpty(name))
@@ -1326,6 +1392,9 @@ namespace Myra.Graphics2D.UI.Properties
 			return name.ToLower().Contains(_filter.ToLower());
 		}
 
+		/// <summary>
+		/// Rebuilds the property grid based on the current object and settings.
+		/// </summary>
 		public void Rebuild()
 		{
 			_layout.RowsProportions.Clear();
@@ -1491,6 +1560,10 @@ namespace Myra.Graphics2D.UI.Properties
 			}
 		}
 
+		/// <summary>
+		/// Applies the specified tree style to the property grid and all child elements.
+		/// </summary>
+		/// <param name="style">The tree style to apply.</param>
 		public void ApplyPropertyGridStyle(TreeStyle style)
 		{
 			ApplyWidgetStyle(style);

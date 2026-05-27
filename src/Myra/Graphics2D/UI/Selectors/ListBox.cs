@@ -18,12 +18,19 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A list box widget that displays a scrollable list of items that can be selected.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use <see cref="ListView"/> instead.</remarks>
 	[Obsolete("Use ListView")]
 	public class ListBox : Selector<ScrollViewer, ListItem>
 	{
 		private readonly VerticalStackPanel _box;
 		internal ComboBox _parentComboBox;
 
+		/// <summary>
+		/// Gets or sets the style for the list box.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ListBoxStyle ListBoxStyle
@@ -31,6 +38,9 @@ namespace Myra.Graphics2D.UI
 			get; set;
 		}
 
+		/// <summary>
+		/// Gets or sets the selection mode for the list box.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(SelectionMode.Single)]
 		public override SelectionMode SelectionMode
@@ -46,10 +56,17 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the scroll viewer that contains the list items.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public ScrollViewer ScrollViewer => InternalChild;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListBox"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public ListBox(string styleName = Stylesheet.DefaultStyleName) : base(new ScrollViewer())
 		{
 			AcceptsKeyboardFocus = true;
@@ -71,6 +88,11 @@ namespace Myra.Graphics2D.UI
 			InvalidateMeasure();
 		}
 
+		/// <summary>
+		/// Inserts an item at the specified index in the list box.
+		/// </summary>
+		/// <param name="item">The item to insert.</param>
+		/// <param name="index">The zero-based index where the item should be inserted.</param>
 		protected override void InsertItem(ListItem item, int index)
 		{
 			item.Changed += ItemOnChanged;
@@ -104,6 +126,10 @@ namespace Myra.Graphics2D.UI
 			item.Widget = widget;
 		}
 
+		/// <summary>
+		/// Removes the specified item from the list box.
+		/// </summary>
+		/// <param name="item">The item to remove.</param>
 		protected override void RemoveItem(ListItem item)
 		{
 			item.Changed -= ItemOnChanged;
@@ -117,6 +143,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Clears all items from the list box.
+		/// </summary>
 		protected override void Reset()
 		{
 			while (_box.Widgets.Count > 0)
@@ -152,6 +181,9 @@ namespace Myra.Graphics2D.UI
 			_parentComboBox.HideDropdown();
 		}
 
+		/// <summary>
+		/// Called when the selected item changes. Updates the parent combo box if this list box is part of one.
+		/// </summary>
 		protected override void OnSelectedItemChanged()
 		{
 			base.OnSelectedItemChanged();
@@ -162,6 +194,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles keyboard input for navigating and selecting items in the list box.
+		/// </summary>
+		/// <param name="k">The key being pressed (supports Up, Down, and Enter keys).</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -200,6 +236,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Called when the items collection changes. Resets the scroll position.
+		/// </summary>
 		protected override void OnItemCollectionChanged()
 		{
 			base.OnItemCollectionChanged();
@@ -237,6 +276,10 @@ namespace Myra.Graphics2D.UI
 			InternalChild.ScrollPosition = sp;
 		}
 
+		/// <summary>
+		/// Handles mouse wheel scrolling events within the list box.
+		/// </summary>
+		/// <param name="delta">The amount of scroll movement from the mouse wheel.</param>
 		public override void OnMouseWheel(float delta)
 		{
 			base.OnMouseWheel(delta);
@@ -244,6 +287,10 @@ namespace Myra.Graphics2D.UI
 			InternalChild.OnMouseWheel(delta);
 		}
 
+		/// <summary>
+		/// Applies the specified list box style to this list box and all its items.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyListBoxStyle(ListBoxStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -270,6 +317,11 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a named list box style from the stylesheet to the list box.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the list box style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyListBoxStyle(stylesheet.ListBoxStyles.SafelyGetStyle(name));

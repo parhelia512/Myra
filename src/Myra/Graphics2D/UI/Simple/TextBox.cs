@@ -24,6 +24,9 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A text input widget that allows users to enter and edit text with support for undo/redo and selection.
+	/// </summary>
 	public class TextBox : Widget
 	{
 		private const int CursorUpdateDelayInMs = 30;
@@ -50,6 +53,9 @@ namespace Myra.Graphics2D.UI
 		private readonly UndoRedoStack UndoStack = new UndoRedoStack();
 		private readonly UndoRedoStack RedoStack = new UndoRedoStack();
 
+		/// <summary>
+		/// Gets or sets the vertical spacing in pixels between lines of text.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(0)]
 		public int VerticalSpacing
@@ -65,6 +71,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the text contained in the text box.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -80,6 +89,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the hint text displayed when the text box is empty.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string HintText
@@ -99,10 +111,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether hint text is currently displayed.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool HintTextEnabled { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the text box supports multiple lines of text.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool Multiline { get; set; }
@@ -124,6 +142,9 @@ namespace Myra.Graphics2D.UI
 
 		private bool InsertMode { get; set; }
 
+		/// <summary>
+		/// Gets or sets the font used to render the text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase Font
 		{
@@ -138,6 +159,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether text wraps to multiple lines.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public bool Wrap
@@ -159,29 +183,53 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
 		[Category("Appearance")]
 		public Color TextColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the color of the text when the text box is disabled.
+		/// </summary>
 		[Category("Appearance")]
 		public Color? DisabledTextColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the color of the text when the text box has focus.
+		/// </summary>
 		[Category("Appearance")]
 		public Color? FocusedTextColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the image displayed as the text cursor.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage Cursor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the selection highlight.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush Selection { get; set; }
 
+		/// <summary>
+		/// Gets or sets the cursor blink interval in milliseconds.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(450)]
 		public int BlinkIntervalInMs { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the text box is read-only.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool Readonly { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the text box masks input as a password field.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool PasswordField
@@ -197,10 +245,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the text within the text box.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(VerticalAlignment.Top)]
 		public VerticalAlignment TextVerticalAlignment { get; set; }
 
+		/// <summary>
+		/// Gets or sets the mouse cursor type to display when hovering over the text box.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(MouseCursorType.IBeam)]
 		public override MouseCursorType? MouseCursor
@@ -209,6 +263,9 @@ namespace Myra.Graphics2D.UI
 			set => base.MouseCursor = value;
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the text box clips its content to its bounds.
+		/// </summary>
 		[DefaultValue(true)]
 		public override bool ClipToBounds
 		{
@@ -222,6 +279,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the text box.
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Stretch)]
 		public override HorizontalAlignment HorizontalAlignment
 		{
@@ -235,6 +295,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the zero-based index of the text cursor position.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int CursorPosition
@@ -258,22 +321,31 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Cursor position in local coordinates
+		/// Gets the position of the text cursor in local coordinates.
 		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Point CursorCoords => GetRenderPositionByIndex(CursorPosition);
 
+		/// <summary>
+		/// Gets the zero-based index where text selection starts.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int SelectStart { get; private set; }
 
+		/// <summary>
+		/// Gets the zero-based index where text selection ends.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public int SelectEnd { get; private set; }
 
 		private int CursorWidth => 1 + (Cursor != null ? Cursor.Size.X : 0);
 
+		/// <summary>
+		/// Gets or sets the desktop this text box is attached to.
+		/// </summary>
 		public override Desktop Desktop
 		{
 			get
@@ -319,9 +391,16 @@ namespace Myra.Graphics2D.UI
 		/// Fires every time when the text had been deleted
 		/// </summary>
 		public event MyraEventHandler<TextDeletedEventArgs> TextDeleted;
-		
+
+		/// <summary>
+		/// Occurs when the cursor position in the text box changes.
+		/// </summary>
 		public event MyraEventHandler CursorPositionChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TextBox"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public TextBox(string styleName = Stylesheet.DefaultStyleName)
 		{
 			AcceptsKeyboardFocus = true;
@@ -378,6 +457,11 @@ namespace Myra.Graphics2D.UI
 			return true;
 		}
 
+		/// <summary>
+		/// Inserts text at the specified position in the text box.
+		/// </summary>
+		/// <param name="where">The zero-based index where the text will be inserted.</param>
+		/// <param name="text">The text to insert.</param>
 		public void Insert(int where, string text)
 		{
 			text = Process(text);
@@ -393,6 +477,12 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Replaces a range of text at the specified position with new text.
+		/// </summary>
+		/// <param name="where">The zero-based index where replacement begins.</param>
+		/// <param name="len">The number of characters to replace.</param>
+		/// <param name="text">The replacement text.</param>
 		public void Replace(int where, int len, string text)
 		{
 			if (len <= 0)
@@ -413,6 +503,10 @@ namespace Myra.Graphics2D.UI
 			UserText = UserText.Substring(0, where) + text + UserText.Substring(where + len);
 		}
 
+		/// <summary>
+		/// Replaces all text in the text box with the specified text.
+		/// </summary>
+		/// <param name="text">The new text to set.</param>
 		public void ReplaceAll(string text)
 		{
 			if (string.IsNullOrEmpty(Text))
@@ -634,6 +728,9 @@ namespace Myra.Graphics2D.UI
 			UpdateSelectionIfShiftDown();
 		}
 
+		/// <summary>
+		/// Selects all text in the text box.
+		/// </summary>
 		public void SelectAll()
 		{
 			// Select all
@@ -641,6 +738,10 @@ namespace Myra.Graphics2D.UI
 			SelectEnd = Length;
 		}
 
+		/// <summary>
+		/// Called when a keyboard key is pressed while the text box has focus.
+		/// </summary>
+		/// <param name="k">The key that was pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -1121,6 +1222,10 @@ namespace Myra.Graphics2D.UI
 			CursorPositionChanged.Invoke(this, InputEventType.CursorPositionChanged);
 		}
 
+		/// <summary>
+		/// Called when a character is entered into the text box.
+		/// </summary>
+		/// <param name="c">The character that was entered.</param>
 		public override void OnChar(char c)
 		{
 			base.OnChar(c);
@@ -1194,6 +1299,9 @@ namespace Myra.Graphics2D.UI
 			_isTouchDown = true;
 		}
 
+		/// <summary>
+		/// Called when the text box receives a double-tap touch event, selecting the word at the tap position.
+		/// </summary>
 		public override void OnTouchDoubleClick()
 		{
 			base.OnTouchDoubleClick();
@@ -1251,6 +1359,9 @@ namespace Myra.Graphics2D.UI
 			SelectEnd = end;
 		}
 
+		/// <summary>
+		/// Called when the text box receives keyboard focus.
+		/// </summary>
 		public override void OnGotKeyboardFocus()
 		{
 			base.OnGotKeyboardFocus();
@@ -1261,6 +1372,9 @@ namespace Myra.Graphics2D.UI
 			DisableHintText();
 		}
 
+		/// <summary>
+		/// Called when the text box loses keyboard focus.
+		/// </summary>
 		public override void OnLostKeyboardFocus()
 		{
 			base.OnLostKeyboardFocus();
@@ -1380,6 +1494,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Renders the text box's content, including text, cursor, and selection.
+		/// </summary>
+		/// <param name="context">The render context to draw with.</param>
 		public override void InternalRender(RenderContext context)
 		{
 			if (_richTextLayout.Font == null)
@@ -1475,6 +1593,11 @@ namespace Myra.Graphics2D.UI
 			context.Opacity = oldOpacity;
 		}
 
+		/// <summary>
+		/// Measures the size required to display the text box contents.
+		/// </summary>
+		/// <param name="availableSize">The available size for the text box.</param>
+		/// <returns>The measured size needed for the text box.</returns>
 		protected override Point InternalMeasure(Point availableSize)
 		{
 			if (Font == null)
@@ -1505,6 +1628,9 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Arranges the text box's content within its bounds.
+		/// </summary>
 		protected override void InternalArrange()
 		{
 			base.InternalArrange();
@@ -1515,6 +1641,10 @@ namespace Myra.Graphics2D.UI
 			_richTextLayout.Width = _wrap ? width : default(int?);
 		}
 
+		/// <summary>
+		/// Applies a text box style to the text box, setting colors, cursor, selection, and font.
+		/// </summary>
+		/// <param name="style">The text box style to apply.</param>
 		public void ApplyTextBoxStyle(TextBoxStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -1529,11 +1659,21 @@ namespace Myra.Graphics2D.UI
 			Font = style.Font;
 		}
 
+		/// <summary>
+		/// Applies a named text box style from the stylesheet to the text box.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the text box style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyTextBoxStyle(stylesheet.TextBoxStyles.SafelyGetStyle(name));
 		}
 
+		/// <summary>
+		/// Gets the width of the character at the specified text index.
+		/// </summary>
+		/// <param name="index">The index of the character in the text.</param>
+		/// <returns>The width of the character, or 0 if the index is out of bounds or the character is a newline.</returns>
 		public float GetWidth(int index)
 		{
 			var glyph = _richTextLayout.GetGlyphInfoByIndex(index);
@@ -1550,6 +1690,10 @@ namespace Myra.Graphics2D.UI
 			return glyph.Value.Bounds.Width;
 		}
 
+		/// <summary>
+		/// Copies all properties from another widget to this text box.
+		/// </summary>
+		/// <param name="w">The widget to copy properties from.</param>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);

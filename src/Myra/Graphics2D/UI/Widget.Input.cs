@@ -26,10 +26,16 @@ namespace Myra.Graphics2D.UI
 		private Point? _localMousePosition;
 		private Point? _localTouchPosition;
 
+		/// <summary>
+		/// Gets a value indicating whether the mouse pointer is currently inside this widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool IsMouseInside => _localMousePosition != null;
 
+		/// <summary>
+		/// Gets or sets the local coordinates of the mouse pointer relative to this widget, or null if the mouse is not over the widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Point? LocalMousePosition
@@ -65,10 +71,16 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether a touch point is currently inside this widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public bool IsTouchInside => _localTouchPosition != null;
 
+		/// <summary>
+		/// Gets or sets the local coordinates of the touch point relative to this widget, or null if there is no active touch on the widget.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Point? LocalTouchPosition
@@ -121,33 +133,109 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this widget accepts mouse wheel input.
+		/// </summary>
 		protected internal virtual bool AcceptsMouseWheel => false;
 
+		/// <summary>
+		/// Occurs when the widget's position has changed.
+		/// </summary>
 		public event MyraEventHandler PlacedChanged;
+
+		/// <summary>
+		/// Occurs when the widget's visibility has changed.
+		/// </summary>
 		public event MyraEventHandler VisibleChanged;
+
+		/// <summary>
+		/// Occurs when the widget's enabled state has changed.
+		/// </summary>
 		public event MyraEventHandler EnabledChanged;
 
+		/// <summary>
+		/// Occurs when the widget's location has changed.
+		/// </summary>
 		public event MyraEventHandler LocationChanged;
+
+		/// <summary>
+		/// Occurs when the widget's size has changed.
+		/// </summary>
 		public event MyraEventHandler SizeChanged;
+
+		/// <summary>
+		/// Occurs when the widget's layout arrangement has been updated.
+		/// </summary>
 		public event MyraEventHandler ArrangeUpdated;
 
+		/// <summary>
+		/// Occurs when the mouse pointer leaves the widget.
+		/// </summary>
 		public event MyraEventHandler MouseLeft;
+
+		/// <summary>
+		/// Occurs when the mouse pointer enters the widget.
+		/// </summary>
 		public event MyraEventHandler MouseEntered;
+
+		/// <summary>
+		/// Occurs when the mouse pointer moves within the widget.
+		/// </summary>
 		public event MyraEventHandler MouseMoved;
 
+		/// <summary>
+		/// Occurs when a touch point leaves the widget.
+		/// </summary>
 		public event MyraEventHandler TouchLeft;
+
+		/// <summary>
+		/// Occurs when a touch point enters the widget.
+		/// </summary>
 		public event MyraEventHandler TouchEntered;
+
+		/// <summary>
+		/// Occurs when a touch point moves within the widget.
+		/// </summary>
 		public event MyraEventHandler TouchMoved;
+
+		/// <summary>
+		/// Occurs when a touch point is pressed on the widget.
+		/// </summary>
 		public event MyraEventHandler TouchDown;
+
+		/// <summary>
+		/// Occurs when a touch point is released on the widget.
+		/// </summary>
 		public event MyraEventHandler TouchUp;
+
+		/// <summary>
+		/// Occurs when the widget receives a double-tap touch event.
+		/// </summary>
 		public event MyraEventHandler TouchDoubleClick;
 
+		/// <summary>
+		/// Occurs when the keyboard focus on the widget has changed.
+		/// </summary>
 		public event MyraEventHandler KeyboardFocusChanged;
 
+		/// <summary>
+		/// Occurs when the mouse wheel is scrolled while over the widget.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<float>> MouseWheelChanged;
 
+		/// <summary>
+		/// Occurs when a key is released while the widget has keyboard focus.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<Keys>> KeyUp;
+
+		/// <summary>
+		/// Occurs when a key is pressed while the widget has keyboard focus.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<Keys>> KeyDown;
+
+		/// <summary>
+		/// Occurs when a character is entered while the widget has keyboard focus.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<char>> Char;
 
 		private void ProcessDoubleClick(Point touchPos)
@@ -167,6 +255,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Processes input events for this widget, including mouse and touch input.
+		/// </summary>
+		/// <param name="inputContext">The input context containing the current input state.</param>
 		protected internal virtual void ProcessInput(InputContext inputContext)
 		{
 			if (!Visible || Desktop == null)
@@ -378,42 +470,73 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Called when the mouse pointer leaves the widget.
+		/// </summary>
 		public virtual void OnMouseLeft()
 		{
 		}
 
+		/// <summary>
+		/// Called when the mouse pointer enters the widget.
+		/// </summary>
 		public virtual void OnMouseEntered()
 		{
 		}
 
+		/// <summary>
+		/// Called when the mouse pointer moves within the widget.
+		/// </summary>
 		public virtual void OnMouseMoved()
 		{
 		}
 
+		/// <summary>
+		/// Called when the mouse wheel is scrolled while over the widget.
+		/// </summary>
+		/// <param name="delta">The scroll delta value.</param>
 		public virtual void OnMouseWheel(float delta)
 		{
 		}
 
+		/// <summary>
+		/// Called when a touch point leaves the widget.
+		/// </summary>
 		public virtual void OnTouchLeft()
 		{
 		}
 
+		/// <summary>
+		/// Called when a touch point enters the widget.
+		/// </summary>
 		public virtual void OnTouchEntered()
 		{
 		}
 
+		/// <summary>
+		/// Called when a touch point moves within the widget.
+		/// </summary>
 		public virtual void OnTouchMoved()
 		{
 		}
 
+		/// <summary>
+		/// Called when a touch point is pressed on the widget.
+		/// </summary>
 		public virtual void OnTouchDown()
 		{
 		}
 
+		/// <summary>
+		/// Called when a touch point is released on the widget.
+		/// </summary>
 		public virtual void OnTouchUp()
 		{
 		}
 
+		/// <summary>
+		/// Called when the widget receives a double-tap touch event.
+		/// </summary>
 		public virtual void OnTouchDoubleClick()
 		{
 		}

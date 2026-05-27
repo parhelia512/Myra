@@ -7,14 +7,23 @@ using Myra.Events;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An abstract base class for button-like content controls that can be pressed and respond to click events.
+	/// </summary>
 	public abstract class ButtonBase2 : ContentControl
 	{
 		private bool _isPressed = false;
 		private bool _isClicked = false;
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the background when the button is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		public virtual IBrush PressedBackground { get; set; }
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the button is currently in the pressed state.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public virtual bool IsPressed
@@ -36,22 +45,34 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Occurs when the button is clicked.
+		/// </summary>
 		public event MyraEventHandler Click;
+
+		/// <summary>
+		/// Occurs when the pressed state changes.
+		/// </summary>
 		public event MyraEventHandler PressedChanged;
 
 		/// <summary>
-		/// Fires when the value is about to be changed
-		/// Set Cancel to true if you want to cancel the change
+		/// Occurs when the pressed state is about to change due to user interaction. Set Cancel to true to prevent the change.
 		/// </summary>
 		public event MyraEventHandler<ValueChangingEventArgs<bool>> PressedChangingByUser;
 
 
+		/// <summary>
+		/// Simulates a click on the button by firing touch down and touch up events.
+		/// </summary>
 		public void DoClick()
 		{
 			OnTouchDown();
 			OnTouchUp();
 		}
 
+		/// <summary>
+		/// Raises the pressed changed event and updates the content if it implements IPressable.
+		/// </summary>
 		public virtual void OnPressedChanged()
 		{
 			PressedChanged.Invoke(this, InputEventType.PressedChanged);
@@ -63,6 +84,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Sets the pressed state by user interaction, raising the PressedChangingByUser event.
+		/// </summary>
+		/// <param name="value">The new pressed state value.</param>
 		protected void SetValueByUser(bool value)
 		{
 			if (value != IsPressed && PressedChangingByUser != null)
@@ -79,9 +104,18 @@ namespace Myra.Graphics2D.UI
 			IsPressed = value;
 		}
 
+		/// <summary>
+		/// Called when a touch point is released on the button. Derived classes should override to implement custom touch up behavior.
+		/// </summary>
 		protected abstract void InternalOnTouchUp();
+		/// <summary>
+		/// Called when a touch point is pressed on the button. Derived classes should override to implement custom touch down behavior.
+		/// </summary>
 		protected abstract void InternalOnTouchDown();
 
+		/// <summary>
+		/// Handles touch up events on the button.
+		/// </summary>
 		public override void OnTouchUp()
 		{
 			base.OnTouchUp();
@@ -100,6 +134,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles touch down events on the button.
+		/// </summary>
 		public override void OnTouchDown()
 		{
 			base.OnTouchDown();
@@ -114,6 +151,10 @@ namespace Myra.Graphics2D.UI
 			_isClicked = true;
 		}
 
+		/// <summary>
+		/// Gets the current background brush based on button state (pressed, hovered, disabled, or normal).
+		/// </summary>
+		/// <returns>The background brush to use for rendering.</returns>
 		public override IBrush GetCurrentBackground()
 		{
 			var result = base.GetCurrentBackground();
@@ -140,6 +181,10 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Applies the specified button style to the button.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplyButtonStyle(ButtonStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -147,6 +192,10 @@ namespace Myra.Graphics2D.UI
 			PressedBackground = style.PressedBackground;
 		}
 
+		/// <summary>
+		/// Applies the specified image button style to the button.
+		/// </summary>
+		/// <param name="style">The image button style to apply.</param>
 		public void ApplyImageButtonStyle(ImageButtonStyle style)
 		{
 			ApplyButtonStyle(style);
@@ -158,11 +207,20 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a named button style from the stylesheet to the button.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the button style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyButtonStyle(stylesheet.ButtonStyles.SafelyGetStyle(name));
 		}
 
+		/// <summary>
+		/// Copies the button properties from another button.
+		/// </summary>
+		/// <param name="w">The source button to copy from.</param>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);

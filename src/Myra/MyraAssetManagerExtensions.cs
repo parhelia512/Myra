@@ -21,6 +21,9 @@ using Texture2D = System.Object;
 
 namespace AssetManagementBase
 {
+	/// <summary>
+	/// Provides extension methods for the AssetManager class to load Myra-specific assets like texture atlases, fonts, and stylesheets.
+	/// </summary>
 	public static partial class MyraAssetManagerExtensions
 	{
 		private static AssetLoader<TextureRegionAtlas> _atlasLoader = (manager, assetName, settings, tag) =>
@@ -28,9 +31,9 @@ namespace AssetManagementBase
 			var data = manager.ReadAsString(assetName);
 
 #if !PLATFORM_AGNOSTIC
-			return TextureRegionAtlas.Load(data, name => manager.LoadTexture2D(MyraEnvironment.GraphicsDevice, name, true));
+			return TextureRegionAtlas.FromXml(data, name => manager.LoadTexture2D(MyraEnvironment.GraphicsDevice, name, true));
 #else
-			return TextureRegionAtlas.Load(data, name => manager.LoadTexture2D(name).Texture);
+			return TextureRegionAtlas.FromXml(data, name => manager.LoadTexture2D(name).Texture);
 #endif
 		};
 
@@ -119,14 +122,20 @@ namespace AssetManagementBase
 			return Stylesheet.LoadFromSource(xml, textureRegionAtlas, fonts);
 		};
 
+		/// <summary>
+		/// Loads a texture region atlas from an XML asset file.
+		/// </summary>
+		/// <param name="assetManager">The asset manager instance.</param>
+		/// <param name="assetName">The name of the atlas asset to load.</param>
+		/// <returns>The loaded texture region atlas.</returns>
 		public static TextureRegionAtlas LoadTextureRegionAtlas(this AssetManager assetManager, string assetName) => assetManager.UseLoader(_atlasLoader, assetName);
 
 		/// <summary>
-		/// Loads texture region by either image name(i.e. 'image.png') or atlas name/id(i.e. 'atlas.xmat:id')
+		/// Loads a texture region by either image name (e.g., 'image.png') or atlas name/id (e.g., 'atlas.xmat:id').
 		/// </summary>
-		/// <param name="assetManager"></param>
-		/// <param name="assetName"></param>
-		/// <returns></returns>
+		/// <param name="assetManager">The asset manager instance.</param>
+		/// <param name="assetName">The name of the image or atlas region to load.</param>
+		/// <returns>The loaded texture region.</returns>
 		public static TextureRegion LoadTextureRegion(this AssetManager assetManager, string assetName)
 		{
 			if (assetName.Contains(":"))
@@ -151,11 +160,11 @@ namespace AssetManagementBase
 		internal static StaticSpriteFont MyraLoadStaticSpriteFont(this AssetManager assetManager, string assetName) => assetManager.UseLoader(_staticFontLoader, assetName);
 
 		/// <summary>
-		/// Loads a font by either ttf name/size(i.e. 'font.ttf:32') or by fnt name(i.e. 'font.fnt')
+		/// Loads a sprite font by either TTF name/size (e.g., 'font.ttf:32') or by FNT name (e.g., 'font.fnt').
 		/// </summary>
-		/// <param name="assetManager"></param>
-		/// <param name="assetName"></param>
-		/// <returns></returns>
+		/// <param name="assetManager">The asset manager instance.</param>
+		/// <param name="assetName">The name of the font asset to load.</param>
+		/// <returns>The loaded sprite font.</returns>
 		public static SpriteFontBase LoadFont(this AssetManager assetManager, string assetName)
 		{
 			if (assetName.Contains(".fnt"))
@@ -180,6 +189,12 @@ namespace AssetManagementBase
 			throw new Exception(string.Format("Can't load font '{0}'", assetName));
 		}
 
+		/// <summary>
+		/// Loads a UI stylesheet from an XML asset file.
+		/// </summary>
+		/// <param name="assetManager">The asset manager instance.</param>
+		/// <param name="assetName">The name of the stylesheet asset to load.</param>
+		/// <returns>The loaded stylesheet.</returns>
 		public static Stylesheet LoadStylesheet(this AssetManager assetManager, string assetName) => assetManager.UseLoader(_stylesheetLoader, assetName);
 	}
 }

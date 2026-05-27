@@ -14,6 +14,9 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An abstract base class for slider widgets that allow users to select a value within a range.
+	/// </summary>
 	public abstract class Slider : Widget
 	{
 		private readonly SingleItemLayout<Button> _layout;
@@ -21,18 +24,30 @@ namespace Myra.Graphics2D.UI
 		private float _value, _wheelStep;
 		private bool _wheelAdjustment, _acceptWheelInput;
 
+		/// <summary>
+		/// Gets the orientation of the slider (horizontal or vertical).
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public abstract Orientation Orientation { get; }
 
+		/// <summary>
+		/// Gets or sets the minimum value of the slider. Default is 0.0.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float Minimum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the maximum value of the slider. Default is 100.0.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(100.0f)]
 		public float Maximum { get; set; }
 
+		/// <summary>
+		/// Gets or sets the current value of the slider between Minimum and Maximum. Default is 0.0.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(0.0f)]
 		public float Value
@@ -69,11 +84,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the slider can be adjusted with the mouse wheel. Default is false.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(false)]
 		public bool WheelAdjustment
 		{
-			get 
+			get
 			{
 				return _wheelAdjustment;
 			}
@@ -84,6 +102,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the amount to adjust the value when using the mouse wheel. Default is 1.0.
+		/// </summary>
 		[Category("Behavior")]
 		[DefaultValue(1.0f)]
 		public float WheelStep
@@ -98,6 +119,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the slider accepts mouse wheel input.
+		/// </summary>
 		protected internal override bool AcceptsMouseWheel {
 			get
 			{
@@ -140,6 +164,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the desktop this slider is part of, managing touch event subscriptions.
+		/// </summary>
 		public override Desktop Desktop
 		{
 			get
@@ -163,20 +190,27 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the button widget that acts as the slider's draggable knob.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public Button ImageButton => _layout.Child;
 
 		/// <summary>
-		/// Fires when the value had been changed
+		/// Occurs when the value of the slider changes, regardless of whether it was changed by user input or programmatically.
 		/// </summary>
 		public event MyraEventHandler<ValueChangedEventArgs<float>> ValueChanged;
 
 		/// <summary>
-		/// Fires only when the value had been changed by user(doesnt fire if it had been assigned through code)
+		/// Occurs when the value of the slider changes due to user interaction (dragging or mouse wheel). Does not fire for programmatic value changes.
 		/// </summary>
 		public event MyraEventHandler<ValueChangedEventArgs<float>> ValueChangedByUser;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Slider"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply.</param>
 		protected Slider(string styleName)
 		{
 			_layout = new SingleItemLayout<Button>(this)
@@ -208,6 +242,10 @@ namespace Myra.Graphics2D.UI
 			return Orientation == Orientation.Horizontal ? pos.X - bounds.Width / 2 : pos.Y - bounds.Height / 2;
 		}
 
+		/// <summary>
+		/// Applies the specified slider style to this slider.
+		/// </summary>
+		/// <param name="style">The slider style to apply.</param>
 		public void ApplySliderStyle(SliderStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -229,6 +267,9 @@ namespace Myra.Graphics2D.UI
 			Hint = (int)(MaxHint * ((_value - Minimum) / (Maximum - Minimum)));
 		}
 
+		/// <summary>
+		/// Arranges the slider and synchronizes the hint (knob position) with the current value.
+		/// </summary>
 		protected override void InternalArrange()
 		{
 			base.InternalArrange();
@@ -236,6 +277,9 @@ namespace Myra.Graphics2D.UI
 			SyncHintWithValue();
 		}
 
+		/// <summary>
+		/// Handles touch down events and activates the slider for dragging.
+		/// </summary>
 		public override void OnTouchDown()
 		{
 			base.OnTouchDown();
@@ -244,6 +288,10 @@ namespace Myra.Graphics2D.UI
 			ImageButton.IsPressed = true;
 		}
 
+		/// <summary>
+		/// Handles mouse wheel input to adjust the slider value if wheel adjustment is enabled.
+		/// </summary>
+		/// <param name="delta">The mouse wheel delta value (positive for up/forward, negative for down/back).</param>
 		public override void OnMouseWheel(float delta)
 		{
 			base.OnMouseWheel(delta);
@@ -322,6 +370,10 @@ namespace Myra.Graphics2D.UI
 			UpdateHint();
 		}
 
+		/// <summary>
+		/// Copies the properties from another slider widget.
+		/// </summary>
+		/// <param name="w">The source slider widget to copy from.</param>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);

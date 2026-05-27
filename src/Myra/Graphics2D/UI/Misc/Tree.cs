@@ -18,6 +18,9 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An obsolete tree widget for displaying hierarchical data. Use TreeView instead.
+	/// </summary>
 	[Obsolete("Use TreeView")]
 	public class Tree : TreeNode
 	{
@@ -26,6 +29,9 @@ namespace Myra.Graphics2D.UI
 		private bool _rowInfosDirty = true;
 		private bool _hasRoot = true;
 
+		/// <summary>
+		/// Gets the list of all nodes in the tree, including nested nodes.
+		/// </summary>
 		public List<TreeNode> AllNodes
 		{
 			get
@@ -36,6 +42,9 @@ namespace Myra.Graphics2D.UI
 
 		private TreeNode HoverRow { get; set; }
 
+		/// <summary>
+		/// Gets or sets the currently selected tree node.
+		/// </summary>
 		public TreeNode SelectedRow
 		{
 			get
@@ -60,6 +69,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the tree displays a visible root node. Default is true.
+		/// </summary>
 		[DefaultValue(true)]
 		public bool HasRoot
 		{
@@ -80,8 +92,15 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Occurs when the selected node changes.
+		/// </summary>
 		public event MyraEventHandler SelectionChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Tree"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public Tree(string styleName = Stylesheet.DefaultStyleName) : base(null, styleName)
 		{
 			AcceptsKeyboardFocus = true;
@@ -104,6 +123,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles keyboard input for tree navigation (Up, Down, and Enter keys).
+		/// </summary>
+		/// <param name="k">The key being pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -180,6 +203,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles touch down events and selects the node at the touch position.
+		/// </summary>
 		public override void OnTouchDown()
 		{
 			base.OnTouchDown();
@@ -197,6 +223,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles touch double-click events and toggles node expansion if clicked on the mark.
+		/// </summary>
 		public override void OnTouchDoubleClick()
 		{
 			base.OnTouchDoubleClick();
@@ -244,6 +273,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles mouse movement and updates the hover state of nodes.
+		/// </summary>
 		public override void OnMouseMoved()
 		{
 			base.OnMouseMoved();
@@ -258,6 +290,9 @@ namespace Myra.Graphics2D.UI
 			SetHoverRow(Desktop.MousePosition);
 		}
 
+		/// <summary>
+		/// Handles mouse leaving the tree and clears the hover state.
+		/// </summary>
 		public override void OnMouseLeft()
 		{
 			base.OnMouseLeft();
@@ -265,6 +300,9 @@ namespace Myra.Graphics2D.UI
 			HoverRow = null;
 		}
 
+		/// <summary>
+		/// Removes all nodes from the tree and clears selection and hover state.
+		/// </summary>
 		public override void RemoveAllSubNodes()
 		{
 			base.RemoveAllSubNodes();
@@ -328,12 +366,19 @@ namespace Myra.Graphics2D.UI
 			RecursiveUpdateRowVisibility(this);
 		}
 
+		/// <summary>
+		/// Arranges the tree and marks row information as needing update.
+		/// </summary>
 		protected override void InternalArrange()
 		{
 			base.InternalArrange();
 			_rowInfosDirty = true;
 		}
 
+		/// <summary>
+		/// Renders the tree including selection and hover backgrounds for rows.
+		/// </summary>
+		/// <param name="context">The render context used for drawing.</param>
 		public override void InternalRender(RenderContext context)
 		{
 			if (_rowInfosDirty)
@@ -357,6 +402,9 @@ namespace Myra.Graphics2D.UI
 			base.InternalRender(context);
 		}
 
+		/// <summary>
+		/// Updates the mark (expand/collapse button) visibility based on HasRoot setting.
+		/// </summary>
 		protected override void UpdateMark()
 		{
 			if (!HasRoot)
@@ -395,9 +443,9 @@ namespace Myra.Graphics2D.UI
 
 
 		/// <summary>
-		/// Expands path to the node
+		/// Expands the path from the root to the specified node, making it visible in the tree.
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">The tree node to expand the path to.</param>
 		public void ExpandPath(TreeNode node)
 		{
 			var path = new Stack<TreeNode>();

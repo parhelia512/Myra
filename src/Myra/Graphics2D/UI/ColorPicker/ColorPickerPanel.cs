@@ -17,6 +17,9 @@ using ColorHSV = Myra.Utility.ColorHSV;
 
 namespace Myra.Graphics2D.UI.ColorPicker
 {
+	/// <summary>
+	/// A color picker panel that provides user interface controls for selecting colors.
+	/// </summary>
 	public partial class ColorPickerPanel
 	{
 		private enum ActiveState
@@ -36,6 +39,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 		private readonly List<Image> _userColorDisplays = new List<Image>();
 		private ActiveState _activeState;
 
+		/// <summary>
+		/// An array of predefined user colors.
+		/// </summary>
 		public static readonly Color[] UserColors = new[]
 		{
 			new Color(255, 255, 255),
@@ -56,6 +62,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			new Color(207, 86, 191)
 		};
 
+		/// <summary>
+		/// Gets or sets the currently selected color.
+		/// </summary>
 		public Color Color
 		{
 			get
@@ -78,24 +87,36 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the red component of the color (0-255).
+		/// </summary>
 		public byte R
 		{
 			get => Color.R;
 			set => Color = new Color(value, Color.G, Color.B, Color.A);
 		}
 
+		/// <summary>
+		/// Gets or sets the green component of the color (0-255).
+		/// </summary>
 		public byte G
 		{
 			get => Color.G;
 			set => Color = new Color(Color.R, value, Color.B, Color.A);
 		}
 
+		/// <summary>
+		/// Gets or sets the blue component of the color (0-255).
+		/// </summary>
 		public byte B
 		{
 			get => Color.B;
 			set => Color = new Color(Color.R, Color.G, value, Color.A);
 		}
 
+		/// <summary>
+		/// Gets or sets the alpha (opacity) value of the color (0.0-1.0).
+		/// </summary>
 		public float A
 		{
 			get => _colorDisplay.Opacity;
@@ -122,6 +143,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 
 		private ColorHSV colorHSV;
 
+		/// <summary>
+		/// Initializes a new instance of the ColorPickerPanel class.
+		/// </summary>
 		public ColorPickerPanel()
 		{
 			BuildUI();
@@ -313,18 +337,27 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			}
 		}
 
+		/// <summary>
+		/// Called when a touch is pressed down on the color picker.
+		/// </summary>
 		public override void OnTouchDown()
 		{
 			base.OnTouchDown();
 			ProcessTouch();
 		}
 
+		/// <summary>
+		/// Called when a touch is moved on the color picker.
+		/// </summary>
 		public override void OnTouchMoved()
 		{
 			base.OnTouchMoved();
 			ProcessTouch();
 		}
 
+		/// <summary>
+		/// Called when a touch leaves the color picker.
+		/// </summary>
 		public override void OnTouchLeft()
 		{
 			base.OnTouchLeft();
@@ -332,6 +365,9 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			_activeState = ActiveState.None;
 		}
 
+		/// <summary>
+		/// Called when a touch is released from the color picker.
+		/// </summary>
 		public override void OnTouchUp()
 		{
 			base.OnTouchUp();
@@ -521,6 +557,10 @@ namespace Myra.Graphics2D.UI.ColorPicker
 			colorHSV = hsv;
 		}
 
+		/// <summary>
+		/// Applies a color picker dialog style to the color picker panel.
+		/// </summary>
+		/// <param name="style">The color picker dialog style to apply.</param>
 		public void ApplyColorPickerDialogStyle(ColorPickerDialogStyle style)
 		{
 			foreach (var image in _userColorBackgrounds)

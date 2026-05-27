@@ -15,18 +15,30 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
-
+	/// <summary>
+	/// A button widget that displays both an image and text.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use <see cref="Button"/> instead.</remarks>
 	[Obsolete("Use Button")]
 	[StyleTypeName("Button")]
 	public class ImageTextButton : ButtonBase<Grid>
 	{
+		/// <summary>
+		/// Specifies the position of text relative to the image in an image text button.
+		/// </summary>
 		public enum TextPositionEnum
 		{
+			/// <summary>Text is positioned to the right of the image.</summary>
 			Right,
+			/// <summary>Text is positioned to the left of the image.</summary>
 			Left,
+			/// <summary>Text is positioned above the image.</summary>
 			Top,
+			/// <summary>Text is positioned below the image.</summary>
 			Bottom,
+			/// <summary>Text is overlaid on top of the image.</summary>
 			OverlapsImage,
+			/// <summary>Text is behind the image.</summary>
 			BehindImage
 		}
 
@@ -34,6 +46,9 @@ namespace Myra.Graphics2D.UI
 		private readonly Label _label;
 		private TextPositionEnum _textPosition;
 
+		/// <summary>
+		/// Gets or sets the text displayed on the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -48,6 +63,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the button text.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/TextColor")]
 		public Color TextColor
@@ -62,6 +80,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the button text when the cursor is over it.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/OverTextColor")]
 		public Color? OverTextColor
@@ -76,6 +97,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the button text when the button is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/PressedTextColor")]
 		public Color? PressedTextColor
@@ -90,6 +114,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the font used to render the button text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase Font
 		{
@@ -103,6 +130,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed on the button.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage Image
 		{
@@ -117,6 +147,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed on the button when the cursor is over it.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage OverImage
 		{
@@ -131,6 +164,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the image displayed on the button when it is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		public IImage PressedImage
 		{
@@ -145,6 +181,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the width of the image in pixels, or null to use automatic sizing.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public int? ImageWidth
@@ -159,6 +198,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the height of the image in pixels, or null to use automatic sizing.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public int? ImageHeight
@@ -173,6 +215,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the image is visible.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(true)]
 		public bool ImageVisible
@@ -188,6 +233,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the spacing in pixels between the image and text.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(0)]
 		public int ImageTextSpacing
@@ -204,6 +252,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the position of the text relative to the image.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(TextPositionEnum.Right)]
 		public TextPositionEnum TextPosition
@@ -224,6 +275,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the text label within the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(HorizontalAlignment.Left)]
 		public HorizontalAlignment LabelHorizontalAlignment
@@ -232,6 +286,9 @@ namespace Myra.Graphics2D.UI
 			set => _label.HorizontalAlignment = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the text label within the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(VerticalAlignment.Center)]
 		public VerticalAlignment LabelVerticalAlignment
@@ -240,6 +297,9 @@ namespace Myra.Graphics2D.UI
 			set => _label.VerticalAlignment = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the image within the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(HorizontalAlignment.Center)]
 		public HorizontalAlignment ImageHorizontalAlignment
@@ -248,6 +308,9 @@ namespace Myra.Graphics2D.UI
 			set => _image.HorizontalAlignment = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the image within the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(VerticalAlignment.Center)]
 		public VerticalAlignment ImageVerticalAlignment
@@ -256,6 +319,9 @@ namespace Myra.Graphics2D.UI
 			set => _image.VerticalAlignment = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the horizontal alignment of the button's content (image and text).
+		/// </summary>
 		[DefaultValue(HorizontalAlignment.Stretch)]
 		public override HorizontalAlignment ContentHorizontalAlignment
 		{
@@ -269,6 +335,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the vertical alignment of the button's content (image and text).
+		/// </summary>
 		[DefaultValue(VerticalAlignment.Stretch)]
 		public override VerticalAlignment ContentVerticalAlignment
 		{
@@ -282,6 +351,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ImageTextButton"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public ImageTextButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			InternalChild = new Grid
@@ -372,6 +445,10 @@ namespace Myra.Graphics2D.UI
 			_textPosition = value;
 		}
 
+		/// <summary>
+		/// Applies the specified image text button style to the button, its image, and its text label.
+		/// </summary>
+		/// <param name="style">The image text button style to apply.</param>
 		public void ApplyImageTextButtonStyle(ImageTextButtonStyle style)
 		{
 			ApplyButtonStyle(style);
@@ -389,6 +466,9 @@ namespace Myra.Graphics2D.UI
 			ImageTextSpacing = style.ImageTextSpacing;
 		}
 
+		/// <summary>
+		/// Handles the pressed state change and updates the image and text label's pressed state.
+		/// </summary>
 		public override void OnPressedChanged()
 		{
 			base.OnPressedChanged();
@@ -397,6 +477,11 @@ namespace Myra.Graphics2D.UI
 			_label.IsPressed = IsPressed;
 		}
 
+		/// <summary>
+		/// Applies a named image text button style from the stylesheet to the button.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the image text button style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyImageTextButtonStyle(new ImageTextButtonStyle(stylesheet.ButtonStyles.SafelyGetStyle(name)));

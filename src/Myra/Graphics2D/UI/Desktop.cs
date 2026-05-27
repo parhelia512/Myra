@@ -23,6 +23,9 @@ using Matrix = System.Numerics.Matrix3x2;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Represents the main UI desktop/screen that manages all widgets and handles user input.
+	/// </summary>
 	public partial class Desktop : ITransformable, IDisposable
 	{
 		private Rectangle _lastBounds;
@@ -42,15 +45,21 @@ namespace Myra.Graphics2D.UI
 		private readonly List<Widget> _widgetsCopy = new List<Widget>();
 		private Widget _previousKeyboardFocus;
 #if MONOGAME || PLATFORM_AGNOSTIC
+		/// <summary>
+		/// Gets or sets a value indicating whether external text input is available.
+		/// </summary>
 		public bool HasExternalTextInput = false;
 #endif
 
 		private bool _isDisposed = false;
 
+		/// <summary>
+		/// Gets or sets the function that fetches the bounds of the desktop.
+		/// </summary>
 		public Func<Rectangle> BoundsFetcher { get; set; } = DefaultBoundsFetcher;
 
 		/// <summary>
-		/// Root Widget
+		/// Gets or sets the root widget that covers the entire desktop.
 		/// </summary>
 		public Widget Root
 		{
@@ -82,6 +91,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the menu bar widget for the desktop.
+		/// </summary>
 		public HorizontalMenu MenuBar { get; private set; }
 
 		internal List<Widget> ChildrenCopy
@@ -93,6 +105,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the collection of all widgets on the desktop.
+		/// </summary>
 		public ObservableCollection<Widget> Widgets { get; } = new ObservableCollection<Widget>();
 
 		internal Rectangle InternalBounds
@@ -121,11 +136,18 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets the context menu widget currently displayed on the desktop.
+		/// </summary>
 		public Widget ContextMenu { get; private set; }
+
+		/// <summary>
+		/// Gets the tooltip widget currently displayed on the desktop.
+		/// </summary>
 		public Widget Tooltip { get; private set; }
 
 		/// <summary>
-		/// Widget having keyboard focus
+		/// Gets or sets the widget that currently has keyboard focus.
 		/// </summary>
 		public Widget FocusedKeyboardWidget
 		{
@@ -166,8 +188,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the opacity of the desktop (0.0 to 1.0).
+		/// </summary>
 		public float Opacity { get; set; }
 
+		/// <summary>
+		/// Gets or sets the scale factor for the desktop and all its widgets.
+		/// </summary>
 		public Vector2 Scale
 		{
 			get => _scale;
@@ -184,6 +212,9 @@ namespace Myra.Graphics2D.UI
 
 		}
 
+		/// <summary>
+		/// Gets or sets the origin point for transformations (rotation and scale).
+		/// </summary>
 		public Vector2 TransformOrigin
 		{
 			get => _transformOrigin;
@@ -199,6 +230,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the rotation angle of the desktop in radians.
+		/// </summary>
 		public float Rotation
 		{
 			get => _rotation;
@@ -225,6 +259,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the mouse cursor is over a GUI widget.
+		/// </summary>
 		public bool IsMouseOverGUI
 		{
 			get
@@ -233,6 +270,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether a touch point is over a GUI widget.
+		/// </summary>
 		public bool IsTouchOverGUI
 		{
 			get
@@ -273,6 +313,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether any modal widget is currently displayed on the desktop.
+		/// </summary>
 		public bool HasModalWidget
 		{
 			get
@@ -299,16 +342,39 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the background brush for the desktop.
+		/// </summary>
 		public IBrush Background { get; set; }
 
+		/// <summary>
+		/// Occurs before a context menu is closed.
+		/// </summary>
 		public event MyraEventHandler<CancellableEventArgs<Widget>> ContextMenuClosing;
+
+		/// <summary>
+		/// Occurs after a context menu is closed.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<Widget>> ContextMenuClosed;
 
+		/// <summary>
+		/// Occurs before a widget loses keyboard focus.
+		/// </summary>
 		public event MyraEventHandler<CancellableEventArgs<Widget>> WidgetLosingKeyboardFocus;
+
+		/// <summary>
+		/// Occurs after a widget gets keyboard focus.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<Widget>> WidgetGotKeyboardFocus;
 
+		/// <summary>
+		/// Gets or sets the handler for keyboard key down events.
+		/// </summary>
 		public Action<Keys> KeyDownHandler;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Desktop"/> class.
+		/// </summary>
 		public Desktop()
 		{
 			Opacity = 1.0f;
@@ -326,11 +392,21 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Determines whether a specific keyboard key is currently pressed.
+		/// </summary>
+		/// <param name="keys">The key to check.</param>
+		/// <returns>true if the key is pressed; otherwise, false.</returns>
 		public bool IsKeyDown(Keys keys)
 		{
 			return _downKeys[(int)keys];
 		}
 
+		/// <summary>
+		/// Gets the child widget at the specified index.
+		/// </summary>
+		/// <param name="index">The zero-based index of the child widget.</param>
+		/// <returns>The child widget at the specified index.</returns>
 		public Widget GetChild(int index)
 		{
 			return ChildrenCopy[index];
@@ -357,6 +433,9 @@ namespace Myra.Graphics2D.UI
 			HideTooltip();
 		}
 
+		/// <summary>
+		/// Hides the currently displayed context menu.
+		/// </summary>
 		public void HideContextMenu()
 		{
 			if (ContextMenu == null)
@@ -426,6 +505,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Hides the currently displayed tooltip.
+		/// </summary>
 		public void HideTooltip()
 		{
 			if (Tooltip == null)
@@ -438,6 +520,11 @@ namespace Myra.Graphics2D.UI
 			Tooltip = null;
 		}
 
+		/// <summary>
+		/// Shows a tooltip for the specified widget at the given position.
+		/// </summary>
+		/// <param name="widget">The widget to show the tooltip for.</param>
+		/// <param name="position">The position to show the tooltip in global coordinates.</param>
 		public void ShowTooltip(Widget widget, Point position)
 		{
 			if (string.IsNullOrEmpty(widget.Tooltip))
@@ -486,6 +573,9 @@ namespace Myra.Graphics2D.UI
 			_widgetsDirty = true;
 		}
 
+		/// <summary>
+		/// Renders the visual representation of the desktop and all its widgets.
+		/// </summary>
 		public void RenderVisual()
 		{
 			var oldDeviceScissor = _renderContext.DeviceScissor;
@@ -526,6 +616,9 @@ namespace Myra.Graphics2D.UI
 			_renderContext.DeviceScissor = oldDeviceScissor;
 		}
 
+		/// <summary>
+		/// Updates the layout of all widgets and processes input events.
+		/// </summary>
 		public void Render()
 		{
 			// Layout run
@@ -570,6 +663,11 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Converts a local coordinate to global (screen) coordinates.
+		/// </summary>
+		/// <param name="pos">The local position.</param>
+		/// <returns>The position in global coordinates.</returns>
 		public Vector2 ToGlobal(Vector2 pos)
 		{
 			UpdateTransform();
@@ -577,6 +675,11 @@ namespace Myra.Graphics2D.UI
 			return Transform.Apply(pos);
 		}
 
+		/// <summary>
+		/// Converts a local coordinate to global (screen) coordinates.
+		/// </summary>
+		/// <param name="pos">The local position.</param>
+		/// <returns>The position in global coordinates.</returns>
 		public Point ToGlobal(Point pos)
 		{
 			UpdateTransform();
@@ -584,6 +687,11 @@ namespace Myra.Graphics2D.UI
 			return Transform.Apply(pos);
 		}
 
+		/// <summary>
+		/// Converts a global (screen) coordinate to local coordinates.
+		/// </summary>
+		/// <param name="pos">The global position.</param>
+		/// <returns>The position in local coordinates.</returns>
 		public Vector2 ToLocal(Vector2 pos)
 		{
 			UpdateTransform();
@@ -591,13 +699,24 @@ namespace Myra.Graphics2D.UI
 			return Transform.InverseApply(pos);
 		}
 
+		/// <summary>
+		/// Converts a global (screen) coordinate to local coordinates.
+		/// </summary>
+		/// <param name="pos">The global position.</param>
+		/// <returns>The position in local coordinates.</returns>
 		public Point ToLocal(Point pos) => ToLocal(new Vector2(pos.X, pos.Y)).ToPoint();
 
+		/// <summary>
+		/// Marks the layout as dirty, requiring an update on the next render.
+		/// </summary>
 		public void InvalidateLayout()
 		{
 			_layoutDirty = true;
 		}
 
+		/// <summary>
+		/// Updates the layout of all widgets on the desktop.
+		/// </summary>
 		public void UpdateLayout()
 		{
 			var bounds = BoundsFetcher();
@@ -688,6 +807,11 @@ namespace Myra.Graphics2D.UI
 			return null;
 		}
 
+		/// <summary>
+		/// Finds the first child widget that matches the specified predicate, recursively searching all descendants.
+		/// </summary>
+		/// <param name="filter">A function to test each widget.</param>
+		/// <returns>The first matching widget, or null if no match is found.</returns>
 		public Widget FindChild(Func<Widget, bool> filter)
 		{
 			foreach (var w in ChildrenCopy)
@@ -702,20 +826,40 @@ namespace Myra.Graphics2D.UI
 			return null;
 		}
 
+		/// <summary>
+		/// Finds a widget by predicate. This method is obsolete; use <see cref="FindChild(Func{Widget, bool})"/> instead.
+		/// </summary>
+		/// <param name="predicate">A function to test each widget.</param>
+		/// <returns>The first matching widget, or null if no match is found.</returns>
 		[Obsolete("Use FindChild")]
 		public Widget GetWidgetBy(Func<Widget, bool> predicate) => FindChild(predicate);
 
+		/// <summary>
+		/// Finds a child widget by its ID, recursively searching all descendants.
+		/// </summary>
+		/// <param name="id">The ID of the widget to find.</param>
+		/// <returns>The widget with the specified ID, or null if not found.</returns>
 		public Widget FindChild(string id)
 		{
 			return FindChild(w => w.Id == id);
 		}
 
+		/// <summary>
+		/// Finds a widget by ID. This method is obsolete; use <see cref="FindChild(string)"/> instead.
+		/// </summary>
+		/// <param name="ID">The ID of the widget to find.</param>
+		/// <returns>The widget with the specified ID, or null if not found.</returns>
 		[Obsolete("Use FindChild")]
 		public Widget GetWidgetByID(string ID)
 		{
 			return FindChild(w => w.Id == ID);
 		}
 
+		/// <summary>
+		/// Calculates the total number of widgets on the desktop and all their descendants.
+		/// </summary>
+		/// <param name="visibleOnly">If true, only counts visible widgets.</param>
+		/// <returns>The total number of widgets.</returns>
 		public int CalculateTotalWidgets(bool visibleOnly)
 		{
 			var result = 0;
@@ -786,6 +930,10 @@ namespace Myra.Graphics2D.UI
 			widget != null && widget.Visible &&
 			widget.Enabled && widget.AcceptsKeyboardFocus;
 
+		/// <summary>
+		/// Handles a keyboard key down event.
+		/// </summary>
+		/// <param name="key">The key that was pressed.</param>
 		public void OnKeyDown(Keys key)
 		{
 			KeyDown.Invoke(key, InputEventType.KeyDown);
@@ -826,6 +974,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles character input from the keyboard.
+		/// </summary>
+		/// <param name="c">The character that was input.</param>
 		public void OnChar(char c)
 		{
 			if (IsMenuBarActive)
@@ -857,6 +1009,11 @@ namespace Myra.Graphics2D.UI
 			_widgetsDirty = false;
 		}
 
+		/// <summary>
+		/// Determines whether a point is over a GUI widget.
+		/// </summary>
+		/// <param name="p">The point to test.</param>
+		/// <returns>True if the point is over a GUI widget; otherwise, false.</returns>
 		public bool IsPointOverGUI(Point p)
 		{
 			foreach (var widget in ChildrenCopy)
@@ -892,6 +1049,9 @@ namespace Myra.Graphics2D.UI
 			_renderContext.Dispose();
 		}
 
+		/// <summary>
+		/// Releases all resources used by the desktop.
+		/// </summary>
 		public void Dispose()
 		{
 			if (_isDisposed)
@@ -905,11 +1065,18 @@ namespace Myra.Graphics2D.UI
 			GC.SuppressFinalize(this);
 		}
 
+		/// <summary>
+		/// Finalizer that releases unmanaged resources.
+		/// </summary>
 		~Desktop()
 		{
 			ReleaseUnmanagedResources();
 		}
 
+		/// <summary>
+		/// Gets the default bounds of the desktop from the game window.
+		/// </summary>
+		/// <returns>A rectangle representing the desktop bounds.</returns>
 		public static Rectangle DefaultBoundsFetcher()
 		{
 			var size = CrossEngineStuff.ViewSize;

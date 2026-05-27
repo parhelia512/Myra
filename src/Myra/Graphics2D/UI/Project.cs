@@ -19,21 +19,63 @@ using AssetManagementBase;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Options for exporting a UI project.
+	/// </summary>
 	public class ExportOptions
 	{
+		/// <summary>
+		/// Gets or sets the namespace for the exported code.
+		/// </summary>
 		public string Namespace { get; set; }
+
+		/// <summary>
+		/// Gets or sets the class name for the exported code.
+		/// </summary>
 		public string Class { get; set; }
+
+		/// <summary>
+		/// Gets or sets the output path for the exported files.
+		/// </summary>
 		public string OutputPath { get; set; }
+
+		/// <summary>
+		/// Gets or sets the template for the designer file.
+		/// </summary>
 		public string TemplateDesigner { get; set; }
+
+		/// <summary>
+		/// Gets or sets the template for the main file.
+		/// </summary>
 		public string TemplateMain { get; set; }
 	}
 
+	/// <summary>
+	/// Represents the position of an object in a document.
+	/// </summary>
 	public class ObjectPosition
 	{
+		/// <summary>
+		/// Gets the object.
+		/// </summary>
 		public object Object { get; private set; }
+
+		/// <summary>
+		/// Gets the starting position.
+		/// </summary>
 		public int Start { get; private set; }
+
+		/// <summary>
+		/// Gets the ending position.
+		/// </summary>
 		public int End { get; private set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ObjectPosition"/> class with the specified object and positions.
+		/// </summary>
+		/// <param name="obj">The object.</param>
+		/// <param name="start">The starting position.</param>
+		/// <param name="end">The ending position.</param>
 		public ObjectPosition(object obj, int start, int end)
 		{
 			Object = obj;
@@ -42,6 +84,9 @@ namespace Myra.Graphics2D.UI
 		}
 	}
 
+	/// <summary>
+	/// Represents a UI project that can be saved, loaded, and exported to code.
+	/// </summary>
 	public class Project
 	{
 		private struct StylesheetChanger: IDisposable
@@ -60,37 +105,56 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>Constant name for proportion values.</summary>
 		public const string ProportionName = "Proportion";
+		/// <summary>Constant name for default proportion values.</summary>
 		public const string DefaultProportionName = "DefaultProportion";
+		/// <summary>Constant name for default column proportion values.</summary>
 		public const string DefaultColumnProportionName = "DefaultColumnProportion";
+		/// <summary>Constant name for default row proportion values.</summary>
 		public const string DefaultRowProportionName = "DefaultRowProportion";
 
 		private static readonly Dictionary<string, string> LegacyClassNames = new Dictionary<string, string>();
 
 		private readonly ExportOptions _exportOptions = new ExportOptions();
 
+		/// <summary>
+		/// Gets the export options for this project.
+		/// </summary>
 		[Browsable(false)]
 		public ExportOptions ExportOptions
 		{
 			get { return _exportOptions; }
 		}
 
+		/// <summary>
+		/// Gets or sets the root widget of the project.
+		/// </summary>
 		[Browsable(false)]
 		[Content]
 		public Widget Root { get; set; }
 
+		/// <summary>
+		/// Gets or sets the path to the stylesheet file.
+		/// </summary>
 		[Browsable(false)]
 		public string StylesheetPath { get; set; }
 
+		/// <summary>
+		/// Gets or sets the stylesheet for this project.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public Stylesheet Stylesheet { get; set; }
 
+		/// <summary>
+		/// Gets or sets the designer runtime assets folder path.
+		/// </summary>
 		[FilePath(FileDialogMode.ChooseFolder)]
 		public string DesignerRtfAssetsPath { get; set; }
 
 		/// <summary>
-		/// Maps loaded objects to their respective xml nodes
+		/// Gets the mapping of loaded objects to their respective XML nodes.
 		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
@@ -105,11 +169,19 @@ namespace Myra.Graphics2D.UI
 			LegacyClassNames["ScrollPane"] = "ScrollViewer";
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Project"/> class.
+		/// </summary>
 		public Project()
 		{
 			Stylesheet = Stylesheet.Current;
 		}
 
+		/// <summary>
+		/// Determines whether the specified name is a proportion property name.
+		/// </summary>
+		/// <param name="s">The name to check.</param>
+		/// <returns>true if the name is a proportion name; otherwise, false.</returns>
 		public static bool IsProportionName(string s)
 		{
 			return s.EndsWith(ProportionName) ||
@@ -118,6 +190,13 @@ namespace Myra.Graphics2D.UI
 				s.EndsWith(DefaultRowProportionName);
 		}
 
+		/// <summary>
+		/// Determines whether a property should be serialized for the specified object.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet to use for comparison.</param>
+		/// <param name="o">The object containing the property.</param>
+		/// <param name="p">The property information.</param>
+		/// <returns>true if the property should be serialized; otherwise, false.</returns>
 		public static bool ShouldSerializeProperty(Stylesheet stylesheet, object o, PropertyInfo p)
 		{
 			var asWidget = o as Widget;
@@ -167,6 +246,12 @@ namespace Myra.Graphics2D.UI
 			return true;
 		}
 
+		/// <summary>
+		/// Determines whether a property should be serialized for the specified object using this project's stylesheet.
+		/// </summary>
+		/// <param name="o">The object containing the property.</param>
+		/// <param name="p">The property information.</param>
+		/// <returns>true if the property should be serialized; otherwise, false.</returns>
 		public bool ShouldSerializeProperty(object o, PropertyInfo p)
 		{
 			return ShouldSerializeProperty(Stylesheet, o, p);
@@ -185,6 +270,9 @@ namespace Myra.Graphics2D.UI
 			return CreateSaveContext(Stylesheet);
 		}
 
+		/// <summary>
+		/// Gets or sets the extra widget assemblies and namespaces to include during project loading and saving.
+		/// </summary>
 		public static Dictionary<Assembly, string[]> ExtraWidgetAssembliesAndNamespaces = new Dictionary<Assembly, string[]>();
 		
 		internal static LoadContext CreateLoadContext(AssetManager assetManager)
@@ -218,6 +306,10 @@ namespace Myra.Graphics2D.UI
 			};
 		}
 
+		/// <summary>
+		/// Saves the project to an XML string.
+		/// </summary>
+		/// <returns>An XML string representation of the project.</returns>
 		public string Save()
 		{
 			var saveContext = CreateSaveContext();
@@ -228,6 +320,14 @@ namespace Myra.Graphics2D.UI
 			return xDoc.ToString();
 		}
 
+		/// <summary>
+		/// Loads a project from an XDocument with an optional handler.
+		/// </summary>
+		/// <typeparam name="T">The type of the handler.</typeparam>
+		/// <param name="xDoc">The XDocument to load from.</param>
+		/// <param name="assetManager">The asset manager for loading resources. Required if the project has an external stylesheet.</param>
+		/// <param name="handler">Optional handler for loading events.</param>
+		/// <returns>The loaded project.</returns>
 		public static Project LoadFromXml<T>(XDocument xDoc, AssetManager assetManager = null, T handler = null) where T : class
 		{
 			var stylesheet = Stylesheet.Current;
@@ -248,7 +348,7 @@ namespace Myra.Graphics2D.UI
 
 				result.Stylesheet = stylesheet;
 				using(var stylesheetChanger = new StylesheetChanger(stylesheet))
-				{ 
+				{
 					var loadContext = CreateLoadContext(assetManager);
 					loadContext.Load(result, xDoc.Root, handler);
 					result.ObjectsNodes = loadContext.ObjectsNodes;
@@ -264,21 +364,51 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Loads a project from XML string data with an optional handler.
+		/// </summary>
+		/// <typeparam name="T">The type of the handler.</typeparam>
+		/// <param name="data">The XML data as a string.</param>
+		/// <param name="assetManager">The asset manager for loading resources.</param>
+		/// <param name="handler">Optional handler for loading events.</param>
+		/// <returns>The loaded project.</returns>
 		public static Project LoadFromXml<T>(string data, AssetManager assetManager = null, T handler = null) where T : class
 		{
 			return LoadFromXml(XDocument.Parse(data, LoadOptions.SetLineInfo), assetManager, handler);
 		}
 
+		/// <summary>
+		/// Loads a project from an XDocument.
+		/// </summary>
+		/// <param name="xDoc">The XDocument to load from.</param>
+		/// <param name="assetManager">The asset manager for loading resources.</param>
+		/// <returns>The loaded project.</returns>
 		public static Project LoadFromXml(XDocument xDoc, AssetManager assetManager = null)
 		{
 			return LoadFromXml<object>(xDoc, assetManager, null);
 		}
 
+		/// <summary>
+		/// Loads a project from XML string data.
+		/// </summary>
+		/// <param name="data">The XML data as a string.</param>
+		/// <param name="assetManager">The asset manager for loading resources.</param>
+		/// <returns>The loaded project.</returns>
 		public static Project LoadFromXml(string data, AssetManager assetManager = null)
 		{
 			return LoadFromXml<object>(XDocument.Parse(data, LoadOptions.SetLineInfo), assetManager, null);
 		}
 
+		/// <summary>
+		/// Loads a single object from XML string data.
+		/// </summary>
+		/// <typeparam name="T">The type of the handler.</typeparam>
+		/// <param name="data">The XML data as a string.</param>
+		/// <param name="assetManager">The asset manager for loading resources.</param>
+		/// <param name="stylesheet">The stylesheet to apply to loaded objects.</param>
+		/// <param name="handler">Optional handler for loading events.</param>
+		/// <param name="parentType">The parent type context for loading.</param>
+		/// <returns>The loaded object.</returns>
 		public static object LoadObjectFromXml<T>(string data, AssetManager assetManager = null, Stylesheet stylesheet = null, T handler = null, Type parentType = null) where T : class
 		{
 			XDocument xDoc = XDocument.Parse(data, LoadOptions.SetLineInfo);
@@ -330,16 +460,36 @@ namespace Myra.Graphics2D.UI
 			return item;
 		}
 
+		/// <summary>
+		/// Loads a single object from XML string data using the specified stylesheet.
+		/// </summary>
+		/// <param name="data">The XML data as a string.</param>
+		/// <param name="assetManager">The asset manager for loading resources.</param>
+		/// <param name="stylesheet">The stylesheet to apply to loaded objects.</param>
+		/// <returns>The loaded object.</returns>
 		public static object LoadObjectFromXml(string data, AssetManager assetManager, Stylesheet stylesheet)
 		{
 			return LoadObjectFromXml<object>(data, assetManager, stylesheet, null);
 		}
 
+		/// <summary>
+		/// Loads a single object from XML string data using this project's stylesheet.
+		/// </summary>
+		/// <param name="data">The XML data as a string.</param>
+		/// <param name="assetManager">The asset manager for loading resources.</param>
+		/// <returns>The loaded object.</returns>
 		public object LoadObjectFromXml(string data, AssetManager assetManager)
 		{
 			return LoadObjectFromXml(data, assetManager, Stylesheet);
 		}
 
+		/// <summary>
+		/// Saves an object to an XML string.
+		/// </summary>
+		/// <param name="obj">The object to save.</param>
+		/// <param name="tagName">The XML tag name for the object.</param>
+		/// <param name="parentType">The parent type context for saving.</param>
+		/// <returns>An XML string representation of the object.</returns>
 		public string SaveObjectToXml(object obj, string tagName, Type parentType)
 		{
 			var saveContext = CreateSaveContext(Stylesheet);
@@ -478,6 +628,11 @@ namespace Myra.Graphics2D.UI
 			return true;
 		}
 
+		/// <summary>
+		/// Gets the widget type by its name.
+		/// </summary>
+		/// <param name="name">The name of the widget type.</param>
+		/// <returns>The widget type, or null if not found.</returns>
 		public static Type GetWidgetTypeByName(string name)
 		{
 			var itemNamespace = typeof(Widget).Namespace;

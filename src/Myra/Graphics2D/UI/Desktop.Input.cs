@@ -21,12 +21,34 @@ using Matrix = System.Numerics.Matrix3x2;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Represents the state of the mouse input including position and button states.
+	/// </summary>
 	public struct MouseInfo
 	{
+		/// <summary>
+		/// Gets the current mouse position in screen coordinates.
+		/// </summary>
 		public Point Position;
+
+		/// <summary>
+		/// Gets a value indicating whether the left mouse button is currently pressed.
+		/// </summary>
 		public bool IsLeftButtonDown;
+
+		/// <summary>
+		/// Gets a value indicating whether the middle mouse button is currently pressed.
+		/// </summary>
 		public bool IsMiddleButtonDown;
+
+		/// <summary>
+		/// Gets a value indicating whether the right mouse button is currently pressed.
+		/// </summary>
 		public bool IsRightButtonDown;
+
+		/// <summary>
+		/// Gets the accumulated mouse wheel delta for the current frame.
+		/// </summary>
 		public float Wheel;
 	}
 
@@ -103,8 +125,14 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the touch is currently down.
+		/// </summary>
 		public bool IsTouchDown => TouchPosition != null;
 
+		/// <summary>
+		/// Gets or sets the mouse wheel delta for the current frame.
+		/// </summary>
 		public float MouseWheelDelta
 		{
 			get => _mouseWheelDelta;
@@ -120,11 +148,24 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets an array indicating which keys are currently pressed down.
+		/// </summary>
 		public bool[] DownKeys => _downKeys;
+
+		/// <summary>
+		/// Gets or sets the delay in milliseconds before key repeat starts.
+		/// </summary>
 		public int RepeatKeyDownStartInMs { get; set; } = 500;
 
+		/// <summary>
+		/// Gets or sets the interval in milliseconds between key repeat events.
+		/// </summary>
 		public int RepeatKeyDownInternalInMs { get; set; } = 50;
 
+		/// <summary>
+		/// Gets a value indicating whether the current platform is a mobile platform.
+		/// </summary>
 		public static bool IsMobile
 		{
 			get
@@ -138,19 +179,54 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Occurs when the mouse moves.
+		/// </summary>
 		public event MyraEventHandler MouseMoved;
 
+		/// <summary>
+		/// Occurs when a touch point moves on the screen.
+		/// </summary>
 		public event MyraEventHandler TouchMoved;
+
+		/// <summary>
+		/// Occurs when a touch point is pressed on the screen.
+		/// </summary>
 		public event MyraEventHandler TouchDown;
+
+		/// <summary>
+		/// Occurs when a touch point is released from the screen.
+		/// </summary>
 		public event MyraEventHandler TouchUp;
+
+		/// <summary>
+		/// Occurs when a touch point is double-clicked on the screen.
+		/// </summary>
 		public event MyraEventHandler TouchDoubleClick;
 
+		/// <summary>
+		/// Occurs when the mouse wheel is scrolled. The event args contain the wheel delta value.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<float>> MouseWheelChanged;
 
+		/// <summary>
+		/// Occurs when a key is released. The event args contain the key code.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<Keys>> KeyUp;
+
+		/// <summary>
+		/// Occurs when a key is pressed. The event args contain the key code.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<Keys>> KeyDown;
+
+		/// <summary>
+		/// Occurs when a character is input from the keyboard. The event args contain the character value.
+		/// </summary>
 		public event MyraEventHandler<GenericEventArgs<char>> Char;
 
+		/// <summary>
+		/// Updates the mouse input state based on the current mouse information.
+		/// </summary>
 		public void UpdateMouseInput()
 		{
 			if (MyraEnvironment.MouseInfoGetter == null)
@@ -198,6 +274,9 @@ namespace Myra.Graphics2D.UI
 		}
 
 #if MONOGAME || FNA || PLATFORM_AGNOSTIC
+		/// <summary>
+		/// Updates the touch input state based on the current touch information from the platform.
+		/// </summary>
 		public void UpdateTouchInput()
 		{
 #if MONOGAME || FNA
@@ -218,6 +297,9 @@ namespace Myra.Graphics2D.UI
 		}
 #endif
 
+		/// <summary>
+		/// Updates the keyboard input state based on the current keyboard information.
+		/// </summary>
 		public void UpdateKeyboardInput()
 		{
 			if (MyraEnvironment.DownKeysGetter == null)
@@ -272,6 +354,9 @@ namespace Myra.Graphics2D.UI
 			Array.Copy(_downKeys, _lastDownKeys, _downKeys.Length);
 		}
 
+		/// <summary>
+		/// Updates all input states (keyboard, mouse, and touch) for the current frame.
+		/// </summary>
 		public void UpdateInput()
 		{
 			UpdateKeyboardInput();

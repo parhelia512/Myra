@@ -8,13 +8,31 @@ using Myra.Utility;
 
 namespace Myra.Graphics2D.UI.File
 {
+	/// <summary>
+	/// A dialog for selecting files or folders from the file system.
+	/// </summary>
 	public partial class FileDialog
 	{
+		/// <summary>
+		/// Represents the path and type of a browsable location (folder or drive).
+		/// </summary>
 		protected class PathInfo
 		{
+			/// <summary>
+			/// Gets the full path to the location.
+			/// </summary>
 			public string Path { get; }
+
+			/// <summary>
+			/// Gets a value indicating whether this location is a drive.
+			/// </summary>
 			public bool IsDrive { get; }
 
+			/// <summary>
+			/// Initializes a new instance of the PathInfo class.
+			/// </summary>
+			/// <param name="path">The full path to the location.</param>
+			/// <param name="isDrive">True if this location is a drive; otherwise, false.</param>
 			public PathInfo(string path, bool isDrive)
 			{
 				Path = path;
@@ -26,6 +44,13 @@ namespace Myra.Graphics2D.UI.File
 		/// </summary>
 		protected class Location
 		{
+			/// <summary>
+			/// Initializes a new instance of the Location class.
+			/// </summary>
+			/// <param name="volume">The volume label of the location.</param>
+			/// <param name="label">The display label of the location.</param>
+			/// <param name="path">The full path to the location.</param>
+			/// <param name="isDrive">True if this location is a drive; otherwise, false.</param>
 			public Location(string volume, string label, string path, bool isDrive)
 			{
 				VolumeLabel = volume;
@@ -34,9 +59,24 @@ namespace Myra.Graphics2D.UI.File
 				IsDrive = isDrive;
 			}
 
+			/// <summary>
+			/// Gets the volume label of the location.
+			/// </summary>
 			public readonly string VolumeLabel;
+
+			/// <summary>
+			/// Gets the display label for the location.
+			/// </summary>
 			public readonly string Label;
+
+			/// <summary>
+			/// Gets the full path to the location.
+			/// </summary>
 			public readonly string Path;
+
+			/// <summary>
+			/// Gets a value indicating whether this location is a drive.
+			/// </summary>
 			public readonly bool IsDrive;
 		}
 
@@ -47,6 +87,9 @@ namespace Myra.Graphics2D.UI.File
 		private int _historyPosition;
 		private readonly FileDialogMode _mode;
 
+		/// <summary>
+		/// Gets or sets the current folder path being browsed.
+		/// </summary>
 		public string Folder
 		{
 			get => _textFieldPath.Text;
@@ -54,16 +97,22 @@ namespace Myra.Graphics2D.UI.File
 		}
 
 		/// <summary>
-		/// File filter that is used as 2nd parameter for Directory.EnumerateFiles call
+		/// Gets or sets the file filter used when enumerating files (e.g., "*.txt" or "*.*").
 		/// </summary>
 		public string Filter { get; set; }
 
+		/// <summary>
+		/// Gets or sets the name of the file being selected or saved.
+		/// </summary>
 		internal string FileName
 		{
 			get => _textFieldFileName.Text;
 			set => _textFieldFileName.Text = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the full path of the selected file or folder.
+		/// </summary>
 		public string FilePath
 		{
 			get
@@ -112,12 +161,30 @@ namespace Myra.Graphics2D.UI.File
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether to automatically add the file extension based on the active filter.
+		/// </summary>
 		public bool AutoAddFilterExtension { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether hidden files and folders are shown in the file list.
+		/// </summary>
 		public bool ShowHiddenFiles { get; set; }
 
+		/// <summary>
+		/// Gets or sets the image displayed for folder items in the file list.
+		/// </summary>
 		public IImage IconFolder { get; set; }
+
+		/// <summary>
+		/// Gets or sets the image displayed for drive items in the file list.
+		/// </summary>
 		public IImage IconDrive { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FileDialog"/> class with the specified mode.
+		/// </summary>
+		/// <param name="mode">The file dialog mode (open file, save file, or choose folder).</param>
 		public FileDialog(FileDialogMode mode) : base(null)
 		{
 			_mode = mode;
@@ -179,6 +246,9 @@ namespace Myra.Graphics2D.UI.File
 			SetStyle(Stylesheet.DefaultStyleName);
 		}
 
+		/// <summary>
+		/// Handles the placement of the dialog window and updates the folder view.
+		/// </summary>
 		protected override void OnPlacedChanged()
 		{
 			base.OnPlacedChanged();
@@ -187,8 +257,9 @@ namespace Myra.Graphics2D.UI.File
 		}
 
 		/// <summary>
-		/// Create the navigation menu of places we can visit.
+		/// Populates the navigation menu with places that can be visited (user directories and drives).
 		/// </summary>
+		/// <param name="listView">The list view to populate with place items.</param>
 		protected virtual void PopulatePlacesListUI(ListView listView)
 		{
 			List<Location> placeList = new List<Location>(8);
@@ -209,8 +280,10 @@ namespace Myra.Graphics2D.UI.File
 		}
 
 		/// <summary>
-		/// Create a display widget for the given location
+		/// Creates a display widget for the given file system location (drive or folder).
 		/// </summary>
+		/// <param name="location">The location to create a display widget for.</param>
+		/// <returns>A widget displaying the location with icon and label.</returns>
 		protected virtual Widget CreateListItem(Location location)
 		{
 			var item = new HorizontalStackPanel
@@ -229,8 +302,10 @@ namespace Myra.Graphics2D.UI.File
 		}
 
 		/// <summary>
-		/// Return true if <paramref name="path"/> is a valid directory, and we have permissions to access it.
+		/// Determines whether a path is a valid accessible directory that can be browsed.
 		/// </summary>
+		/// <param name="path">The directory path to check.</param>
+		/// <returns>True if the path is a valid directory with appropriate access permissions; otherwise, false.</returns>
 		protected bool TryAccessDirectory(string path)
 		{
 			if (!Directory.Exists(path))
@@ -245,6 +320,11 @@ namespace Myra.Graphics2D.UI.File
 			return CheckAccess(path, _mode, ShowHiddenFiles);
 		}
 
+		/// <summary>
+		/// Displays an error message dialog for I/O operations that failed.
+		/// </summary>
+		/// <param name="path">The file path where the error occurred.</param>
+		/// <param name="exceptionMsg">The error message describing what went wrong.</param>
 		protected void ShowIOError(string path, string exceptionMsg)
 		{
 			CreateMessageBox("I/O Error", exceptionMsg);
@@ -481,6 +561,10 @@ namespace Myra.Graphics2D.UI.File
 			}
 		}
 
+		/// <summary>
+		/// Determines whether the dialog can be closed by clicking OK. For save dialogs, confirms file overwrite if necessary.
+		/// </summary>
+		/// <returns>True if the dialog can be closed; otherwise, false.</returns>
 		protected internal override bool CanCloseByOk()
 		{
 			if (_mode != FileDialogMode.SaveFile)
@@ -535,6 +619,10 @@ namespace Myra.Graphics2D.UI.File
 			return false;
 		}
 
+		/// <summary>
+		/// Applies the specified file dialog style to this dialog instance.
+		/// </summary>
+		/// <param name="style">The file dialog style to apply.</param>
 		public void ApplyFileDialogStyle(FileDialogStyle style)
 		{
 			ApplyWindowStyle(style);
@@ -564,6 +652,11 @@ namespace Myra.Graphics2D.UI.File
 			}
 		}
 
+		/// <summary>
+		/// Internal method to set the style of the dialog from a stylesheet.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style definition.</param>
+		/// <param name="name">The name of the style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyFileDialogStyle(stylesheet.FileDialogStyles.SafelyGetStyle(name));

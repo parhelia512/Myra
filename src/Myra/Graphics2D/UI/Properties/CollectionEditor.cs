@@ -4,6 +4,9 @@ using System.Collections;
 
 namespace Myra.Graphics2D.UI.Properties
 {
+	/// <summary>
+	/// A widget for editing the items in a collection, with UI controls to add, remove, and reorder items.
+	/// </summary>
 	public class CollectionEditor : Widget
 	{
 		private readonly StackPanelLayout _layout = new StackPanelLayout(Orientation.Vertical);
@@ -13,6 +16,11 @@ namespace Myra.Graphics2D.UI.Properties
 		private readonly PropertyGrid _propertyGrid;
 		private readonly Button _buttonDelete, _buttonMoveUp, _buttonMoveDown;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CollectionEditor"/> class.
+		/// </summary>
+		/// <param name="collection">The collection to edit.</param>
+		/// <param name="type">The type of items in the collection.</param>
 		public CollectionEditor(IList collection, Type type)
 		{
 			ChildrenLayout = _layout;
@@ -163,6 +171,9 @@ namespace Myra.Graphics2D.UI.Properties
 			UpdateButtonsEnabled();
 		}
 
+		/// <summary>
+		/// Saves all changes made in the editor back to the original collection.
+		/// </summary>
 		public void SaveChanges()
 		{
 			_collection.Clear();

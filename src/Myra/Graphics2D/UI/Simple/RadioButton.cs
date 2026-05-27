@@ -6,11 +6,18 @@ using System.Xml.Serialization;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A radio button widget that can be part of a group where only one button can be selected at a time.
+	/// </summary>
 	[StyleTypeName("RadioButton")]
 	public class RadioButton : CheckButtonBase
 	{
 		private string _text;
 
+		/// <summary>
+		/// Gets or sets the text displayed by the radio button.
+		/// </summary>
+		/// <remarks>This property is obsolete. Set Content to a Label instead.</remarks>
 		[Obsolete("Set Content to Label instead")]
 		[Browsable(false)]
 		[XmlIgnore]
@@ -34,7 +41,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
-
+		/// <summary>
+		/// Gets or sets a value indicating whether this radio button is pressed/selected.
+		/// Only one radio button in a group can be pressed at a time.
+		/// </summary>
 		public override bool IsPressed
 		{
 			get => base.IsPressed;
@@ -71,11 +81,18 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RadioButton"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public RadioButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Handles the pressed state change, deselecting other radio buttons in the same parent when this button is pressed.
+		/// </summary>
 		public override void OnPressedChanged()
 		{
 			base.OnPressedChanged();
@@ -99,6 +116,11 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies a named radio button style from the stylesheet to the radio button.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the radio button style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyCheckButtonStyle(stylesheet.RadioButtonStyles.SafelyGetStyle(name));

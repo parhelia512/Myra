@@ -10,6 +10,9 @@ using Myra.Events;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// An abstract base class for split pane containers that divide space between child widgets with moveable splitter handles.
+	/// </summary>
 	public abstract class SplitPane : Container
 	{
 		private readonly ObservableCollection<Widget> _widgets = new ObservableCollection<Widget>();
@@ -19,20 +22,36 @@ namespace Myra.Graphics2D.UI
 		private int? _mouseCoord;
 		private int _handlesSize;
 
+		/// <summary>
+		/// Gets the collection of child widgets in the split pane.
+		/// </summary>
 		[Content]
 		[Browsable(false)]
 		public override IList<Widget> Widgets => _widgets;
 
+		/// <summary>
+		/// Gets the orientation (horizontal or vertical) of the split pane.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public abstract Orientation Orientation { get; }
 
+		/// <summary>
+		/// Gets or sets the style applied to the splitter handle buttons.
+		/// </summary>
 		[XmlIgnore]
 		[Browsable(false)]
 		public SplitPanelButtonStyle HandleStyle { get; private set; }
 
+		/// <summary>
+		/// Occurs when the splitter positions change.
+		/// </summary>
 		public event MyraEventHandler ProportionsChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SplitPane"/> class.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply to the split pane.</param>
 		protected SplitPane(string styleName)
 		{
 			ChildrenLayout = _layout;
@@ -41,6 +60,11 @@ namespace Myra.Graphics2D.UI
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Gets the proportion (size ratio) of the widget at the specified index.
+		/// </summary>
+		/// <param name="widgetIndex">The index of the widget.</param>
+		/// <returns>The proportion value, or 0 if the index is out of range.</returns>
 		public float GetProportion(int widgetIndex)
 		{
 			if (widgetIndex < 0 || widgetIndex >= Widgets.Count)
@@ -55,6 +79,9 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Handles touch/mouse movement for dragging splitter handles to resize sections.
+		/// </summary>
 		public override void OnTouchMoved()
 		{
 			base.OnTouchMoved();
@@ -181,6 +208,11 @@ namespace Myra.Graphics2D.UI
 			rightProportion = allProps[baseIndex + 2];
 		}
 
+		/// <summary>
+		/// Gets the position of the splitter between two widgets as a proportion (0.0 to 1.0).
+		/// </summary>
+		/// <param name="leftWidgetIndex">The index of the widget to the left/top of the splitter.</param>
+		/// <returns>The splitter position as a proportion of total space.</returns>
 		public float GetSplitterPosition(int leftWidgetIndex)
 		{
 			float total;
@@ -190,6 +222,11 @@ namespace Myra.Graphics2D.UI
 			return leftProportion.Value / total;
 		}
 
+		/// <summary>
+		/// Sets the position of the splitter between two widgets.
+		/// </summary>
+		/// <param name="leftWidgetIndex">The index of the widget to the left/top of the splitter.</param>
+		/// <param name="proportion">The splitter position as a proportion (0.0 to 1.0).</param>
 		public void SetSplitterPosition(int leftWidgetIndex, float proportion)
 		{
 			float total;
@@ -202,6 +239,9 @@ namespace Myra.Graphics2D.UI
 			rightProportion.Value = fp2;
 		}
 
+		/// <summary>
+		/// Reinitializes the split pane layout based on the current widgets and handle style.
+		/// </summary>
 		public void Reset()
 		{
 			// Clear
@@ -314,6 +354,10 @@ namespace Myra.Graphics2D.UI
 			FireProportionsChanged();
 		}
 
+		/// <summary>
+		/// Applies the specified style to the split pane and its splitter handles.
+		/// </summary>
+		/// <param name="style">The style to apply.</param>
 		public void ApplySplitPaneStyle(SplitPaneStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -322,6 +366,10 @@ namespace Myra.Graphics2D.UI
 			Reset();
 		}
 
+		/// <summary>
+		/// Copies the style and properties from another split pane.
+		/// </summary>
+		/// <param name="w">The source split pane to copy from.</param>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);

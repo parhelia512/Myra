@@ -14,10 +14,17 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A button widget that displays text.
+	/// </summary>
+	/// <remarks>This class is obsolete. Use <see cref="Button"/> instead.</remarks>
 	[Obsolete("Switch to Button")]
 	[StyleTypeName("Button")]
 	public class TextButton : ButtonBase<Label>
 	{
+		/// <summary>
+		/// Gets or sets the text displayed on the button.
+		/// </summary>
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		public string Text
@@ -32,6 +39,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the button text.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/TextColor")]
 		public Color TextColor
@@ -46,6 +56,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the button text when the cursor is over it.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/OverTextColor")]
 		public Color? OverTextColor
@@ -60,6 +73,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the button text when the button is pressed.
+		/// </summary>
 		[Category("Appearance")]
 		[StylePropertyPath("/LabelStyle/PressedTextColor")]
 		public Color? PressedTextColor
@@ -74,6 +90,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the font used to render the button text.
+		/// </summary>
 		[Category("Appearance")]
 		public SpriteFontBase Font
 		{
@@ -87,6 +106,10 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TextButton"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public TextButton(string styleName = Stylesheet.DefaultStyleName)
 		{
 			InternalChild = new Label(null)
@@ -99,6 +122,10 @@ namespace Myra.Graphics2D.UI
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Applies the specified button style to the text button and its text label.
+		/// </summary>
+		/// <param name="style">The button style to apply.</param>
 		public void ApplyTextButtonStyle(ButtonStyle style)
 		{
 			ApplyButtonStyle(style);
@@ -109,6 +136,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles the pressed state change and updates the text label's pressed state.
+		/// </summary>
 		public override void OnPressedChanged()
 		{
 			base.OnPressedChanged();
@@ -116,6 +146,11 @@ namespace Myra.Graphics2D.UI
 			InternalChild.IsPressed = IsPressed;
 		}
 
+		/// <summary>
+		/// Applies a named button style from the stylesheet to the text button.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style.</param>
+		/// <param name="name">The name of the button style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			ApplyTextButtonStyle(stylesheet.ButtonStyles.SafelyGetStyle(name));

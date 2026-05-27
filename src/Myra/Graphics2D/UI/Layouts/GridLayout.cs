@@ -13,6 +13,9 @@ using System.Drawing;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A layout system that arranges widgets in a grid with configurable rows and columns.
+	/// </summary>
 	public class GridLayout: ILayout
 	{
 		private readonly List<int> _measureColWidths = new List<int>();
@@ -21,30 +24,79 @@ namespace Myra.Graphics2D.UI
 		private List<Widget>[,] _widgetsByGridPosition;
 		private Point _actualSize;
 
+		/// <summary>
+		/// Gets or sets the spacing between columns.
+		/// </summary>
 		public int ColumnSpacing { get; set; }
 
+		/// <summary>
+		/// Gets or sets the spacing between rows.
+		/// </summary>
 		public int RowSpacing { get; set; }
 
+		/// <summary>
+		/// Gets or sets the default proportion for columns.
+		/// </summary>
 		public Proportion DefaultColumnProportion { get; set; } = Proportion.GridDefault;
 
+		/// <summary>
+		/// Gets or sets the default proportion for rows.
+		/// </summary>
 		public Proportion DefaultRowProportion { get; set; } = Proportion.GridDefault;
 
+		/// <summary>
+		/// Gets the collection of proportions that define how columns divide available space.
+		/// </summary>
 		public ObservableCollection<Proportion> ColumnsProportions { get; } = new ObservableCollection<Proportion>();
 
+		/// <summary>
+		/// Gets the collection of proportions that define how rows divide available space.
+		/// </summary>
 		public ObservableCollection<Proportion> RowsProportions { get; } = new ObservableCollection<Proportion>();
-		
+
+		/// <summary>
+		/// Gets the list of X-coordinates for grid lines (internal use).
+		/// </summary>
 		public List<int> GridLinesX { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the list of Y-coordinates for grid lines (internal use).
+		/// </summary>
 		public List<int> GridLinesY { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the list of column widths.
+		/// </summary>
 		public List<int> ColWidths { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the list of row heights.
+		/// </summary>
 		public List<int> RowHeights { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the list of X-coordinates for cell locations.
+		/// </summary>
 		public List<int> CellLocationsX { get; } = new List<int>();
+
+		/// <summary>
+		/// Gets the list of Y-coordinates for cell locations.
+		/// </summary>
 		public List<int> CellLocationsY { get; } = new List<int>();
 
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GridLayout"/> class.
+		/// </summary>
 		public GridLayout()
 		{
 		}
 
+		/// <summary>
+		/// Gets the width of the column at the specified index.
+		/// </summary>
+		/// <param name="index">The column index.</param>
+		/// <returns>The width of the column, or zero if the index is invalid.</returns>
 		public int GetColumnWidth(int index)
 		{
 			if (ColWidths == null || index < 0 || index >= ColWidths.Count)
@@ -55,6 +107,11 @@ namespace Myra.Graphics2D.UI
 			return ColWidths[index];
 		}
 
+		/// <summary>
+		/// Gets the height of the row at the specified index.
+		/// </summary>
+		/// <param name="index">The row index.</param>
+		/// <returns>The height of the row, or zero if the index is invalid.</returns>
 		public int GetRowHeight(int index)
 		{
 			if (RowHeights == null || index < 0 || index >= RowHeights.Count)
@@ -65,6 +122,11 @@ namespace Myra.Graphics2D.UI
 			return RowHeights[index];
 		}
 
+		/// <summary>
+		/// Gets the X-coordinate of the cell in the specified column.
+		/// </summary>
+		/// <param name="col">The column index.</param>
+		/// <returns>The X-coordinate of the cell, or zero if the index is invalid.</returns>
 		public int GetCellLocationX(int col)
 		{
 			if (col < 0 || col >= CellLocationsX.Count)
@@ -75,6 +137,11 @@ namespace Myra.Graphics2D.UI
 			return CellLocationsX[col];
 		}
 
+		/// <summary>
+		/// Gets the Y-coordinate of the cell in the specified row.
+		/// </summary>
+		/// <param name="row">The row index.</param>
+		/// <returns>The Y-coordinate of the cell, or zero if the index is invalid.</returns>
 		public int GetCellLocationY(int row)
 		{
 			if (row < 0 || row >= CellLocationsY.Count)
@@ -85,6 +152,12 @@ namespace Myra.Graphics2D.UI
 			return CellLocationsY[row];
 		}
 
+		/// <summary>
+		/// Gets the rectangle of the cell at the specified column and row.
+		/// </summary>
+		/// <param name="col">The column index.</param>
+		/// <param name="row">The row index.</param>
+		/// <returns>The rectangle of the cell, or empty if the indices are invalid.</returns>
 		public Rectangle GetCellRectangle(int col, int row)
 		{
 			if (col < 0 || col >= CellLocationsX.Count ||
@@ -97,6 +170,11 @@ namespace Myra.Graphics2D.UI
 				ColWidths[col], RowHeights[row]);
 		}
 
+		/// <summary>
+		/// Gets the proportion for the specified column.
+		/// </summary>
+		/// <param name="col">The column index.</param>
+		/// <returns>The proportion for the column, or the default column proportion if not found.</returns>
 		public Proportion GetColumnProportion(int col)
 		{
 			if (col < 0 || col >= ColumnsProportions.Count)
@@ -107,6 +185,11 @@ namespace Myra.Graphics2D.UI
 			return ColumnsProportions[col];
 		}
 
+		/// <summary>
+		/// Gets the proportion for the specified row.
+		/// </summary>
+		/// <param name="row">The row index.</param>
+		/// <returns>The proportion for the row, or the default row proportion if not found.</returns>
 		public Proportion GetRowProportion(int row)
 		{
 			if (row < 0 || row >= RowsProportions.Count)
@@ -183,6 +266,12 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Measures the desired size of the grid layout with all its widgets within the given available size.
+		/// </summary>
+		/// <param name="widgets">The widgets to measure.</param>
+		/// <param name="availableSize">The available size for layout.</param>
+		/// <returns>The desired size needed to display the grid with all widgets.</returns>
 		public Point Measure(IEnumerable<Widget> widgets, Point availableSize)
 		{
 			var rows = 0;
@@ -343,6 +432,11 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Arranges the widgets within the specified bounds according to the grid layout.
+		/// </summary>
+		/// <param name="widgets">The widgets to arrange.</param>
+		/// <param name="bounds">The bounds in which to arrange the widgets.</param>
 		public void Arrange(IEnumerable<Widget> widgets, Rectangle bounds)
 		{
 			Measure(widgets, bounds.Size());

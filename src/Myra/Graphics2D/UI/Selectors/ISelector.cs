@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// Specifies how many items can be selected in a selector widget.
+	/// </summary>
 	public enum SelectionMode
 	{
 		/// <summary>

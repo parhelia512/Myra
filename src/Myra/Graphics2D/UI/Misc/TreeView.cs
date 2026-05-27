@@ -20,6 +20,9 @@ using Myra.Platform;
 
 namespace Myra.Graphics2D.UI
 {
+	/// <summary>
+	/// A hierarchical tree view widget that displays nodes in an expandable/collapsible tree structure.
+	/// </summary>
 	public class TreeView : Widget, ITreeViewNode
 	{
 		private readonly StackPanelLayout _layout = new StackPanelLayout(Orientation.Vertical);
@@ -29,12 +32,21 @@ namespace Myra.Graphics2D.UI
 
 		internal List<TreeViewNode> AllNodes => _allNodes;
 
+		/// <summary>
+		/// Gets the number of top-level child nodes.
+		/// </summary>
 		public int ChildNodesCount => Children.Count;
 
+		/// <summary>
+		/// Gets the total number of nodes in the tree (including all nested nodes).
+		/// </summary>
 		public int TotalNodesCount => _allNodes.Count;
 
 		internal TreeViewNode HoverRow { get; set; }
 
+		/// <summary>
+		/// Gets or sets the currently selected node. This property is obsolete; use SelectedNode instead.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		[Obsolete("Use SelectedNode")]
@@ -45,6 +57,9 @@ namespace Myra.Graphics2D.UI
 			set => SelectedNode = value;
 		}
 
+		/// <summary>
+		/// Gets or sets the currently selected node.
+		/// </summary>
 		[Browsable(false)]
 		[XmlIgnore]
 		public TreeViewNode SelectedNode
@@ -71,14 +86,27 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the background of selected nodes.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush SelectionBackground { get; set; }
 
+		/// <summary>
+		/// Gets or sets the brush used to draw the background of hovered nodes.
+		/// </summary>
 		[Category("Appearance")]
 		public IBrush SelectionHoverBackground { get; set; }
 
+		/// <summary>
+		/// Occurs when the selected node changes.
+		/// </summary>
 		public event MyraEventHandler SelectionChanged;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TreeView"/> class with the specified style.
+		/// </summary>
+		/// <param name="styleName">The name of the style to apply. Defaults to the default stylesheet style.</param>
 		public TreeView(string styleName = Stylesheet.DefaultStyleName)
 		{
 			ChildrenLayout = _layout;
@@ -88,6 +116,10 @@ namespace Myra.Graphics2D.UI
 			SetStyle(styleName);
 		}
 
+		/// <summary>
+		/// Handles keyboard input for tree navigation (Up, Down, and Enter keys).
+		/// </summary>
+		/// <param name="k">The key being pressed.</param>
 		public override void OnKeyDown(Keys k)
 		{
 			base.OnKeyDown(k);
@@ -164,6 +196,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles touch down events and selects the node at the touch position.
+		/// </summary>
 		public override void OnTouchDown()
 		{
 			base.OnTouchDown();
@@ -181,6 +216,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles touch double-click events and toggles node expansion if clicked on the mark.
+		/// </summary>
 		public override void OnTouchDoubleClick()
 		{
 			base.OnTouchDoubleClick();
@@ -228,6 +266,9 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Handles mouse movement and updates the hover state of nodes.
+		/// </summary>
 		public override void OnMouseMoved()
 		{
 			base.OnMouseMoved();
@@ -242,6 +283,9 @@ namespace Myra.Graphics2D.UI
 			SetHoverRow(Desktop.MousePosition);
 		}
 
+		/// <summary>
+		/// Handles mouse leaving the tree view and clears the hover state.
+		/// </summary>
 		public override void OnMouseLeft()
 		{
 			base.OnMouseLeft();
@@ -249,6 +293,11 @@ namespace Myra.Graphics2D.UI
 			HoverRow = null;
 		}
 
+		/// <summary>
+		/// Adds a new top-level node to the tree with the specified content.
+		/// </summary>
+		/// <param name="content">The widget to display as the node's content.</param>
+		/// <returns>The newly created tree node.</returns>
 		public TreeViewNode AddSubNode(Widget content)
 		{
 			var result = new TreeViewNode(this, StyleName)
@@ -263,11 +312,23 @@ namespace Myra.Graphics2D.UI
 			return result;
 		}
 
+		/// <summary>
+		/// Gets a top-level node by its index.
+		/// </summary>
+		/// <param name="index">The zero-based index of the node.</param>
+		/// <returns>The tree node at the specified index.</returns>
 		public TreeViewNode GetSubNode(int index) => (TreeViewNode)Children[index];
 
+		/// <summary>
+		/// Gets a node by its absolute index (across all levels of the tree).
+		/// </summary>
+		/// <param name="index">The zero-based absolute index.</param>
+		/// <returns>The tree node at the specified absolute index.</returns>
 		public TreeViewNode GetNodeByAbsoluteIndex(int index) => _allNodes[index];
 
-
+		/// <summary>
+		/// Removes all nodes from the tree.
+		/// </summary>
 		public void RemoveAllSubNodes()
 		{
 			HoverRow = SelectedNode = null;
@@ -333,12 +394,19 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Arranges the tree view and marks row information as needing update.
+		/// </summary>
 		protected override void InternalArrange()
 		{
 			base.InternalArrange();
 			_rowInfosDirty = true;
 		}
 
+		/// <summary>
+		/// Renders the tree view including selection and hover backgrounds for rows.
+		/// </summary>
+		/// <param name="context">The render context used for drawing.</param>
 		public override void InternalRender(RenderContext context)
 		{
 			if (_rowInfosDirty)
@@ -425,12 +493,21 @@ namespace Myra.Graphics2D.UI
 			}
 		}
 
+		/// <summary>
+		/// Applies the style with the specified name from the stylesheet to this tree view.
+		/// </summary>
+		/// <param name="stylesheet">The stylesheet containing the style to apply.</param>
+		/// <param name="name">The name of the tree style to apply.</param>
 		protected override void InternalSetStyle(Stylesheet stylesheet, string name)
 		{
 			base.InternalSetStyle(stylesheet, name);
 			ApplyTreeViewStyle(stylesheet.TreeStyles.SafelyGetStyle(name));
 		}
 
+		/// <summary>
+		/// Applies the specified tree style to this tree view, including selection backgrounds.
+		/// </summary>
+		/// <param name="style">The tree style to apply.</param>
 		public void ApplyTreeViewStyle(TreeStyle style)
 		{
 			ApplyWidgetStyle(style);
@@ -439,6 +516,11 @@ namespace Myra.Graphics2D.UI
 			SelectionHoverBackground = style.SelectionHoverBackground;
 		}
 
+		/// <summary>
+		/// Finds the first node that matches the specified predicate.
+		/// </summary>
+		/// <param name="predicate">A function to test each node; returns true if the node matches.</param>
+		/// <returns>The first matching node, or null if no nodes match.</returns>
 		public TreeViewNode FindNode(Func<TreeViewNode, bool> predicate)
 		{
 			foreach (var node in AllNodes)
@@ -452,6 +534,10 @@ namespace Myra.Graphics2D.UI
 			return null;
 		}
 
+		/// <summary>
+		/// Copies the properties and child nodes from another tree view widget.
+		/// </summary>
+		/// <param name="w">The source tree view widget to copy from.</param>
 		protected internal override void CopyFrom(Widget w)
 		{
 			base.CopyFrom(w);
