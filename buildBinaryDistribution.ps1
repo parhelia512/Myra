@@ -21,7 +21,7 @@ function Copy-Sample([string]$SampleName) {
 Copy-Item -Path "src\Myra\bin\MonoGame\Release\netstandard2.0\Myra.*" -Destination "ZipPackage"
 Copy-Sample "AllWidgets"
 Copy-Sample "CustomUIStylesheet"
-Copy-Sample "CustomWidgets"
+Copy-Sample "CustomWidgets.Arrow"
 Copy-Sample "GridContainer"
 Copy-Sample "SplitPaneContainer"
 Copy-Sample "Notepad"
