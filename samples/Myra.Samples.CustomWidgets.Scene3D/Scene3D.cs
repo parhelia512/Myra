@@ -10,12 +10,6 @@ using System.IO;
 
 namespace Myra.Samples.CustomWidgets
 {
-	public enum ArrowDirection
-	{
-		Left,
-		Right
-	}
-
 	public class Scene3D : Widget
 	{
 		private const float NearPlaneDistance = 0.1f;
