@@ -19,7 +19,7 @@ namespace Myra.Graphics2D.UI
 	/// A clickable button widget that can contain any widget as its content.
 	/// </summary>
 	[StyleTypeName("Button")]
-	public class Button : ButtonBase2
+	public class Button : ButtonBase
 	{
 		private readonly SingleItemLayout<Widget> _layout;
 		internal bool ReleaseOnTouchLeft;

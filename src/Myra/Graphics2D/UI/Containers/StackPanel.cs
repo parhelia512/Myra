@@ -82,14 +82,6 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Gets the proportions collection that defines how space is distributed among children.
-		/// </summary>
-		[Browsable(false)]
-		[Obsolete("Use StackPanel.GetProportion/StackPanel.SetProportion")]
-		[SkipSave]
-		public ObservableCollection<Proportion> Proportions => _proportions;
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="StackPanel"/> class.
 		/// </summary>
 		protected StackPanel()

@@ -26,12 +26,6 @@ namespace Myra
 		}
 
 		/// <summary>
-		/// Gets the default stylesheet. This property is obsolete; use DefaultStylesheet instead.
-		/// </summary>
-		[Obsolete("Use DefaultStylesheet")]
-		public static Stylesheet UIStylesheet => DefaultStylesheet;
-
-		/// <summary>
 		/// Gets the default stylesheet for UI widgets at normal scale.
 		/// </summary>
 		public static Stylesheet DefaultStylesheet

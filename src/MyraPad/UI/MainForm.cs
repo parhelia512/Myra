@@ -47,7 +47,6 @@ namespace MyraPad.UI
 		// Simple widgets that don't contain other widgets (leaf nodes)
 		private static readonly Type[] SimpleWidgets = new[]
 		{
-			typeof(ImageTextButton),
 			typeof(SpinButton),
 			typeof(HorizontalProgressBar),
 			typeof(VerticalProgressBar),

@@ -69,26 +69,6 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Adds a child widget to the container. This method is obsolete; use Widgets.Add instead.
-		/// </summary>
-		/// <param name="child">The widget to add.</param>
-		[Obsolete("Use Widgets.Add")]
-		public void AddChild(Widget child)
-		{
-			Widgets.Add(child);
-		}
-
-		/// <summary>
-		/// Removes a child widget from the container. This method is obsolete; use Widgets.Remove instead.
-		/// </summary>
-		/// <param name="child">The widget to remove.</param>
-		[Obsolete("Use Widgets.Remove")]
-		public void RemoveChild(Widget child)
-		{
-			Widgets.Remove(child);
-		}
-
-		/// <summary>
 		/// Determines whether input at the specified local position falls through the container.
 		/// </summary>
 		/// <param name="localPos">The local position to check.</param>

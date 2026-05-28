@@ -873,14 +873,6 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Finds a widget by predicate. This method is obsolete; use <see cref="FindChild(Func{Widget, bool})"/> instead.
-		/// </summary>
-		/// <param name="predicate">A function to test each widget.</param>
-		/// <returns>The first matching widget, or null if no match is found.</returns>
-		[Obsolete("Use FindChild")]
-		public Widget GetWidgetBy(Func<Widget, bool> predicate) => FindChild(predicate);
-
-		/// <summary>
 		/// Finds a child widget by its ID, recursively searching all descendants.
 		/// </summary>
 		/// <param name="id">The ID of the widget to find.</param>
@@ -888,17 +880,6 @@ namespace Myra.Graphics2D.UI
 		public Widget FindChild(string id)
 		{
 			return FindChild(w => w.Id == id);
-		}
-
-		/// <summary>
-		/// Finds a widget by ID. This method is obsolete; use <see cref="FindChild(string)"/> instead.
-		/// </summary>
-		/// <param name="ID">The ID of the widget to find.</param>
-		/// <returns>The widget with the specified ID, or null if not found.</returns>
-		[Obsolete("Use FindChild")]
-		public Widget GetWidgetByID(string ID)
-		{
-			return FindChild(w => w.Id == ID);
 		}
 
 		/// <summary>

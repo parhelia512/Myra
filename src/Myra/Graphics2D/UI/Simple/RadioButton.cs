@@ -12,35 +12,6 @@ namespace Myra.Graphics2D.UI
 	[StyleTypeName("RadioButton")]
 	public class RadioButton : CheckButtonBase
 	{
-		private string _text;
-
-		/// <summary>
-		/// Gets or sets the text displayed by the radio button.
-		/// </summary>
-		/// <remarks>This property is obsolete. Set Content to a Label instead.</remarks>
-		[Obsolete("Set Content to Label instead")]
-		[Browsable(false)]
-		[XmlIgnore]
-		[Category("Appearance")]
-		public string Text
-		{
-			get => _text;
-			set
-			{
-				if (_text == value)
-				{
-					return;
-				}
-
-				Content = new Label
-				{
-					Text = value
-				};
-
-				_text = value;
-			}
-		}
-
 		/// <summary>
 		/// Gets or sets a value indicating whether this radio button is pressed/selected.
 		/// Only one radio button in a group can be pressed at a time.

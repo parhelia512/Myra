@@ -382,51 +382,6 @@ namespace Myra.Graphics2D.UI
 		}
 
 		/// <summary>
-		/// Gets or sets the column index of the widget in a Grid layout. This property is obsolete; use Grid.GetColumn/Grid.SetColumn instead.
-		/// </summary>
-		[Browsable(false)]
-		[Obsolete("Use Grid.GetColumn/Grid.SetColumn")]
-
-		public int GridColumn
-		{
-			get => Grid.GetColumn(this);
-			set => Grid.SetColumn(this, value);
-		}
-
-		/// <summary>
-		/// Gets or sets the row index of the widget in a Grid layout. This property is obsolete; use Grid.GetColumn/Grid.SetColumn instead.
-		/// </summary>
-		[Browsable(false)]
-		[Obsolete("Use Grid.GetColumn/Grid.SetColumn")]
-		public int GridRow
-		{
-			get => Grid.GetRow(this);
-			set => Grid.SetRow(this, value);
-		}
-
-		/// <summary>
-		/// Gets or sets the number of columns this widget spans in a Grid layout. This property is obsolete; use Grid.GetColumnSpan/Grid.SetColumnSpan instead.
-		/// </summary>
-		[Browsable(false)]
-		[Obsolete("Use Grid.GetColumnSpan/Grid.SetColumnSpan")]
-		public int GridColumnSpan
-		{
-			get => Grid.GetColumnSpan(this);
-			set => Grid.SetColumnSpan(this, value);
-		}
-
-		/// <summary>
-		/// Gets or sets the number of rows this widget spans in a Grid layout. This property is obsolete; use Grid.GetColumnSpan/Grid.SetColumnSpan instead.
-		/// </summary>
-		[Browsable(false)]
-		[Obsolete("Use Grid.GetColumnSpan/Grid.SetColumnSpan")]
-		public int GridRowSpan
-		{
-			get => Grid.GetRowSpan(this);
-			set => Grid.SetRowSpan(this, value);
-		}
-
-		/// <summary>
 		/// Gets or sets a value indicating whether the widget is enabled and can receive user input.
 		/// </summary>
 		[Category("Behavior")]

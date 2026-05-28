@@ -19,7 +19,7 @@ namespace Myra.Graphics2D.UI
 	/// A toggle button widget that can be toggled between two states.
 	/// </summary>
 	[StyleTypeName("Button")]
-	public class ToggleButton : ButtonBase2
+	public class ToggleButton : ButtonBase
 	{
 		private readonly SingleItemLayout<Widget> _layout;
 

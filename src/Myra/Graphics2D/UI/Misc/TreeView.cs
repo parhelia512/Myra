@@ -45,19 +45,6 @@ namespace Myra.Graphics2D.UI
 		internal TreeViewNode HoverRow { get; set; }
 
 		/// <summary>
-		/// Gets or sets the currently selected node. This property is obsolete; use SelectedNode instead.
-		/// </summary>
-		[Browsable(false)]
-		[XmlIgnore]
-		[Obsolete("Use SelectedNode")]
-		public TreeViewNode SelectedRow
-		{
-			get => SelectedNode;
-
-			set => SelectedNode = value;
-		}
-
-		/// <summary>
 		/// Gets or sets the currently selected node.
 		/// </summary>
 		[Browsable(false)]

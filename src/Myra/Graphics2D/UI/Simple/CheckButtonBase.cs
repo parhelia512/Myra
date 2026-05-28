@@ -28,7 +28,7 @@ namespace Myra.Graphics2D.UI
 	/// <summary>
 	/// An abstract base class for check button widgets that display a checkbox image and content with toggle functionality.
 	/// </summary>
-	public class CheckButtonBase : ButtonBase2
+	public class CheckButtonBase : ButtonBase
 	{
 		private class CheckImageInternal : Image
 		{
