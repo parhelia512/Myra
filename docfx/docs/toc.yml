@@ -52,3 +52,5 @@
   href: using-myra-in-stride-engine-tutorial.md
 - name: Using platform agnostic version of Myra
   href: using-platform-agnostic-version-of-myra.md
+- name: Samples
+  href: samples.md
