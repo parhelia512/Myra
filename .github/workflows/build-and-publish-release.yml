@@ -48,6 +48,9 @@ jobs:
     - name: Publish Myra.PlatformAgnostic to NuGet
       run: nuget.exe push src\Myra\bin\PlatformAgnostic\Release\Myra.PlatformAgnostic.*.nupkg ${{secrets.NUGET_APIKEY}} -Source https://api.nuget.org/v3/index.json
       continue-on-error: true
+    - name: Publish MyraPad to NuGet
+      run: nuget.exe push src\MyraPad\bin\Release\myrapad.*.nupkg ${{secrets.NUGET_APIKEY}} -Source https://api.nuget.org/v3/index.json
+      continue-on-error: true
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -58,13 +61,3 @@ jobs:
         release_name: ${{ env.VERSION }}
         draft: false
         prerelease: false
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./Myra.${{ env.VERSION }}.zip
-        asset_name: Myra.${{ env.VERSION }}.zip
-        asset_content_type: application/zip
