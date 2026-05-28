@@ -2,10 +2,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>$(AppTargetFramework)</TargetFramework>
-    <AssemblyName>MyraPad</AssemblyName>
+    <AssemblyName>myrapad</AssemblyName>
     <RootNamespace>MyraPad</RootNamespace>
+    <PackAsTool>true</PackAsTool>
     <DefineConstants>$(DefineConstants);MONOGAME</DefineConstants>
     <LangVersion>10.0</LangVersion>	
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
