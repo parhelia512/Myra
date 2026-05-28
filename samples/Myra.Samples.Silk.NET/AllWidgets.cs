@@ -20,18 +20,18 @@ namespace Myra.Samples.AllWidgets
 			_menuItemChooseFolder.Selected += (s, a) => ChooseFolder();
 			_menuItemQuit.Selected += (s, a) => Quit();
 
-			_buttonOpenFile.Image = Stylesheet.Current.Atlas["icon-star"];
+			_imageOpenFile.Renderable = Stylesheet.Current.Atlas["icon-star"];
 			_buttonOpenFile.Click += (sender, args) => OpenFile();
 
-			_buttonSaveFile.Image = Stylesheet.Current.Atlas["icon-star"];
+			_imageSaveFile.Renderable = Stylesheet.Current.Atlas["icon-star"];
 			_buttonSaveFile.Click += (sender, args) => SaveFile();
 
-			_buttonChooseFolder.Image = Stylesheet.Current.Atlas["icon-star"];
+			_imageChooseFolder.Renderable = Stylesheet.Current.Atlas["icon-star"];
 			_buttonChooseFolder.Click += (sender, args) => ChooseFolder();
 
 			_buttonChooseColor.Click += (sender, args) => ChooseColor();
 
-			_imageButton.Image = Stylesheet.Current.Atlas["icon-star-outline"];
+			((Image)_imageButton.Content).Renderable = Stylesheet.Current.Atlas["icon-star-outline"];
 			_imageButton.Click += (sender, args) =>
 			{
 				var debugWindow = new DebugOptionsWindow();
@@ -44,32 +44,115 @@ namespace Myra.Samples.AllWidgets
 				messageBox.ShowModal(Desktop);
 			};
 
-			var tree = new Tree
-			{
-				HasRoot = false,
-			};
+			var tree = new TreeView();
 			Grid.SetColumn(tree, 1);
 			Grid.SetRow(tree, 12);
 			Grid.SetColumnSpan(tree, 2);
-			var node1 = tree.AddSubNode("node1");
-			var node2 = node1.AddSubNode("node2");
-			var node3 = node2.AddSubNode("node3");
-			node3.AddSubNode("node4");
-			node3.AddSubNode("node5");
-			node3.AddSubNode("node7");
-			node3.AddSubNode("node8");
-			node3.AddSubNode("node9");
-			node3.AddSubNode("node10");
 
-			var node4 = node2.AddSubNode("node6");
-			node4.AddSubNode("node11");
-			node4.AddSubNode("node12");
-			node4.AddSubNode("node13");
-			node4.AddSubNode("node14");
-			node4.AddSubNode("node15");
-			node4.AddSubNode("node16");
-			node4.AddSubNode("node17");
-			node4.AddSubNode("node18");
+			var node1 = tree.AddSubNode(new Label
+			{
+				Text = "node1"
+			});
+			var node2 = node1.AddSubNode(new Label
+			{
+				Text = "node2"
+			});
+
+			var node4 = node2.AddSubNode(new Label
+			{
+				Text = "node6"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node11"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node12"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node13"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node14"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node15"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node16"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node17"
+			});
+			node4.AddSubNode(new Label
+			{
+				Text = "node18"
+			});
+
+			var node3 = node2.AddSubNode(new CheckButton
+			{
+				Content = new Label
+				{
+					Text = "CheckButton node"
+				}
+			});
+			node3.AddSubNode(new Label
+			{
+				Text = "node4"
+			});
+			node3.AddSubNode(new CheckButton
+			{
+				Content = new Label { Text = "CheckButton node2" },
+				CheckPosition = CheckPosition.Right,
+				CheckContentSpacing = 8
+			});
+
+			var imageButtonContent = new HorizontalStackPanel
+			{
+				Spacing = 4
+			};
+
+			imageButtonContent.Widgets.Add(new Image
+			{
+				Renderable = Stylesheet.Current.Atlas["icon-star"]
+			});
+
+			imageButtonContent.Widgets.Add(new Label
+			{
+				Text = "Button node"
+			});
+			node3.AddSubNode(new Button
+			{
+				Content = imageButtonContent
+			});
+			node3.AddSubNode(new HorizontalSlider());
+			node3.AddSubNode(new SpinButton());
+
+			var imageButtonContent2 = new HorizontalStackPanel
+			{
+				Spacing = 4
+			};
+
+			imageButtonContent2.Widgets.Add(new Label
+			{
+				Text = "ToggleButton node"
+			});
+			imageButtonContent2.Widgets.Add(new Image
+			{
+				Renderable = Stylesheet.Current.Atlas["icon-star"]
+			});
+
+			node3.AddSubNode(new ToggleButton
+			{
+				Content = imageButtonContent2
+			});
+
 			_gridRight.Widgets.Add(tree);
 		}
 
