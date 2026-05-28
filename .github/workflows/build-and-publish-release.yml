@@ -22,9 +22,6 @@ jobs:
       run: dotnet build build\Myra.PlatformAgnostic.sln --configuration Release
     - name: Test
       run: dotnet test build\Myra.MonoGame.sln --verbosity normal
-    - name: Build Binary Distribution
-      shell: pwsh
-      run: ./buildBinaryDistribution.ps1 ${{env.VERSION}}
     - name: Install NuGet
       uses: NuGet/setup-nuget@v2
     - name: Publish Myra.MonoGame to MyGet
