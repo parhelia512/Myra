@@ -6,7 +6,6 @@
     <RootNamespace>MyraPad</RootNamespace>
     <PackAsTool>true</PackAsTool>
     <DefineConstants>$(DefineConstants);MONOGAME</DefineConstants>
-    <LangVersion>10.0</LangVersion>	
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
