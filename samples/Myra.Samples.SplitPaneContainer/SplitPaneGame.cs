@@ -17,7 +17,11 @@ namespace Myra.Samples.SplitPaneContainer
 
 		public SplitPaneGame()
 		{
-			graphics = new GraphicsDeviceManager(this);
+			graphics = new GraphicsDeviceManager(this)
+			{
+				PreferredBackBufferWidth = 1200,
+				PreferredBackBufferHeight = 800
+			};
 
 			IsMouseVisible = true;
 			Window.AllowUserResizing = true;
