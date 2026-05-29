@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>$(AppTargetFramework)</TargetFramework>
     <AssemblyName>myrapad</AssemblyName>
+    <PackageId>myrapad</PackageId>
     <RootNamespace>MyraPad</RootNamespace>
     <PackAsTool>true</PackAsTool>
     <DefineConstants>$(DefineConstants);MONOGAME</DefineConstants>

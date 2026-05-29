@@ -419,6 +419,8 @@ namespace MyraPad.UI
 			{
 				Options = new Options();
 			}
+
+			UpdateTitle();
 		}
 
 		/// <summary>
