@@ -2,25 +2,33 @@ MyraPad is WYSIWYG [MML](MML.md) based UI designer.
 
 ![alt text](~/images/MyraPad.png)
 
-It is included in the Myra binary distribution, which is Myra.v.v.v.v.zip from the latest  release at https://github.com/rds1983/Myra/releases.
+## Installation
+
+```bash
+dotnet tool install --global myrapad
+```
+
+## Update
+
+```bash
+dotnet tool update --global myrapad
+```
+
+## Running
+```bash
+myrapad
+```
+
+## Configuration File
+MyraPad maintains the configuration file(MyraPad.config) at the location "~/.config/". It contains various settings such as window size or the last edited file.
+Delete it, if you want settings to be reset.
+
+## Usage
 
 Following video demonstrates creation of simple main menu project in MyraPad:
-https://youtu.be/NZUCq2RMgZU
+![](~/videos/myraPadIntro.mp4)
 
-It creates UI with the following [MML](MML.md):
-```xml
-<Project>
-  <Panel>
-    <TextBlock Text="My Awesome Game" TextColor="#FFA500FF" HorizontalAlignment="Center" />
-    <VerticalMenu HorizontalAlignment="Center" VerticalAlignment="Center" >
-      <MenuItem Id="_menuStartNewGame" Text="Start New Game" />
-      <MenuItem Id="_menuOptions" Text="Options" />
-      <MenuItem Id="_menuQuit" Text="Quit" />
-    </VerticalMenu>
-  </Panel>
-</Project>
-```
-  **Note**. MyraPad itself is made with Myra.
+**Note**. MyraPad itself is made with Myra.
 
 # Export To C#
 MyraPad can export projects to C#:
