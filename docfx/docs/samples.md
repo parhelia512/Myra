@@ -14,14 +14,14 @@ Demonstrates all available built-in Myra widgets including buttons, checkboxes, 
 
 ![CustomUIStylesheet Sample](~/images/samples/CustomUIStylesheet.png)
 
-Shows how to create and apply custom UI stylesheets to customize the appearance of Myra widgets through JSON.
+Shows how to create and apply a custom UI stylesheet to customize the appearance of Myra widgets.
 
 ### DebugConsole
 [View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.DebugConsole)
 
 ![DebugConsole Sample](~/images/samples/DebugConsole.png)
 
-Shows how to implement an in-game debug console for testing and development. Useful for debugging applications during gameplay.
+Shows how to implement an in-game debug console for testing and development.
 
 ### GridContainer
 [View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.GridContainer)
@@ -49,7 +49,7 @@ Demonstrates the creation and management of multiple non-modal windows that don'
 
 ![AssetManagement Sample](~/images/samples/AssetManagement.png)
 
-Demonstrates how to manage and load assets (textures, fonts, models) within Myra applications.
+Demonstrates how to manage and load assets (textures, fonts) within Myra applications.
 
 ### ObjectEditor
 [View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.ObjectEditor)

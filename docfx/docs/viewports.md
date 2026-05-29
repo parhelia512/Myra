@@ -4,8 +4,6 @@ While Myra doesn't provide explicit API to change the viewport. Still it could b
 
 Desktop.BoundsFetcher is function returning rectangle the Desktop will render into. By default it returns the whole viewport.
 
-See [Widget Transformations](widget-transformations.md) for details about Scale and TransformOrigin.
-
 This document provides a few examples of changing the viewport through these properties.
 
 ### Fixed Size Viewport

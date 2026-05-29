@@ -30,6 +30,8 @@
   href: simple-widgets-second.md
 - name: Windows and Dialogs
   href: windows-and-dialogs.md
+- name: Event System
+  href: event-system.md
 - name: Context Menus
   href: context-menus.md
 - name: PropertyGrid
