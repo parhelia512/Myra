@@ -15,7 +15,7 @@ public class MyraEventArgs
     public InputEventType EventType { get; }
 
     /// <summary>
-    /// Stops the propagation of the current event, preventing it from reaching parent widgets.
+    /// Stops the propagation of the current event, preventing it from reaching other widgets in the propagation chain.
     /// </summary>
     public void StopPropagation();
 }
@@ -49,9 +49,9 @@ For simple event handlers, lambda expressions are convenient:
 
 ```csharp
 var button = new Button();
-button.PressedChanged += (sender, e) => 
+button.Click += (sender, e) => 
 {
-    Console.WriteLine($"Button pressed: {((Button)sender).IsPressed}");
+    Console.WriteLine("Button was clicked!");
 };
 ```
 
@@ -63,12 +63,19 @@ Some events can be cancelled to prevent their default behavior. Check if an even
 var window = new Window();
 window.Closing += (sender, e) => 
 {
-    if (UnsavedChanges)
+    // Check some condition before allowing the window to close
+    if (!IsDataSaved())
     {
-        e.Cancel = true;
+        e.Cancel = true;  // Prevent the window from closing
         Console.WriteLine("Close cancelled - unsaved changes");
     }
 };
+
+private bool IsDataSaved()
+{
+    // Your logic here
+    return true;
+}
 ```
 
 ## Event Propagation
@@ -120,20 +127,20 @@ MyraEnvironment.EventHandlingModel = EventHandlingStrategy.EventCapturing;
 
 ## Stopping Event Propagation
 
-You can stop an event from propagating to parent widgets by calling `StopPropagation()`:
+You can stop an event from propagating through the widget hierarchy by calling `StopPropagation()`. This prevents the event from being delivered to other widgets in the propagation chain:
 
 ```csharp
 var button = new Button();
 button.MouseEntered += (sender, e) => 
 {
     Console.WriteLine("Button received mouse entered event");
-    e.StopPropagation();  // Parent widgets won't receive this event
+    e.StopPropagation();  // Other widgets in the propagation chain won't receive this event
 };
 
 var container = new Panel();
 container.MouseEntered += (sender, e) => 
 {
-    // This won't be called if button stopped propagation
+    // May or may not be called depending on the event handling strategy and propagation order
     Console.WriteLine("Container received mouse entered event");
 };
 container.Widgets.Add(button);
@@ -151,19 +158,19 @@ var textBox = new TextBox();
 // Fired when text changes (programmatically or by user)
 textBox.TextChanged += (sender, e) => 
 {
-    Console.WriteLine($"Text is now: {textBox.Text}");
+    Console.WriteLine($"Text changed from '{e.OldValue}' to '{e.NewValue}'");
 };
 
-// Fired before text is deleted - can be cancelled
-textBox.TextDeleting += (sender, e) => 
+// Fired when text is changed by user input
+textBox.TextChangedByUser += (sender, e) => 
 {
-    Console.WriteLine($"Text '{e.Value}' will be deleted at position {e.StartPosition}");
+    Console.WriteLine($"User typed: {textBox.Text}");
 };
 
 // Fired after text is deleted
 textBox.TextDeleted += (sender, e) => 
 {
-    Console.WriteLine($"Text '{e.Value}' was deleted");
+    Console.WriteLine($"Text '{e.Value}' was deleted at position {e.StartPosition}");
 };
 
 // Fired when user types a character
@@ -178,17 +185,15 @@ textBox.CharInput += (sender, e) =>
 Collection-based widgets fire selection change events:
 
 ```csharp
-var listBox = new ListBox();
+var listView = new ListView();
 
-listBox.SelectedIndexChanged += (sender, e) => 
+listView.SelectedIndexChanged += (sender, e) => 
 {
-    Console.WriteLine($"Selected index changed");
-    Console.WriteLine($"Selection: {listBox.SelectedIndex}");
-};
-
-listBox.HoverIndexChanged += (sender, e) => 
-{
-    Console.WriteLine($"Hover index changed to {listBox.HoverIndex}");
+    var selectedIndex = listView.SelectedIndex;
+    if (selectedIndex.HasValue)
+    {
+        Console.WriteLine($"Selected index changed to: {selectedIndex.Value}");
+    }
 };
 ```
 
@@ -219,44 +224,64 @@ var dialog = new Window();
 
 dialog.Closing += (sender, e) => 
 {
-    if (!ValidateForm())
+    // Prevent closing if validation fails
+    if (!ValidateDialogContent())
     {
         e.Cancel = true;
-        ShowError("Please fix validation errors");
+        Console.WriteLine("Cannot close - validation failed");
     }
 };
 
 dialog.Closed += (sender, e) => 
 {
-    Console.WriteLine("Dialog closed");
+    Console.WriteLine("Dialog closed successfully");
 };
+
+private bool ValidateDialogContent()
+{
+    // Your validation logic here
+    return true;
+}
 ```
 
 ## Value Change Events
 
-Value-changing events are particularly useful as they allow you to validate and modify values before they are applied:
+Value change events allow you to respond to changes in widget values:
 
 ```csharp
-var slider = new Slider();
+var slider = new HorizontalSlider();
 
-slider.ValueChanging += (sender, e) => 
+// Fired after the slider value has changed
+slider.ValueChanged += (sender, e) => 
 {
-    // Prevent value from exceeding a certain threshold
-    if (e.NewValue > 100)
+    Console.WriteLine($"Slider value changed from {e.OldValue} to {e.NewValue}");
+};
+
+// Fired after the slider value has changed by user interaction
+slider.ValueChangedByUser += (sender, e) => 
+{
+    Console.WriteLine($"User changed slider to: {e.NewValue}");
+};
+```
+
+For widgets like TextBox that support cancellable value changes, you can validate and modify values before they are applied:
+
+```csharp
+var textBox = new TextBox();
+
+// Fired before the text value is changed - can be cancelled or modified
+textBox.ValueChanging += (sender, e) => 
+{
+    // Limit text to maximum length
+    if (e.NewValue?.Length > 100)
     {
-        e.NewValue = 100;  // Clamp to maximum
-    }
-    
-    // Or cancel the change entirely
-    if (ShouldPreventChange(e))
-    {
-        e.Cancel = true;
+        e.NewValue = e.NewValue.Substring(0, 100);
     }
 };
 
-slider.ValueChanged += (sender, e) => 
+textBox.ValueChanged += (sender, e) => 
 {
-    // Value change is committed - only fires if not cancelled
-    Console.WriteLine($"Value changed from {e.OldValue} to {e.NewValue}");
+    // Value change is committed
+    Console.WriteLine($"Text changed to: {e.NewValue}");
 };
 ```
