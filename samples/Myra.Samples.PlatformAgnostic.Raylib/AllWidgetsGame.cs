@@ -12,8 +12,14 @@ namespace Myra.Samples.AllWidgets
 		private const int WindowWidth = 1200;
 		private const int WindowHeight = 800;
 
+		public bool IsRunning { get; set; } = true;
+
+		public static AllWidgetsGame Instance { get; private set; }
+
 		public AllWidgetsGame()
 		{
+			Instance = this;
+
 			Raylib.SetConfigFlags(ConfigFlags.VSyncHint);
 			Raylib.InitWindow(WindowWidth, WindowHeight, "Myra.AllWidgets.Raylib");
 			Raylib.SetTargetFPS(60);
@@ -61,7 +67,7 @@ namespace Myra.Samples.AllWidgets
 
 			_desktop.Root = _allWidgets;
 
-			while (!Raylib.WindowShouldClose())
+			while (IsRunning && !Raylib.WindowShouldClose())
 			{
 				Update();
 				Render();
@@ -88,7 +94,7 @@ namespace Myra.Samples.AllWidgets
 		private void Render()
 		{
 			Raylib.BeginDrawing();
-			Raylib.ClearBackground(new Color(25, 25, 25, 255));
+			Raylib.ClearBackground(new Color(0, 0, 0, 255));
 
 			_allWidgets._labelOverGui.Text = "Is mouse over GUI: " + _desktop.IsMouseOverGUI;
 			_desktop.Render();

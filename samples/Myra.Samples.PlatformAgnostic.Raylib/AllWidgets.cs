@@ -2,6 +2,9 @@ using Myra.Graphics2D.UI;
 using Myra.Graphics2D.UI.ColorPicker;
 using Myra.Graphics2D.UI.File;
 using Myra.Graphics2D.UI.Styles;
+using Raylib_cs;
+
+using Image = Myra.Graphics2D.UI.Image;
 
 namespace Myra.Samples.AllWidgets
 {
@@ -223,6 +226,7 @@ namespace Myra.Samples.AllWidgets
 
 		public void Quit()
 		{
+			AllWidgetsGame.Instance.IsRunning = false;
 		}
 	}
 }
