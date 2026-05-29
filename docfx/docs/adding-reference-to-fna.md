@@ -1,4 +1,4 @@
-Clone following projects in one folder:
+Clone the following projects in one folder:
 
 Link|Description
 ----|-----------
@@ -7,4 +7,4 @@ Link|Description
 <https://github.com/rds1983/XNAssets>|Asset management library
 <https://github.com/rds1983/Myra>|Myra
 
-Now add every required project's .FNA.Core.csproj to your project
+Now add each required project's .FNA.Core.csproj to your project.

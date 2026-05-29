@@ -10,18 +10,18 @@ This entry describes in detail how Myra deals with images.
   }
 ```
 
-Many widgets properties such as Widget.Background or Menu.SelectionBackground have IBrush type.
-The most simple implementation of IBrush is [SolidBrush](https://github.com/rds1983/Myra/blob/master/src/Myra/Graphics2D/Brushes/SolidBrush.cs).
+Many widget properties, such as Widget.Background or Menu.SelectionBackground, have the IBrush type.
+The simplest implementation of IBrush is [SolidBrush](https://github.com/rds1983/Myra/blob/master/src/Myra/Graphics2D/Brushes/SolidBrush.cs).
 
-I.e. following code sets SolidBrush as widget.Background:
+The following code sets a SolidBrush as widget.Background:
 ```c#
   widget.Background = new SolidBrush(Color.Red); // SolidBrush from Color
   widget.Background = new SolidBrush("#808000FF"); // SolidBrush from RGBA string
   widget.Background = new SolidBrush("#FFA500"); // SolidBrush from RGB string
 ```
-Also it could be set through [MML](MML.md).
+It can also be set through [MML](MML.md).
 
-I.e. following MML:
+The following MML:
 ```xml
 <Project>
   <Panel>
@@ -35,7 +35,7 @@ I.e. following MML:
   </Panel>
 </Project>
 ```
-Would result in following image:
+Would result in the following image:
 
 ![alt text](~/images/images.png)
 

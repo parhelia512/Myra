@@ -1,7 +1,7 @@
-1. Create MonoGame/FNA project.
-2. Reference Myra for MonoGame from nuget: https://www.nuget.org/packages/Myra
+1. Create a MonoGame/FNA project.
+2. Reference Myra for MonoGame from NuGet: https://www.nuget.org/packages/Myra
 
-   See [this](docs/adding-reference-to-fna.md) on how to reference Myra for a FNA project.
+   See [this](docs/adding-reference-to-fna.md) for information on how to reference Myra for an FNA project.
 3. Add the following using statements:
 ```c#
   using Myra;
@@ -15,7 +15,7 @@
 ```c#
   private Desktop _desktop;
 ```
-6. Add the following code in the LoadContent method, which will create 2x2 grid and populate it with some widgets:
+6. Add the following code in the LoadContent method to create a 2x2 grid and populate it with some widgets:
 ```c# 
   MyraEnvironment.Game = this;
 

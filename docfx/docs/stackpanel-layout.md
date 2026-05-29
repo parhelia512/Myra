@@ -1,6 +1,6 @@
 # Basics
-HorizontalStackPanel/VerticalStackPanel are containers that layout children horizontally/vertically in one line/row.
-I.e. following code layouts 3 widgets in one line:
+HorizontalStackPanel and VerticalStackPanel are containers that lay out children horizontally or vertically in one line or row.
+The following code lays out 3 widgets in one line:
 ```c#
 var horizontalStackPanel = new HorizontalStackPanel
 {
@@ -44,7 +44,7 @@ It is equivalent to the following [MML](MML.md):
   </HorizontalStackPanel>
 </Project>
 ```
-It would result in following:
+It would result in the following:
 
 ![alt text](~/images/stackpanel-layout1.png)
 
@@ -99,7 +99,7 @@ It is equivalent to the following [MML](MML.md):
   </VerticalStackPanel>
 </Project>
 ```
-It would result in following:
+It would result in the following:
 
 ![alt text](~/images/stackpanel-layout2.png)
 

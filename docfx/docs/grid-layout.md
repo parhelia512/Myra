@@ -1,9 +1,9 @@
 # Basics
-Grid is a container. It partitions the available space into cells and places the child widgets there. The partitioning configuration should be explicitly set by creating Proportion objects, setting their properties and adding to either RowsProportions or ColumnsProportions property.
+Grid is a container that partitions the available space into cells and places child widgets in them. The partitioning configuration must be explicitly set by creating Proportion objects, setting their properties, and adding them to either the RowsProportions or ColumnsProportions property.
 
-Every child Widget should also explicitly specify which cell(s) it would occupy by setting attached properties GridColumn, GridRow, GridColumnSpan and GridRowSpan.
+Every child widget must also explicitly specify which cell(s) it occupies by setting the attached properties GridColumn, GridRow, GridColumnSpan, and GridRowSpan.
 
-I.e. following code describes simple 2x2 grid with 8 pixels spacing between rows and columns, and 3 child widgets:
+The following code describes a simple 2x2 grid with 8 pixels of spacing between rows and columns, with 3 child widgets:
 ```c#
 // Create grid
 var grid = new Grid

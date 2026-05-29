@@ -1,15 +1,15 @@
 # Layout Properties
-Every widget has following properties related to the layout:
+Every widget has the following properties related to layout:
 
 Name|Type|Default|Description
 ----|----|-------|-----------
 Left/Top|int|0|X/Y Addition
 Width/Height|int?|null|Width/Height of the widget, if set to null, then it is automatically calculated
-HorizontalAlignment/VerticalAlignment|enum|Depends on a widget, it's either Stretch or Left/Top|How control is horizontally/vertically aligned in the container
+HorizontalAlignment/VerticalAlignment|enum|Depends on the widget; either Stretch or Left/Top|How the control is horizontally/vertically aligned in the container
 Margin/Border/Padding|Thickness||[Margin, Border, Padding](margin-border-padding.md)
 
 # Panel
-Panel is simple container. Following code demonstrates usage of layout properties with it:
+Panel is a simple container. The following code demonstrates the usage of layout properties with it:
 ```C#
 var panel = new Panel();
 var positionedText = new Label();

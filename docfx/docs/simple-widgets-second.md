@@ -8,7 +8,7 @@ Image has parameter ResizeMode that determines how the image is resized(Stretch/
 ## Separator
 There are two types of separators: HorizontalSeparator and VerticalSeparator.
 
-Separator is basically separator image.
+A separator is basically a separator image.
 
 Example usage in C#:
 ```c#

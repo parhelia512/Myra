@@ -1,4 +1,4 @@
-MyraPad is WYSIWYG [MML](MML.md) based UI designer.
+MyraPad is a WYSIWYG [MML](MML.md)-based UI designer.
 
 ## Installation
 
@@ -18,14 +18,14 @@ myrapad
 ```
 
 ## Configuration File
-MyraPad maintains the configuration file(MyraPad.config) at the location "~/.config/". It contains various settings such as window size or the last edited file.
-Delete it, if you want settings to be reset.
+MyraPad maintains a configuration file (MyraPad.config) in the "~/.config/" location. It contains various settings such as window size and the last edited file.
+Delete it if you want to reset the settings.
 
 ## Usage
-Following video demonstrates creation of simple main menu project in MyraPad:
+The following video demonstrates creating a simple main menu project in MyraPad:
 > [!Video https://youtu.be/9tklZY7uIJ8]
 
-**Note**. MyraPad itself is made with Myra.
+**Note:** MyraPad itself is made with Myra.
 
 ## Format Source
 "Format Source" fixes the MML indentation.
@@ -35,9 +35,9 @@ Following video demonstrates creation of simple main menu project in MyraPad:
 MyraPad can export projects to C#:
 > [!Video https://youtu.be/iZU0mXvstE0]
 
-  **Note:** Notice that export settings have been saved in the project in the newly appeared tag &lt;ExportOptions&gt;. Thus they wouldn't be required to be entered again.
+  **Note:** Notice that export settings have been saved in the project in the newly appeared &lt;ExportOptions&gt; tag. Thus, they won't need to be entered again.
 
-That procedure created two files: MainMenu.cs and MainMenu.Generated.cs. Now if export were to be rerun, only MainMenu.Generated.cs would be rewritten. So it is safe to add any user code to MainMenu.cs
+This procedure created two files: MainMenu.cs and MainMenu.Generated.cs. Now, if the export is run again, only MainMenu.Generated.cs will be rewritten. Therefore, it is safe to add custom user code to MainMenu.cs.
 
 Let's take a look at contents of produced files.
 
