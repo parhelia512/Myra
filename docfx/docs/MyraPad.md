@@ -138,4 +138,4 @@ Then the app would quit when 'Quit' menu item is clicked.
 
 ## Export To C# Light
 Allows to instantly convert the edited MML to the C# code:
-![](~/images/myraPadExportToC#Light.gif)
+![](~/images/myraPadExportToCSLight.gif)
