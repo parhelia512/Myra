@@ -10,6 +10,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
+    - name: Extract Version
+      shell: pwsh
+      run: |
+        $version = select-string -Path 'Directory.Build.Props' -Pattern '<VersionPrefix>(.*)<\/VersionPrefix>' -AllMatches | % { $_.Matches } | % { $_.Groups[1].Value }
+        echo "VERSION=$version"
+        echo "VERSION=$version" >> $Env:GITHUB_ENV
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -40,7 +46,7 @@ jobs:
       run: nuget.exe push src\Myra\bin\PlatformAgnostic\Release\Myra.PlatformAgnostic.*.nupkg ${{secrets.NUGET_APIKEY}} -Source https://api.nuget.org/v3/index.json
       continue-on-error: true
     - name: Publish MyraPad to NuGet
-      run: nuget.exe push src\MyraPad\bin\Release\myrapad.*.nupkg ${{secrets.NUGET_APIKEY}} -Source https://api.nuget.org/v3/index.json
+      run: nuget.exe push src\MyraPad\bin\MonoGame\Release\myrapad.*.nupkg ${{secrets.NUGET_APIKEY}} -Source https://api.nuget.org/v3/index.json
       continue-on-error: true
     - name: Create Release
       id: create_release
