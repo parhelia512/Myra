@@ -75,21 +75,7 @@ window.Closing += (sender, e) =>
 
 Myra supports two event propagation strategies defined by the `EventHandlingStrategy` enumeration:
 
-### Event Bubbling (Default)
-
-In **event bubbling**, events start at the widget level and propagate up to parent widgets:
-
-```
-Button (receives event first)
-  ↓
-Parent Container
-  ↓
-Desktop (receives event last)
-```
-
-This allows parent containers to respond to child widget events.
-
-### Event Capturing
+### Event Capturing (Default)
 
 In **event capturing**, events are captured at the top level and propagate down to child widgets:
 
@@ -102,6 +88,20 @@ Button (receives event last)
 ```
 
 This allows parent containers to intercept events before they reach children.
+
+### Event Bubbling
+
+In **event bubbling**, events start at the widget level and propagate up to parent widgets:
+
+```
+Button (receives event first)
+  ↓
+Parent Container
+  ↓
+Desktop (receives event last)
+```
+
+This allows parent containers to respond to child widget events.
 
 ### Configuring Event Handling Strategy
 
