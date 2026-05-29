@@ -112,6 +112,8 @@ namespace Myra.Samples.AllWidgets
 			}
 
 			_graphicsDevice.Clear(ClearBuffers.Color | ClearBuffers.Depth | ClearBuffers.Stencil);
+
+			_allWidgets._labelOverGui.Text = "Is mouse over GUI: " + _desktop.IsMouseOverGUI;
 			_desktop.Render();
 		}
 

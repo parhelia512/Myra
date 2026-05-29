@@ -1,47 +1,29 @@
-﻿using Myra.Graphics2D.UI;
+using Myra.Graphics2D.UI;
 using Myra.Platform;
-using Silk.NET.Input;
-using Silk.NET.Maths;
-using Silk.NET.OpenGL;
-using Silk.NET.Windowing;
-using System.Numerics;
+using Raylib_cs;
 
 namespace Myra.Samples.AllWidgets
 {
 	internal class AllWidgetsGame
 	{
-		private IWindow _window;
-		private SilkPlatform _platform;
+		private RaylibPlatform _platform;
 		private AllWidgets _allWidgets;
 		private Desktop _desktop;
+		private const int WindowWidth = 1200;
+		private const int WindowHeight = 800;
 
 		public AllWidgetsGame()
 		{
-			var options = WindowOptions.Default;
-			options.Size = new Vector2D<int>(1200, 800);
-			options.Title = "FontStashSharp.Silk.NET.TrippyGL";
-			_window = Silk.NET.Windowing.Window.Create(options);
-			_window.Load += OnLoad;
-			_window.Render += OnRender;
-			_window.Closing += OnClose;
-			_window.Resize += OnResize;
+			Raylib.SetConfigFlags(ConfigFlags.VSyncHint);
+			Raylib.InitWindow(WindowWidth, WindowHeight, "Myra.AllWidgets.Raylib");
+			Raylib.SetTargetFPS(60);
 		}
 
-		public void Run() => _window.Run();
-
-		private void OnResize(Vector2D<int> size)
+		public void Run()
 		{
-			_platform.Viewport = new System.Drawing.Rectangle(0, 0, size.X, size.Y);
-		}
-
-		private void OnLoad()
-		{
-			Env.Gl = GL.GetApi(_window);
-
-			_platform = new SilkPlatform(_window.CreateInput());
+			_platform = new RaylibPlatform();
 			MyraEnvironment.Platform = _platform;
 			MyraEnvironment.EnableModalDarkening = true;
-			OnResize(_window.Size);
 
 			_allWidgets = new AllWidgets();
 
@@ -73,26 +55,22 @@ namespace Myra.Samples.AllWidgets
 					}
 					else if (_desktop.IsKeyDown(Keys.Q))
 					{
-//						Exit();
 					}
 				}
 			};
 
 			_desktop.Root = _allWidgets;
 
-/*			// Inform Myra that external text input is available
-			// So it stops translating Keys to chars
-			_desktop.HasExternalTextInput = true;
-
-			// Provide that text input
-			Window.TextInput += (s, a) =>
+			while (!Raylib.WindowShouldClose())
 			{
-				_desktop.OnChar(a.Character);
-			};*/
+				Update();
+				Render();
+			}
+
+			Raylib.CloseWindow();
 		}
 
-
-		private void OnRender(double obj)
+		private void Update()
 		{
 			_allWidgets._horizontalProgressBar.Value += 0.5f;
 			if (_allWidgets._horizontalProgressBar.Value > _allWidgets._horizontalProgressBar.Maximum)
@@ -105,16 +83,17 @@ namespace Myra.Samples.AllWidgets
 			{
 				_allWidgets._verticalProgressBar.Value = _allWidgets._verticalProgressBar.Minimum;
 			}
+		}
 
-			Env.Gl.Clear((uint)ClearBufferMask.ColorBufferBit);
+		private void Render()
+		{
+			Raylib.BeginDrawing();
+			Raylib.ClearBackground(new Color(25, 25, 25, 255));
 
 			_allWidgets._labelOverGui.Text = "Is mouse over GUI: " + _desktop.IsMouseOverGUI;
 			_desktop.Render();
-		}
 
-		private void OnClose()
-		{
-//			_graphicsDevice.Dispose();
+			Raylib.EndDrawing();
 		}
 	}
 }

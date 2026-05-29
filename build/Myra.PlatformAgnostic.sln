@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.PlatformAgnost
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL", "..\samples\Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL\Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL.csproj", "{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.PlatformAgnostic.Raylib", "..\samples\Myra.Samples.PlatformAgnostic.Raylib\Myra.Samples.PlatformAgnostic.Raylib.csproj", "{78C94641-E361-E752-03DE-8FD04C85FB73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C94641-E361-E752-03DE-8FD04C85FB73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C94641-E361-E752-03DE-8FD04C85FB73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C94641-E361-E752-03DE-8FD04C85FB73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C94641-E361-E752-03DE-8FD04C85FB73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{974C5499-7E21-899B-C20E-C1F453C81CCD} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 		{57D634B7-151E-0F47-4BEA-2D01389E9E5F} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 		{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
+		{78C94641-E361-E752-03DE-8FD04C85FB73} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35ACDF4E-2CE2-46B1-A19F-35DC131069A1}

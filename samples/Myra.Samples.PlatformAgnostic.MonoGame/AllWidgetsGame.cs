@@ -99,6 +99,8 @@ namespace Myra.Samples.AllWidgets
 			base.Draw(gameTime);
 
 			GraphicsDevice.Clear(Color.Black);
+
+			_allWidgets._labelOverGui.Text = "Is mouse over GUI: " + _desktop.IsMouseOverGUI;
 			_desktop.Render();
 		}
 	}
