@@ -55,29 +55,6 @@ button.Click += (sender, e) =>
 };
 ```
 
-### Cancellable Events
-
-Some events can be cancelled to prevent their default behavior. Check if an event is cancellable by looking at its argument type:
-
-```csharp
-var window = new Window();
-window.Closing += (sender, e) => 
-{
-    // Check some condition before allowing the window to close
-    if (!IsDataSaved())
-    {
-        e.Cancel = true;  // Prevent the window from closing
-        Console.WriteLine("Close cancelled - unsaved changes");
-    }
-};
-
-private bool IsDataSaved()
-{
-    // Your logic here
-    return true;
-}
-```
-
 ## Event Propagation
 
 Myra supports two event propagation strategies defined by the `EventHandlingStrategy` enumeration:
@@ -147,6 +124,29 @@ container.Widgets.Add(button);
 ```
 
 ## Common Event Patterns
+
+### Cancellable Events
+
+Some events can be cancelled to prevent their default behavior. Check if an event is cancellable by looking at its argument type:
+
+```csharp
+var window = new Window();
+window.Closing += (sender, e) => 
+{
+    // Check some condition before allowing the window to close
+    if (!IsDataSaved())
+    {
+        e.Cancel = true;  // Prevent the window from closing
+        Console.WriteLine("Close cancelled - unsaved changes");
+    }
+};
+
+private bool IsDataSaved()
+{
+    // Your logic here
+    return true;
+}
+```
 
 ### Text Input Handling
 

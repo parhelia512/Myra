@@ -27,7 +27,7 @@ namespace Myra.Events
 		}
 
 		/// <summary>
-		/// Stops the propagation of the current event, preventing it from reaching parent widgets.
+		/// Stops the propagation of the current event, preventing it from reaching other widgets in the propagation chain.
 		/// </summary>
 		public void StopPropagation()
 		{
