@@ -99,11 +99,7 @@ namespace Myra.Samples.AllWidgets
 		{
 			base.OnResize(e);
 
-			if (_platform != null)
-			{
-				_platform.Viewport = new Rectangle(0, 0, ClientSize.X, ClientSize.Y);
-				GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
-			}
+			_platform.Viewport = new Rectangle(0, 0, ClientSize.X, ClientSize.Y);
 		}
 
 		protected override void OnUnload()

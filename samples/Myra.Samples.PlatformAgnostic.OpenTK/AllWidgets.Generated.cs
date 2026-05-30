@@ -14,7 +14,7 @@ using Color = FontStashSharp.FSColor;
 
 namespace Myra.Samples.AllWidgets
 {
-	partial class AllWidgets: Panel
+	partial class AllWidgets : Panel
 	{
 		private void BuildUI()
 		{
@@ -121,9 +121,9 @@ namespace Myra.Samples.AllWidgets
 			_buttonSaveFile.Id = "_buttonSaveFile";
 			Grid.SetColumn(_buttonSaveFile, 1);
 			_buttonSaveFile.Content = horizontalStackPanel1;
-            _buttonSaveFile.MouseCursor = MouseCursorType.Hand;
+			_buttonSaveFile.MouseCursor = MouseCursorType.Hand;
 
-            _textSaveFile = new TextBox();
+			_textSaveFile = new TextBox();
 			_textSaveFile.Id = "_textSaveFile";
 			Grid.SetColumn(_textSaveFile, 2);
 
@@ -448,12 +448,12 @@ namespace Myra.Samples.AllWidgets
 			_labelOverGui.VerticalAlignment = Myra.Graphics2D.UI.VerticalAlignment.Bottom;
 			_labelOverGui.Id = "_labelOverGui";
 
-			
+
 			Widgets.Add(verticalStackPanel1);
 			Widgets.Add(_labelOverGui);
 		}
 
-		
+
 		public MenuItem _menuItemOpenFile;
 		public MenuItem _menuItemSaveFile;
 		public MenuItem _menuItemChooseFolder;

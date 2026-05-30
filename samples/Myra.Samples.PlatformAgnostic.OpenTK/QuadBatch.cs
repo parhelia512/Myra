@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Myra.Samples.AllWidgets
 {
-	internal class QuadBatch: IDisposable
+	internal class QuadBatch : IDisposable
 	{
 		private const int MAX_SPRITES = 2048;
 		private const int MAX_VERTICES = MAX_SPRITES * 4;

@@ -41,7 +41,7 @@ namespace Myra.Samples.AllWidgets
 		{
 			Bind();
 
-			fixed(T* dataPtr = &data[startIndex])
+			fixed (T* dataPtr = &data[startIndex])
 			{
 				var elementSizeInBytes = sizeof(T);
 

@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Myra.Samples.AllWidgets
 {
-	internal class Renderer: IMyraRenderer
+	internal class Renderer : IMyraRenderer
 	{
 		private bool _beginCalled;
 

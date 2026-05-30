@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Myra.Samples.AllWidgets
 {
-	internal class Texture2DManager: ITexture2DManager
+	internal class Texture2DManager : ITexture2DManager
 	{
 		public object CreateTexture(int width, int height) => new Texture(width, height);
 

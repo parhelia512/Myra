@@ -223,7 +223,7 @@ namespace Myra.Samples.AllWidgets
 
 		public void Quit()
 		{
-//			AllWidgetsGame.Instance.Exit();
+			//			AllWidgetsGame.Instance.Exit();
 		}
 	}
 }

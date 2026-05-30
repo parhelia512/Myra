@@ -11,7 +11,7 @@ namespace Myra.Samples.AllWidgets
 				var test = new AllWidgetsGame();
 				test.Run();
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				Console.WriteLine(ex);
 			}
