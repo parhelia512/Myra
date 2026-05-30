@@ -107,6 +107,11 @@ Demonstrates using Myra.PlatformAgnostic with MonoGame Framework, enabling cross
 
 Demonstrates using Myra.PlatformAgnostic with Raylib, a lightweight and cross-platform graphics library that simplifies low-level graphics programming.
 
+#### PlatformAgnostic.OpenTK
+[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic.OpenTK)
+
+Demonstrates using Myra.PlatformAgnostic with OpenTK, a C# binding for OpenGL providing direct and efficient access to graphics APIs.
+
 #### PlatformAgnostic.Silk.NET
 [View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic.Silk.NET)
 

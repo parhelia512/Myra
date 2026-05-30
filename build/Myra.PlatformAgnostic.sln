@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.6.11819.183 stable
+VisualStudioVersion = 18.6.11819.183
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{EAB0AA24-7185-4897-A866-AE87AF3F2E0B}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL", "..\samples\Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL\Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL.csproj", "{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.PlatformAgnostic.Raylib", "..\samples\Myra.Samples.PlatformAgnostic.Raylib\Myra.Samples.PlatformAgnostic.Raylib.csproj", "{78C94641-E361-E752-03DE-8FD04C85FB73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myra.Samples.PlatformAgnostic.OpenTK", "..\samples\Myra.Samples.PlatformAgnostic.OpenTK\Myra.Samples.PlatformAgnostic.OpenTK.csproj", "{E23331EF-F95E-1259-6E2C-965DF05B66CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{78C94641-E361-E752-03DE-8FD04C85FB73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78C94641-E361-E752-03DE-8FD04C85FB73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78C94641-E361-E752-03DE-8FD04C85FB73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23331EF-F95E-1259-6E2C-965DF05B66CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23331EF-F95E-1259-6E2C-965DF05B66CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23331EF-F95E-1259-6E2C-965DF05B66CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23331EF-F95E-1259-6E2C-965DF05B66CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{57D634B7-151E-0F47-4BEA-2D01389E9E5F} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 		{E6252604-9C7E-6D35-02ED-5F9ADF46DC0D} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 		{78C94641-E361-E752-03DE-8FD04C85FB73} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
+		{E23331EF-F95E-1259-6E2C-965DF05B66CF} = {EAB0AA24-7185-4897-A866-AE87AF3F2E0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35ACDF4E-2CE2-46B1-A19F-35DC131069A1}
