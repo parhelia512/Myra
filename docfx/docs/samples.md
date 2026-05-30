@@ -93,17 +93,26 @@ This sample implements a `LogView` widget that extends `ScrollViewer` and contai
 
 This sample implements a `Scene3D` widget that performs 3D rendering using XNA Framework's `BasicEffect`. It handles mesh rendering, lighting, texture mapping, and manages 3D graphics state within the widget's render context, allowing seamless integration of 3D content into the Myra UI.
 
-### PlatformAgnostic
-[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic)
+### PlatformAgnostic Family
 
-Demonstrates how to use Myra.PlatformAgnostic.
+The PlatformAgnostic samples demonstrate how to use Myra.PlatformAgnostic, a cross-platform graphics abstraction layer. Multiple backend implementations are provided to show integration with different graphics frameworks.
 
-### Silk.NET
-[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.Silk.NET)
+#### PlatformAgnostic.MonoGame
+[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic.MonoGame)
 
-Demonstrates using Myra.PlatformAgnostic with Silk.NET, a modern OpenGL/Vulkan binding for .NET, showing cross-platform graphics capabilities.
+Demonstrates using Myra.PlatformAgnostic with MonoGame Framework, enabling cross-platform desktop graphics with a familiar game development API.
 
-### Silk.NET.TrippyGL
-[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.Silk.NET.TrippyGL)
+#### PlatformAgnostic.Raylib
+[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic.Raylib)
 
-An advanced example using Silk.NET with TrippyGL for specialized graphics rendering effects.
+Demonstrates using Myra.PlatformAgnostic with Raylib, a lightweight and cross-platform graphics library that simplifies low-level graphics programming.
+
+#### PlatformAgnostic.Silk.NET
+[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic.Silk.NET)
+
+Demonstrates using Myra.PlatformAgnostic with Silk.NET, a modern OpenGL/Vulkan binding for .NET, providing low-level control and cross-platform graphics capabilities.
+
+#### PlatformAgnostic.Silk.NET.TrippyGL
+[View on GitHub](https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.PlatformAgnostic.Silk.NET.TrippyGL)
+
+An advanced example using Silk.NET with TrippyGL for specialized graphics rendering effects and advanced 3D techniques.
