@@ -72,7 +72,7 @@ namespace Myra.Tests
 
 		public static Project LoadFromResource(string name)
 		{
-			var xml = Utility.ReadResourceAsString("Resources." + name);
+			var xml = ReadResourceAsString("Resources." + name);
 
 			return Project.LoadFromXml(xml);
 		}

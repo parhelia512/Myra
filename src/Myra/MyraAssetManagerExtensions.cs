@@ -7,6 +7,8 @@ using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI.Styles;
 using Myra.MML;
 using Myra.Utility;
+using Myra.Graphics2D.UI;
+
 
 #if MONOGAME || FNA
 using Microsoft.Xna.Framework;
@@ -122,6 +124,13 @@ namespace AssetManagementBase
 			return Stylesheet.LoadFromSource(xml, textureRegionAtlas, fonts);
 		};
 
+		private static AssetLoader<Project> _projectLoader = (manager, assetName, settings, tag) =>
+		{
+			var data = manager.ReadAsString(assetName);
+
+			return Project.LoadFromXml(data, manager);
+		};
+
 		/// <summary>
 		/// Loads a texture region atlas from an XML asset file.
 		/// </summary>
@@ -196,5 +205,13 @@ namespace AssetManagementBase
 		/// <param name="assetName">The name of the stylesheet asset to load.</param>
 		/// <returns>The loaded stylesheet.</returns>
 		public static Stylesheet LoadStylesheet(this AssetManager assetManager, string assetName) => assetManager.UseLoader(_stylesheetLoader, assetName);
+
+		/// <summary>
+		/// Loads a Myra project from an XML asset file.
+		/// </summary>
+		/// <param name="assetManager">The asset manager instance.</param>
+		/// <param name="assetName">The name of the project asset to load.</param>
+		/// <returns>The loaded project.</returns>
+		public static Project LoadProject(this AssetManager assetManager, string assetName) => assetManager.UseLoader(_projectLoader, assetName);
 	}
 }

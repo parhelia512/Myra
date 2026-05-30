@@ -12,7 +12,7 @@ If a MML project with external assets is loaded through `Project.LoadFromXml`, t
 
 For example:
 ```c#
-AssetManager assetManager = AssetManager.CreateFileAssetManager(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
+AssetManager assetManager = AssetManager.CreateFileAssetManager(Path.Combine(AppContext.BaseDirectory, "Assets"));
 string data = File.ReadAllText(filePath);
 Project project = Project.LoadFromXml(data, assetManager);
 ```
@@ -108,7 +108,7 @@ namespace Myra.Samples.AssetManagement
 
 It uses the static variable `MyraEnvironment.DefaultAssetManager` as the AssetManager. This AssetManager can be configured when needed by setting it to a custom AssetManager:
 ```c#
-MyraEnvironment.DefaultAssetManager = AssetManager.CreateFileAssetManager(Path.Combine(PathUtils.ExecutingAssemblyDirectory, "Assets"));
+MyraEnvironment.DefaultAssetManager = AssetManager.CreateFileAssetManager(Path.Combine(AppContext.BaseDirectory, "Assets"));
 ```
 
 Full sample is here: https://github.com/rds1983/Myra/tree/master/samples/Myra.Samples.AssetManagement

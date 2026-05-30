@@ -70,8 +70,7 @@ namespace Myra.Tests
 		public void ComboViewTest()
 		{
 			var assetManager = AssetManager.CreateResourceAssetManager(Utility.Assembly, "Resources.");
-			var mml = assetManager.ReadAsString("comboView.xmmp");
-			var project = Project.LoadFromXml(mml, assetManager);
+			var project =  assetManager.LoadProject("comboView.xmmp");
 			var root = project.Root;
 
 			Assert.IsInstanceOf<Panel>(root);

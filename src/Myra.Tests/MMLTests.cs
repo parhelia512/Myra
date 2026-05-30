@@ -14,9 +14,7 @@ namespace Myra.Tests
 		{
 			var assetManager = AssetManager.CreateResourceAssetManager(Utility.Assembly, "Resources.");
 
-			var mml = assetManager.ReadAsString("GridWithExternalResources.xmmp");
-
-			var project = Project.LoadFromXml(mml, assetManager);
+			var project = assetManager.LoadProject("GridWithExternalResources.xmmp");
 
 			var imageButton1 = (Button)project.Root.FindChildById("spawnUnit1");
 			Assert.IsNotNull(imageButton1);
