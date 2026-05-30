@@ -15,7 +15,7 @@ namespace Myra.Tests
 			Assert.IsType<Panel>(root);
 			var panel = (Panel)root;
 
-			Assert.Equal(1, panel.Widgets.Count);
+			Assert.Single(panel.Widgets);
 			Assert.IsType<Label>(panel.Widgets[0]);
 			var label = (Label)panel.Widgets[0];
 
@@ -28,6 +28,7 @@ namespace Myra.Tests
 		}
 	}
 }
+
 
 
 

@@ -1,4 +1,4 @@
-using AssetManagementBase;
+﻿using AssetManagementBase;
 using Myra.Graphics2D.UI;
 using Xunit;
 
@@ -15,7 +15,7 @@ namespace Myra.Tests
 			Assert.IsType<Panel>(root);
 			var panel = (Panel)root;
 
-			Assert.Equal(1, panel.Widgets.Count);
+			Assert.Single(panel.Widgets);
 			Assert.IsType<ListView>(panel.Widgets[0]);
 			var listView = (ListView)panel.Widgets[0];
 
@@ -76,7 +76,7 @@ namespace Myra.Tests
 			Assert.IsType<Panel>(root);
 			var panel = (Panel)root;
 
-			Assert.Equal(1, panel.Widgets.Count);
+			Assert.Single(panel.Widgets);
 			Assert.IsType<ComboView>(panel.Widgets[0]);
 			var comboView = (ComboView)panel.Widgets[0];
 
@@ -110,5 +110,6 @@ namespace Myra.Tests
 		}
 	}
 }
+
 
 

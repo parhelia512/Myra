@@ -1,4 +1,4 @@
-using Myra.Graphics2D;
+﻿using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using Xunit;
 
@@ -15,7 +15,7 @@ namespace Myra.Tests
 			Assert.IsType<Panel>(root);
 			var panel = (Panel)root;
 
-			Assert.Equal(1, panel.Widgets.Count);
+			Assert.Single(panel.Widgets);
 			Assert.IsType<Label>(panel.Widgets[0]);
 			var label = (Label)panel.Widgets[0];
 
@@ -37,7 +37,7 @@ namespace Myra.Tests
 
 			Utility.AssertSolidBrush("#ADD8E6FF", panel1.Background);
 
-			Assert.Equal(1, panel1.Widgets.Count);
+			Assert.Single(panel1.Widgets);
 			Assert.IsType<Panel>(panel1.Widgets[0]);
 			var panel2 = (Panel)panel1.Widgets[0];
 
@@ -48,7 +48,7 @@ namespace Myra.Tests
 			Utility.AssertSolidBrush("#FFA500FF", panel2.Background);
 			Utility.AssertSolidBrush("#808000FF", panel2.OverBorder);
 
-			Assert.Equal(1, panel2.Widgets.Count);
+			Assert.Single(panel2.Widgets);
 			Assert.IsType<Label>(panel2.Widgets[0]);
 			var label1 = (Label)panel2.Widgets[0];
 
@@ -64,7 +64,7 @@ namespace Myra.Tests
 			Assert.IsType<Panel>(root);
 			var panel = (Panel)root;
 
-			Assert.Equal(1, panel.Widgets.Count);
+			Assert.Single(panel.Widgets);
 			Assert.IsType<CheckButton>(panel.Widgets[0]);
 			var checkButton = (CheckButton)panel.Widgets[0];
 
@@ -136,7 +136,7 @@ namespace Myra.Tests
 			Assert.IsType<Panel>(root);
 			var panel = (Panel)root;
 
-			Assert.Equal(1, panel.Widgets.Count);
+			Assert.Single(panel.Widgets);
 			Assert.IsType<TextBox>(panel.Widgets[0]);
 			var textBox = (TextBox)panel.Widgets[0];
 
@@ -146,5 +146,6 @@ namespace Myra.Tests
 		}
 	}
 }
+
 
 

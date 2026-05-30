@@ -30,7 +30,7 @@ namespace Myra.Tests
 			desktop.Render();
 
 			slider.Value = 0.5f;
-			Assert.Equal(slider.Hint, 0);
+			Assert.Equal(0, slider.Hint);
 
 			slider.Value = 2.0f;
 			Assert.Equal(slider.Hint, slider.MaxHint);
